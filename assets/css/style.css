@@ -1,0 +1,119 @@
+@font-face {
+    font-family: 'LilitaOne';
+    /* Choose a name for your font family */
+    src: local('LilitaOne'),
+        /* Optional: Check for local installation first */
+        url('../fonts/Lilita_One/LilitaOne-Regular.ttf') format('truetype');
+    font-weight: 400;
+    /* Define the font weight */
+    font-style: normal;
+    /* Define the font style */
+    font-display: swap;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "LilitaOne", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    background-color: #FDF5DE;
+
+}
+
+section {
+    padding: 4rem 0;
+}
+
+.logo {
+    width: 100px;
+}
+
+.logo img {
+    width: 100%;
+}
+
+/* Hover effect for Start Reading button */
+button.btn-light:hover {
+    color: #ffffff !important;
+    background-color: #1f2155 !important;
+}
+
+.hero {
+    background-image: url('../images/digital-library-filter.png');
+    background-size: cover;
+    background-position: center;
+    margin-top: 5rem;
+    text-shadow: 5px 5px 10px #020236;
+}
+
+.hero h1,
+.hero h2,
+.hero p {
+    color: #ffffff !important;
+}
+
+
+@media (min-width: 768px) {
+
+    .hero {
+        height: 165vh;
+    }
+
+}
+
+#faq .accordion-button,
+#faq .accordion-item {
+    background-color: transparent;
+    color: black !important;
+    border-left: none;
+    border-right: none;
+}
+
+#faq .accordion-button:after {
+    content: "\2795";
+    color: black;
+    background-image: none;
+
+}
+
+
+/* Logo styling */
+.footer-logo {
+    width: 250px;
+    height: auto;
+    object-fit: contain;
+}
+
+/* Remove underline and style links */
+.footer-links a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.1rem;
+    display: block;
+    margin-bottom: 6px;
+}
+
+/* Subscribe input styling */
+.form-control::placeholder {
+    color: #ADB5BD;
+}
+
+/* Social icons styling */
+.social-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    filter: brightness(1) saturate(4);
+}
+
+/* Adjust gap between social icons */
+.social-icons a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
