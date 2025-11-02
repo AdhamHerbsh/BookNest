@@ -1,4 +1,4 @@
-<header class="border-bottom fixed-top bg-white shadow-sm" data-aos="fade">
+<header class="border-bottom fixed-top bg-white shadow-sm" data-aos="slide-down">
     <div class="container">
         <div class="row justify-content-between align-items-center">
             <div class="col-auto d-flex align-items-center">
@@ -7,7 +7,7 @@
                 </div>
                 <div>
                     <h4 class="m-0 fw-bold">BookNest</h4>
-                    <small>Digital Library</small>
+                    <small>Digital Library For Children</small>
                 </div>
             </div>
             <div class="col d-none d-lg-flex justify-content-end">
@@ -21,7 +21,7 @@
                     <button class="btn btn-light rounded-pill py-2 px-3 text-black">
                         For Parents
                     </button>
-                    <button class="btn btn-light rounded-circle">
+                    <button id="globeBtn" class="btn btn-light rounded-circle">
                         <i class="bi fs-4 bi-globe"></i>
 
                     </button>
@@ -54,7 +54,7 @@
             <button class="btn btn-light rounded-pill py-2 px-3 text-black mb-2 w-auto">
                 For Parents
             </button>
-            <button class="btn btn-light rounded-circle d-inline-block mb-2">
+            <button id="globeBtn" class="btn btn-light rounded-circle d-inline-block mb-2">
                 <i class="bi fs-4 bi-globe"></i>
             </button>
             <a href="?auth=login" class="btn btn-light rounded-circle d-inline-block mb-2">

@@ -97,42 +97,89 @@
   }
 
   /**
-   * Toggle Password Visibility
-   * This script toggles the visibility of the password input field when the eye icon is clicked.
+   * Password toggle and lightweight client-side validation
+   * - Handles any number of toggle buttons (class .toggle-password-btn)
+   * - Uses data-target on button to find the input, or falls back to the input-group sibling
+   * - Debounced validation disables submit when the form is invalid
    */
-  const togglePassword = document.getElementById("togglePassword");
-  if (togglePassword) {
-    togglePassword.addEventListener("click", function (e) {
+
+  // small debounce helper
+  function debounce(fn, delay) {
+    let t;
+    return function (...args) {
+      clearTimeout(t);
+      t = setTimeout(() => fn.apply(this, args), delay);
+    };
+  }
+
+  // Password toggle for any toggle button
+  document.querySelectorAll(".toggle-password-btn").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
       e.preventDefault();
-      const passwordInput = document.getElementById("floatingPassword");
-      const icon = this.querySelector("i");
+      const targetSelector = btn.getAttribute("data-target");
+      let input = null;
+      if (targetSelector) input = document.querySelector(targetSelector);
+      if (!input) {
+        const group = btn.closest(".input-group");
+        if (group) input = group.querySelector("input");
+      }
+      if (!input) return;
 
-      // Toggle the password visibility
-      const type =
-        passwordInput.getAttribute("type") === "password" ? "text" : "password";
-      passwordInput.setAttribute("type", type);
-
-      // Toggle the icon with a smooth transition
-      icon.style.transition = "opacity 0.2s ease-in-out";
-      icon.style.opacity = "0";
-
-      setTimeout(() => {
+      const icon = btn.querySelector("i");
+      const isPassword = input.type === "password";
+      input.type = isPassword ? "text" : "password";
+      if (icon) {
         icon.classList.toggle("bi-eye");
         icon.classList.toggle("bi-eye-slash");
-        icon.style.opacity = "1";
-      }, 100);
-
-      // Add focus back to password input
-      passwordInput.focus();
+        // subtle opacity animation
+        icon.style.transition = "opacity 0.15s ease";
+        icon.style.opacity = "0.6";
+        setTimeout(() => (icon.style.opacity = "1"), 150);
+      }
+      input.focus();
     });
+  });
 
-    // Add hover effect
-    togglePassword.addEventListener("mouseover", function () {
-      this.querySelector("i").style.opacity = "0.8";
-    });
+  // Lightweight client-side validation for forms within auth pages
+  document.querySelectorAll("form.login-form").forEach((form) => {
+    const submit = form.querySelector('button[type="submit"], .btn-success');
+    if (!submit) return;
 
-    togglePassword.addEventListener("mouseout", function () {
-      this.querySelector("i").style.opacity = "1";
-    });
-  }
+    function validateOnce() {
+      // collect inputs we care about
+      const inputs = Array.from(
+        form.querySelectorAll(
+          'input[required], input[type="email"], input[type="password"], input[type="text"]'
+        )
+      );
+      let valid = true;
+      inputs.forEach((inp) => {
+        // trim non-password inputs to avoid accidental whitespace
+        if (inp.type !== "password" && typeof inp.value === "string") {
+          inp.value = inp.value.trimStart(); // don't aggressively trim end while typing
+        }
+
+        // basic required check
+        if (inp.hasAttribute("required") && !inp.value) valid = false;
+
+        // email pattern
+        if (inp.type === "email" && inp.value) {
+          const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!re.test(inp.value)) valid = false;
+        }
+
+        // minlength check
+        const min = inp.getAttribute("minlength");
+        if (min && inp.value && inp.value.length < parseInt(min, 10))
+          valid = false;
+      });
+
+      submit.disabled = !valid;
+    }
+
+    const debouncedValidate = debounce(validateOnce, 180);
+    form.addEventListener("input", debouncedValidate);
+    // initial run
+    validateOnce();
+  });
 })();

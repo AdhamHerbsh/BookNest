@@ -1,7 +1,8 @@
 <div class="container-fluide">
+
     <div class="hero d-flex align-items-center justify-content-center">
         <div class="hero-content container text-center shadow-lg p-4 rounded">
-            <h1 class="display-1 fw-bold">BookNest</h1>
+            <h1 class="display-1 fw-bold" data-i18n="landing.hero">BookNest</h1>
             <h2 class="display-2 fw-bold">Digital Library For Children</h2>
             <p class="fs-4 mb-4">Welcome to our innovative digital library for children, designed to
                 spark a
@@ -16,6 +17,7 @@
                 and critical thinking in the digital age.</p>
         </div>
     </div>
+
     <section class="px-5">
         <div class="row">
             <div class="col col-12 col-md-6 mb-4">
@@ -216,6 +218,7 @@
             </div>
         </div>
     </section>
+
     <section class="px-5">
         <div class="container-fluid text-center">
             <div class="row">
