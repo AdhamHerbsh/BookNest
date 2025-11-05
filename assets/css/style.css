@@ -109,18 +109,30 @@ button.btn-light:hover {
     color: #ffffff !important;
 }
 
-.about-image {
+.library {
+    background-image: url('../images/tanaphong-toochinda.jpg');
+}
+
+.about {
     background-image: url('../images/priscilla-du.jpg');
 }
 
-
-.library-image {
-    background-image: url('../images/tanaphong-toochinda.jpg');
+.contact {
+    background-image: url('../images/little-funny-girl-with-tablet-yellow.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    margin-top: 2rem;
 }
+
 
 @media (max-width: 768px) {
     .login-image {
         width: 60%;
+    }
+
+    .hero-content {
+        top: 0%;
     }
 
     .about-content {

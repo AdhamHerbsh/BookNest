@@ -1,4 +1,4 @@
-<div class="hero-image library-image" data-aos="fade"></div>
+<div class="hero-image library" data-aos="fade"></div>
 <div class="container-fluid">
     <div class="hero-content container text-center">
         <h1 class="display-1 fw-blod text-white" data-aos="fade-up" data-aos-delay="200">Unlock a World of Stories</h1>
