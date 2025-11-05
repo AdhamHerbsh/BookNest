@@ -33,7 +33,9 @@
     --bs-gray-800: #343a40;
     --bs-gray-900: #212529;
     --bs-primary: #2a3380;
+    --bs-primary-light: #bcc3ff;
     --bs-secondary: #F76D2E;
+    --bs-secondary-light: #f76d2e1a;
     --bs-success: #198754;
     --bs-info: #0dcaf0;
     --bs-warning: #ffc107;
@@ -41,7 +43,9 @@
     --bs-light: #E5E7EB;
     --bs-dark: #212529;
     --bs-primary-rgb: 42, 51, 128;
+    --bs-primary-light-rgb: 188, 195, 255;
     --bs-secondary-rgb: 247, 106, 46;
+    --bs-secondary-light-rgb: 247, 109, 46;
     --bs-success-rgb: 25, 135, 84;
     --bs-info-rgb: 13, 202, 240;
     --bs-warning-rgb: 255, 193, 7;
@@ -9153,9 +9157,19 @@ fieldset:disabled .btn {
     background-color: rgba(var(--bs-primary-rgb), var(--bs-bg-opacity)) !important
 }
 
+.bg-primary-light {
+    --bs-bg-opacity: 1;
+    background-color: rgba(var(--bs-primary-light-rgb), var(--bs-bg-opacity)) !important
+}
+
 .bg-secondary {
     --bs-bg-opacity: 1;
     background-color: rgba(var(--bs-secondary-rgb), var(--bs-bg-opacity)) !important
+}
+
+.bg-secondary-light {
+    --bs-bg-opacity: 0.1;
+    background-color: rgba(var(--bs-secondary-light-rgb), var(--bs-bg-opacity)) !important
 }
 
 .bg-success {

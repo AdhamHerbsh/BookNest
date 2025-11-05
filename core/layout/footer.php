@@ -33,14 +33,10 @@
             <div class="col-md-4 d-flex flex-column align-items-center align-items-md-center">
                 <form class="mb-3 w-100" style="max-width: 250px;">
                     <div class="input-group">
-
                         <input type="email" class="form-control form-control-sm border-0" placeholder="Subscribe"
                             aria-label="Subscribe" />
                         <span class="input-group-text bg-white" id="basic-addon1">
                             <i class="bi bi-cursor text-success"></i> </span>
-                    </div>
-                    <div class="input-group">
-
                     </div>
                     <button type="submit" class="btn btn-outline-success btn-sm w-100 mt-2 bg-white text-success">Send
                         Mail</button>

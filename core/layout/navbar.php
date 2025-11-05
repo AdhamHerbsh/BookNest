@@ -12,9 +12,9 @@
             </div>
             <div class="col d-none d-lg-flex justify-content-end">
                 <nav>
-                    <a href="#" class="nav-link d-inline-block px-3 text-primary">Home</a>
-                    <a href="#" class="nav-link d-inline-block px-3 text-black">Library</a>
-                    <a href="#" class="nav-link d-inline-block px-3 text-black">About</a>
+                    <a href="?page=landing" class="nav-link d-inline-block px-3 text-primary">Home</a>
+                    <a href="?page=library" class="nav-link d-inline-block px-3 text-black">Library</a>
+                    <a href="?page=about" class="nav-link d-inline-block px-3 text-black">About</a>
                     <button class="btn btn-light rounded-pill py-2 px-3 text-black">
                         Start Reading
                     </button>
@@ -42,9 +42,9 @@
     <div class="collapse navbar-collapse" id="navbarContent">
         <div class="col d-lg-flex justify-content-center d-block">
             <nav class="text-center">
-                <a href="#" class="nav-link d-block d-lg-inline-block px-3 text-primary">Home</a>
-                <a href="#" class="nav-link d-block d-lg-inline-block px-3 text-black">Library</a>
-                <a href="#" class="nav-link d-block d-lg-inline-block px-3 text-black">About</a>
+                <a href="?page=landing" class="nav-link d-block d-lg-inline-block px-3 text-primary">Home</a>
+                <a href="?page=library" class="nav-link d-block d-lg-inline-block px-3 text-black">Library</a>
+                <a href="?page=about" class="nav-link d-block d-lg-inline-block px-3 text-black">About</a>
             </nav>
         </div>
         <div class="col-auto d-lg-flex align-items-center gap-3 text-center">

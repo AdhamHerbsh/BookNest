@@ -52,11 +52,11 @@
             case 'landing':
                 include("core/pages/landing.php");
                 break;
+            case 'library':
+                include("core/pages/library.php");
+                break;
             case 'about':
                 include("core/pages/about.php");
-                break;
-            case 'services':
-                include("core/pages/services.php");
                 break;
             case 'contact':
                 include("core/pages/contact.php");

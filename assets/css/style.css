@@ -87,16 +87,45 @@ button.btn-light:hover {
     text-shadow: 5px 5px 10px #020236;
 }
 
+.hero-image {
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    filter: brightness(0.7);
+}
+
+.hero-content {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+}
+
+
+
 .hero h1,
 .hero h2,
 .hero p {
     color: #ffffff !important;
 }
 
+.about-image {
+    background-image: url('../images/priscilla-du.jpg');
+}
+
+
+.library-image {
+    background-image: url('../images/tanaphong-toochinda.jpg');
+}
 
 @media (max-width: 768px) {
     .login-image {
         width: 60%;
+    }
+
+    .about-content {
+        top: 10%;
+        padding: 0 1rem;
     }
 
 }
@@ -140,11 +169,6 @@ button.btn-light:hover {
     font-size: 1.1rem;
     display: block;
     margin-bottom: 6px;
-}
-
-/* Subscribe input styling */
-.form-control::placeholder {
-    color: #ADB5BD;
 }
 
 /* Social icons styling */

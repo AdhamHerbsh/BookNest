@@ -54,51 +54,46 @@
         <div class="row g-4">
 
             <div class="col-12 col-md-6 col-lg-3">
-                <div class="p-3 bg-white rounded-3 shadow-sm h-100">
-                    <div class="bg-primary bg-opacity-10 rounded-3 d-inline-flex p-2 mb-3">
+                <div class="py-4 px-5 bg-white rounded-3 shadow-sm h-100">
+                    <div class="bg-primary bg-opacity-10 rounded-3 d-inline-flex py-2 px-3 mb-4">
                         <i class="text-primary fs-1 bi bi-headphones"></i>
                     </div>
-                    <h5 class="mb-2">Audio Read-Aloud</h5>
-                    <p class="text-muted mb-0">Professional narrators bring stories to life with
-                        engaging
-                        audio.</p>
+                    <h5 class="mb-4">Audio Read-Aloud</h5>
+                    <p class="text-muted mb-0">Professional narrators bring stories to life with engaging audio.</p>
                 </div>
             </div>
 
             <div class="col-12 col-md-6 col-lg-3">
-                <div class="p-3 bg-white rounded-3 shadow-sm h-100">
-                    <div class="bg-primary bg-opacity-10 rounded-3 d-inline-flex p-2 mb-3">
+                <div class="py-4 px-5 bg-white rounded-3 shadow-sm h-100">
+                    <div class="bg-primary bg-opacity-10 rounded-3 d-inline-flex py-2 px-3 mb-4">
                         <i class="text-primary fs-1 bi bi-hand-index-thumb"></i>
                     </div>
-                    <h5 class="mb-2">Interactive Elements</h5>
+                    <h5 class="mb-4">Interactive Elements</h5>
                     <p class="text-muted mb-0">Tap, swipe, and interact with characters and scenes
-                        within
-                        the stories.</p>
+                        within the stories.</p>
                 </div>
             </div>
 
             <div class="col-12 col-md-6 col-lg-3">
-                <div class="p-3 bg-white rounded-3 shadow-sm h-100">
-                    <div class="bg-primary bg-opacity-10 rounded-3 d-inline-flex p-2 mb-3">
+                <div class="py-4 px-5 bg-white rounded-3 shadow-sm h-100">
+                    <div class="bg-primary bg-opacity-10 rounded-3 d-inline-flex py-2 px-3 mb-4">
                         <i class="text-primary fs-1 bi bi-book"></i>
                     </div>
-                    <h5 class="mb-2">Age-Based Library</h5>
-                    <p class="text-muted mb-0">Stories are carefully curated for different age groups
-                        (4–12).</p>
+                    <h5 class="mb-4">Age-Based Library</h5>
+                    <p class="text-muted mb-0">Stories are carefully curated for different age groups (4–12).</p>
                 </div>
             </div>
 
             <div class="col-12 col-md-6 col-lg-3">
-                <div class="p-3 bg-white rounded-3 shadow-sm h-100">
-                    <div class="bg-primary bg-opacity-10 rounded-3 d-inline-flex p-2 mb-3">
+                <div class="py-4 px-5 bg-white rounded-3 shadow-sm h-100">
+                    <div class="bg-primary bg-opacity-10 rounded-3 d-inline-flex py-2 px-3 mb-4">
                         <i class="text-primary fs-1 bi bi-layout-wtf"></i>
                     </div>
-                    <h5 class="mb-2">Parental Dashboard</h5>
-                    <p class="text-muted mb-0">Track your child's progress, set goals, and manage their
-                        reading experience.</p>
+                    <h5 class="mb-4">Parental Dashboard</h5>
+                    <p class="text-muted mb-0">Track your child's progress, set goals, and manage their reading
+                        experience.</p>
                 </div>
             </div>
-
         </div>
     </section>
 
