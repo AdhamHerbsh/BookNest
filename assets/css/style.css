@@ -125,6 +125,37 @@ button.btn-light:hover {
     margin-top: 2rem;
 }
 
+.card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.card:hover .card-overlay {
+    opacity: 1;
+}
+
+button.position-absolute {
+    top: 0;
+    right: 10px;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
 
 @media (max-width: 768px) {
     .login-image {
@@ -196,4 +227,236 @@ button.btn-light:hover {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+}
+
+
+
+
+
+
+
+
+/* Reader */
+
+.sidebar {
+    border-right: 2px solid #ffb18f;
+    width: 260px;
+    min-height: 100vh;
+    padding: 1.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.page-preview {
+    width: 48px;
+    height: 68px;
+    background: #e3e4e8;
+    border-radius: 0.5rem;
+}
+
+.pages-title {
+    color: #4c6ef5;
+    /* a bold blue */
+    user-select: none;
+    margin-bottom: 1rem;
+}
+
+.page-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.4rem 0.75rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.page-item.active {
+    background-color: #d4d4ff;
+    border: 3.5px solid #ffb396;
+}
+
+.page-item img {
+    width: 48px;
+    height: 68px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    flex-shrink: 0;
+    box-shadow: 0 3px 6px rgb(0 0 0 / 0.15);
+}
+
+.main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 3rem;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.toolbar {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.toolbar button {
+    background-color: #fefbf4;
+    border-radius: 50%;
+    border: none;
+    padding: 0.5rem 0.6rem;
+    width: 48px;
+    height: 48px;
+    box-shadow: 2px 2px 5px rgb(0 0 0 / 0.1);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: box-shadow 0.2s ease;
+}
+
+.toolbar button:hover {
+    box-shadow: 4px 4px 7px rgb(0 0 0 / 0.3);
+}
+
+.toolbar button svg {
+    fill: #2c3e9e;
+    width: 22px;
+    height: 22px;
+}
+
+.page-indicator {
+    background-color: #fefbf4;
+    color: #1f255e;
+    border-radius: 1.5rem;
+    padding: 0.3rem 1.2rem;
+    user-select: none;
+    text-align: center;
+    width: fit-content;
+    margin: 0 auto;
+    box-shadow: 2px 2px 7px rgb(0 0 0 / 0.15);
+}
+
+.pdf-viewer {
+    background-color: #116161;
+    border-radius: 2rem;
+    padding: 2rem 3rem;
+    width: 100%;
+    max-width: 860px;
+    position: relative;
+    box-shadow: inset -8px -8px 15px #0a3a3a, inset 8px 8px 15px #158585;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* Arrows */
+.nav-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(254, 251, 244, 0.8);
+    border-radius: 50%;
+    width: 64px;
+    height: 64px;
+    box-shadow: -4px 6px 10px rgba(255, 177, 144, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    user-select: none;
+}
+
+.nav-arrow:hover {
+    background-color: rgba(254, 251, 244, 1);
+}
+
+.nav-arrow.left {
+    left: -32px;
+}
+
+.nav-arrow.right {
+    right: -32px;
+}
+
+
+
+
+/* Scrollable pages list */
+.pages-list {
+    overflow-y: auto;
+    flex-grow: 1;
+    padding-right: 3px;
+}
+
+
+
+/**
+    * Quiz Section Style
+
+    */
+
+
+/* Minimal custom CSS for colors and rounded corners */
+.progress-bar-custom {
+    background-color: #f16824;
+    border-radius: 5px;
+}
+
+.option-btn {
+    background-color: #fff1eb;
+    border: none;
+    border-radius: 1rem;
+    color: #12192c;
+    padding: 0.75rem 1rem;
+    width: 100%;
+    text-align: left;
+    user-select: none;
+    transition: background-color 0.3s;
+}
+
+.option-btn:hover,
+.option-btn:focus {
+    background-color: #ffd6bd;
+    outline: none;
+}
+
+.option-letter {
+    color: #f16824;
+    margin-right: 0.75rem;
+    min-width: 1.5rem;
+    display: inline-block;
+}
+
+.btn-previous {
+    background-color: #fff1eb;
+    color: #f16824;
+    border-radius: 2rem;
+    padding: 0.5rem 2rem;
+    border: none;
+}
+
+.btn-previous:hover,
+.btn-previous:focus {
+    background-color: #ffd6bd;
+    color: #b14000;
+    outline: none;
+}
+
+.btn-next {
+    background-color: #f16824;
+    color: white;
+    border-radius: 2rem;
+    padding: 0.5rem 2rem;
+    border: none;
+}
+
+.btn-next:hover,
+.btn-next:focus {
+    background-color: #b14000;
+    outline: none;
 }

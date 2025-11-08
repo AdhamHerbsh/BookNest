@@ -182,4 +182,56 @@
     // initial run
     validateOnce();
   });
+
+  /**
+   * * Favorite button toggle
+   *
+   */
+
+  // Favorite button toggle (handles multiple buttons)
+  document.querySelectorAll(".btn-favorite").forEach((btn) => {
+    btn.addEventListener("click", function (e) {
+      e.preventDefault();
+      // Toggle visual state
+      this.classList.toggle("btn-danger");
+      const isPressed = this.classList.contains("btn-danger");
+      this.setAttribute("aria-pressed", isPressed);
+
+      const icon = this.querySelector("i");
+      if (icon) {
+        // swap between outlined and filled heart
+        icon.classList.toggle("bi-heart");
+        icon.classList.toggle("bi-heart-fill");
+      }
+
+      // Optional: persist favorite state (example using localStorage)
+      try {
+        const bookId = this.dataset.bookId;
+        if (bookId) {
+          const key = "favorites_v1";
+          const stored = JSON.parse(localStorage.getItem(key) || "{}");
+          if (isPressed) stored[bookId] = true;
+          else delete stored[bookId];
+          localStorage.setItem(key, JSON.stringify(stored));
+        }
+      } catch (err) {
+        // ignore storage errors
+      }
+    });
+  });
+
+  /**
+   * Quiz Modal
+   *
+   */
+  var modalId = document.getElementById("modalId");
+
+  modalId.addEventListener("show.bs.modal", function (event) {
+    // Button that triggered the modal
+    let button = event.relatedTarget;
+    // Extract info from data-bs-* attributes
+    let recipient = button.getAttribute("data-bs-whatever");
+
+    // Use above variables to manipulate the DOM
+  });
 })();

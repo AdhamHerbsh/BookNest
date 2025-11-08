@@ -40,11 +40,136 @@
         </div>
 
     </section>
-    <section>
-        <div class="mb-4 text-center">
-            <h1 class="display-4">Featured Collections</h1>
-        </div>
-        <div class="container">
+    <section class="featured-collections">
+        <div class="container-fluid px-4">
+            <div class="row mb-4">
+                <div class="col-12 text-center">
+                    <h1 class="display-4 fw-bold">Featured Collections</h1>
+                </div>
+            </div>
+
+            <div class="row">
+                <swiper-container class="book-slider" pagination="true" pagination-clickable="true" navigation="true"
+                    loop="true" autoplay-delay="5000" autoplay-disable-on-interaction="false" slides-per-view="auto"
+                    breakpoints='{
+                "320": {"slidesPerView": 1.2, "spaceBetween": 15},
+                "480": {"slidesPerView": 2.2, "spaceBetween": 15},
+                "768": {"slidesPerView": 3.2, "spaceBetween": 20},
+                "992": {"slidesPerView": 4.2, "spaceBetween": 20},
+                "1200": {"slidesPerView": 5.2, "spaceBetween": 20}
+            }'>
+                    <?php include_once 'core/layout/book-card.php'; ?>
+                    <?php
+                    $books = [
+                        [
+                            'title' => 'Adventures in Wonderland',
+                            'description' => 'Dive into a world of whimsy and wonder with our curated collection of adventure stories.',
+                            'coverImage' => 'assets/images/books/library-book-1.png',
+                            'altText' => 'Adventures in Wonderland cover'
+                        ],
+                        [
+                            'title' => 'Adventures in Wonderland',
+                            'description' => 'Dive into a world of whimsy and wonder with our curated collection of adventure stories.',
+                            'coverImage' => 'assets/images/books/library-book-2.png',
+                            'altText' => 'Adventures in Wonderland cover'
+                        ],
+                        [
+                            'title' => 'Adventures in Wonderland',
+                            'description' => 'Dive into a world of whimsy and wonder with our curated collection of adventure stories.',
+                            'coverImage' => 'assets/images/books/library-book-3.png',
+                            'altText' => 'Adventures in Wonderland cover'
+                        ],
+                        [
+                            'title' => 'Adventures in Wonderland',
+                            'description' => 'Dive into a world of whimsy and wonder with our curated collection of adventure stories.',
+                            'coverImage' => 'assets/images/books/library-book-4.png',
+                            'altText' => 'Adventures in Wonderland cover'
+                        ],
+                        [
+                            'title' => 'Adventures in Wonderland',
+                            'description' => 'Dive into a world of whimsy and wonder with our curated collection of adventure stories.',
+                            'coverImage' => 'assets/images/books/library-book-5.png',
+                            'altText' => 'Adventures in Wonderland cover'
+                        ],
+                        [
+                            'title' => 'Adventures in Wonderland',
+                            'description' => 'Dive into a world of whimsy and wonder with our curated collection of adventure stories.',
+                            'coverImage' => 'assets/images/books/library-book-6.png',
+                            'altText' => 'Adventures in Wonderland cover'
+                        ],
+                        // Add more books as needed
+                    ];
+
+                    foreach ($books as $book) {
+                        echo '<swiper-slide>';
+                        echo renderBookCard($book);
+                        echo '</swiper-slide>';
+                    }
+                    ?>
+                </swiper-container>
+            </div>
+
+            <div class="row">
+                <swiper-container class="book-slider" pagination="true" pagination-clickable="true" navigation="true"
+                    loop="true" autoplay-delay="2500" autoplay-disable-on-interaction="false" slides-per-view="auto"
+                    breakpoints='{
+                "320": {"slidesPerView": 1.2, "spaceBetween": 15},
+                "480": {"slidesPerView": 2.2, "spaceBetween": 15},
+                "768": {"slidesPerView": 3.2, "spaceBetween": 20},
+                "992": {"slidesPerView": 4.2, "spaceBetween": 20},
+                "1200": {"slidesPerView": 5.2, "spaceBetween": 20}
+            }'>
+                    <?php include_once 'core/layout/book-card.php'; ?>
+                    <?php
+                    $books = [
+                        [
+                            'title' => 'Adventures in Wonderland',
+                            'description' => 'Dive into a world of whimsy and wonder with our curated collection of adventure stories.',
+                            'coverImage' => 'assets/images/books/library-book-1.png',
+                            'altText' => 'Adventures in Wonderland cover'
+                        ],
+                        [
+                            'title' => 'Adventures in Wonderland',
+                            'description' => 'Dive into a world of whimsy and wonder with our curated collection of adventure stories.',
+                            'coverImage' => 'assets/images/books/library-book-2.png',
+                            'altText' => 'Adventures in Wonderland cover'
+                        ],
+                        [
+                            'title' => 'Adventures in Wonderland',
+                            'description' => 'Dive into a world of whimsy and wonder with our curated collection of adventure stories.',
+                            'coverImage' => 'assets/images/books/library-book-3.png',
+                            'altText' => 'Adventures in Wonderland cover'
+                        ],
+                        [
+                            'title' => 'Adventures in Wonderland',
+                            'description' => 'Dive into a world of whimsy and wonder with our curated collection of adventure stories.',
+                            'coverImage' => 'assets/images/books/library-book-4.png',
+                            'altText' => 'Adventures in Wonderland cover'
+                        ],
+                        [
+                            'title' => 'Adventures in Wonderland',
+                            'description' => 'Dive into a world of whimsy and wonder with our curated collection of adventure stories.',
+                            'coverImage' => 'assets/images/books/library-book-5.png',
+                            'altText' => 'Adventures in Wonderland cover'
+                        ],
+                        [
+                            'title' => 'Adventures in Wonderland',
+                            'description' => 'Dive into a world of whimsy and wonder with our curated collection of adventure stories.',
+                            'coverImage' => 'assets/images/books/library-book-6.png',
+                            'altText' => 'Adventures in Wonderland cover'
+                        ],
+                        // Add more books as needed
+                    ];
+
+                    foreach ($books as $book) {
+                        echo '<swiper-slide>';
+                        echo renderBookCard($book);
+                        echo '</swiper-slide>';
+                    }
+                    ?>
+                </swiper-container>
+            </div>
+
 
         </div>
     </section>
@@ -54,7 +179,7 @@
                 <div class="col-12 col-md-8 mb-4">
                     <h1>Ready to test your memory ?</h1>
                     <p>Take a quick quiz on the book and earn some shiny rewards!</p>
-                    <button class="btn btn-primary">Start Quiz ??..</button>
+                    <a href="?page=quiz" class="btn btn-primary">Start Quiz ??..</a>
                 </div>
                 <div class="col-12 col-md-2">
                     <img class="img-fluid rounded-circle" src="assets/images/jaredd-craig-croped.jpg"

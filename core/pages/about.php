@@ -9,7 +9,8 @@
             every child, anywhere and anytime. We believe that books build curiosity, strengthen creativity, and
             connect children with knowledge in both Arabic and English.
         </p>
-        <a class="btn btn-primary" href="?page=contact" data-aos="zoom-in" data-aos-delay="1000">Contact Our Library</a>
+        <a class="btn btn-primary rounded-pill" href="?page=contact" data-aos="zoom-in" data-aos-delay="1000">Contact
+            Our Library</a>
     </div>
     <!-- Our Mission & Vision Section -->
     <section class="px-5 text-center">
@@ -56,30 +57,63 @@
         </div>
     </section>
     <!-- Our Values Section -->
-    <section>
+    <section class="bg-secondary-light">
         <div class="mb-5 text-center">
             <h1 class="display-4">Our Values</h1>
         </div>
         <div class="container">
             <div class="row">
-                <div class="col-6 col-md-3"></div>
-                <div class="col-6 col-md-3"></div>
-                <div class="col-6 col-md-3"></div>
-                <div class="col-6 col-md-3"></div>
-            </div>
-        </div>
-    </section>
-    <!-- Team Section -->
-    <section>
-        <div class="mb-5 text-center">
-            <h1 class="display-4">Our Values</h1>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-6 col-md-3"></div>
-                <div class="col-6 col-md-3"></div>
-                <div class="col-6 col-md-3"></div>
-                <div class="col-6 col-md-3"></div>
+                <div class="col-6 col-md-3">
+                    <div class="card bg-transparent h-100 rounded-4 hover border-0">
+                        <img src="assets/images/value-educational.png" class="card-img-top rounded-4 p-2"
+                            alt="image not found" loading="lazy" />
+                        <div class="card-body">
+                            <h5 class="card-title">Education</h5>
+                            <p class="card-text">We believe in the power of stories to educate and
+                                inspire young minds, fostering creativity and
+                                critical thinking.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="card bg-transparent h-100 rounded-4 hover border-0">
+                        <img src="assets/images/value-safety.png" class="card-img-top rounded-4 p-2"
+                            alt="image not found" loading="lazy" />
+                        <div class="card-body">
+                            <h5 class="card-title">Education</h5>
+                            <p class="card-text">We believe in the power of stories to educate and
+                                inspire young minds, fostering creativity and
+                                critical thinking.</p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="card bg-transparent h-100 rounded-4 hover border-0">
+                        <img src="assets/images/value-accessibility.png" class="card-img-top rounded-4 p-2"
+                            alt="image not found" loading="lazy" />
+                        <div class="card-body">
+                            <h5 class="card-title">Education</h5>
+                            <p class="card-text">We believe in the power of stories to educate and
+                                inspire young minds, fostering creativity and
+                                critical thinking.</p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="card bg-transparent h-100 rounded-4 hover border-0">
+                        <img src="assets/images/value-partnership.png" class="card-img-top rounded-4 p-2"
+                            alt="image not found" loading="lazy" />
+                        <div class="card-body">
+                            <h5 class="card-title">Education</h5>
+                            <p class="card-text">We believe in the power of stories to educate and
+                                inspire young minds, fostering creativity and
+                                critical thinking.</p>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
     </section>
@@ -88,7 +122,7 @@
             <div class="text-center">
                 <h1 class="display-4">Get in Touch</h1>
                 <p>Have questions or feedback? We'd love to hear from you!</p>
-                <button class="btn btn-primary">Contact Us</button>
+                <a href="?page=contact" class="btn btn-light bg-secondary text-white rounded-pill">Contact Us</a>
             </div>
         </div>
     </section>

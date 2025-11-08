@@ -61,6 +61,18 @@
             case 'contact':
                 include("core/pages/contact.php");
                 break;
+            case 'account':
+                include("core/pages/account.php");
+                break;
+            case 'book':
+                include("core/pages/book.php");
+                break;
+            case 'read':
+                include("core/pages/read.php");
+                break;
+            case 'quiz':
+                include("core/pages/quiz.php");
+                break;
             default:
                 include("core/pages/404.php");
                 break;
