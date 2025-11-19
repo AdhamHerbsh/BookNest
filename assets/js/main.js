@@ -221,17 +221,47 @@
   });
 
   /**
-   * Quiz Modal
+   * Login
    *
    */
-  var modalId = document.getElementById("modalId");
+  // Show Parent (username/password) or Child (code/passkey) inputs based on selection
+  (function initLoginToggle() {
+    const parentContainer = document.getElementById("parent");
+    const childContainer = document.getElementById("child");
+    const parentRadio = document.getElementById("check-parent");
+    const childRadio = document.getElementById("check-child");
 
-  modalId.addEventListener("show.bs.modal", function (event) {
-    // Button that triggered the modal
-    let button = event.relatedTarget;
-    // Extract info from data-bs-* attributes
-    let recipient = button.getAttribute("data-bs-whatever");
+    if (!parentContainer || !childContainer || !parentRadio || !childRadio) {
+      return; // Not on login page or elements missing
+    }
 
-    // Use above variables to manipulate the DOM
-  });
+    const updateView = () => {
+      if (childRadio.checked) {
+        parentContainer.classList.add("d-none");
+        childContainer.classList.remove("d-none");
+      } else {
+        childContainer.classList.add("d-none");
+        parentContainer.classList.remove("d-none");
+      }
+    };
+
+    // Keep radios mutually exclusive in case name attribute is missing
+    parentRadio.addEventListener("click", () => {
+      parentRadio.checked = true;
+      childRadio.checked = false;
+      updateView();
+    });
+    childRadio.addEventListener("click", () => {
+      childRadio.checked = true;
+      parentRadio.checked = false;
+      updateView();
+    });
+
+    // Also listen to change (covers keyboard navigation)
+    parentRadio.addEventListener("change", updateView);
+    childRadio.addEventListener("change", updateView);
+
+    // Initial state: default to Parent if none selected
+    updateView();
+  })();
 })();

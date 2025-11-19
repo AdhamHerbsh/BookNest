@@ -10,27 +10,13 @@
                     <img src="assets/images/BookNest Logo/Logo Square RBG.png" alt="BookNest" class="login-logo" />
                 </div>
             </div>
-            <div class="row w-75 m-auto text-center">
+            <!-- Register Form -->
+            <form action="./" method="POST" class="row w-75 m-auto text-center">
                 <h6>
                     Register a new account as parent has personal account
                 </h6>
                 <div class="container bg-secondary p-4 rounded-4 shadow-lg mb-3">
-                    <!-- Auth Type Toggles -->
-                    <div class="row mb-3">
-                        <div class="btn-group justify-content-center" role="group"
-                            aria-label="Basic checkbox toggle button group">
-                            <input type="checkbox" class="btn-check" id="check-signup" autocomplete="off">
-                            <label class="btn btn-outline-primary" for="check-signup">Sign Up</label>
-
-                            <input type="checkbox" class="btn-check" id="check-signin" autocomplete="off">
-                            <label class="btn btn-outline-primary" for="check-signin">Sign In</label>
-                        </div>
-                    </div>
-
-
-                    <!-- Login Form -->
-                    <form class="login-form">
-
+                    <div>
                         <div class="input-group mb-3">
                             <input type="text" class="form-control me-1" id="firstName" placeholder="First Name"
                                 aria-label="First Name">
@@ -56,8 +42,7 @@
                         <!-- Password with toggle button on the right -->
                         <div class="input-group mb-3">
                             <input type="password" class="form-control" id="password" name="password"
-                                placeholder="Password" aria-label="Password" required minlength="8"
-                                autocomplete="new-password">
+                                placeholder="Password" aria-label="Password" minlength="8" autocomplete="new-password">
                             <button type="button" class="btn btn-outline-secondary toggle-password-btn"
                                 data-target="#password" tabindex="-1" aria-label="Toggle password visibility"><i
                                     class="bi bi-eye"></i></button>
@@ -66,7 +51,7 @@
                         <!-- Confirm Password with toggle button on the right -->
                         <div class="input-group mb-3">
                             <input type="password" class="form-control" id="cpassword" name="cpassword"
-                                placeholder="Confirm Password" aria-label="Confirm Password" required minlength="8"
+                                placeholder="Confirm Password" aria-label="Confirm Password" minlength="8"
                                 autocomplete="new-password">
                             <button type="button" class="btn btn-outline-secondary toggle-password-btn"
                                 data-target="#cpassword" tabindex="-1"
@@ -79,7 +64,7 @@
                                 Approve on Terms and Conditions
                             </label>
                         </div>
-                    </form>
+                    </div>
                 </div>
                 <div class="container">
                     <div class="form-check mb-3">
@@ -89,7 +74,7 @@
                         <a class="btn btn-light" href="?auth=login">Login</a>
                     </div>
                 </div>
-            </div>
+            </form>
 
         </div>
         <div class="col-12 col-md-6 text-center" data-aos="zoom-in">

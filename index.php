@@ -73,6 +73,21 @@
             case 'quiz':
                 include("core/pages/quiz.php");
                 break;
+            case 'edu':
+                include("core/pages/edu.php");
+                break;
+            case 'books':
+                include("core/pages/edu-books.php");
+                break;
+            case 'upload':
+                include("core/pages/upload.php");
+                break;
+            case 'quizzes':
+                include("core/pages/quizzes.php");
+                break;
+            case 'create-quiz':
+                include("core/pages/create-quiz.php");
+                break;
             default:
                 include("core/pages/404.php");
                 break;
