@@ -1,3 +1,16 @@
+<?php
+// Include authentication system
+require_once 'session.php';
+require_once 'security.php';
+
+// Initialize session if not already started
+if (session_status() === PHP_SESSION_NONE) {
+    initSession();
+}
+
+// Generate CSRF token
+$csrfToken = generateCsrfToken();
+?>
 <div class="auth container-fluid">
     <div class="row">
         <div class="col-12 col-md-6 text-center" data-aos="zoom-in">
@@ -14,8 +27,41 @@
                     <img src="assets/images/BookNest Logo/Logo Square RBG.png" alt="BookNest" class="login-logo" />
                 </div>
             </div>
+
+            <!-- Error Messages -->
+            <?php if (isset($_SESSION['error'])): ?>
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <?php
+                            echo htmlspecialchars($_SESSION['error']);
+                            unset($_SESSION['error']);
+                            ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+            <?php endif; ?>
+
+            <!-- Success Messages -->
+            <?php if (isset($_SESSION['success'])): ?>
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <?php
+                            echo htmlspecialchars($_SESSION['success']);
+                            unset($_SESSION['success']);
+                            ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+            <?php endif; ?>
+
             <!-- Login Form -->
-            <form action="./" class="login-form row w-75 m-auto text-center" method="POST">
+            <form action="./" class="login-form row w-75 m-auto text-center" method="POST" id="loginForm">
+                <input type="hidden" name="action" value="login">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrfToken); ?>">
                 <div class="container bg-secondary p-5 rounded-4 shadow-lg mb-2">
                     <div>
                         <!-- User Type Selection -->
