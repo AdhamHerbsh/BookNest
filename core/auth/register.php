@@ -64,10 +64,10 @@ $csrfToken = generateCsrfToken();
                 <div class="container bg-secondary p-4 rounded-4 shadow-lg mb-3">
                     <div>
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control me-1" id="firstName" placeholder="First Name"
-                                aria-label="First Name">
-                            <input type="text" class="form-control" id="lastName" placeholder="Last Name"
-                                aria-label="Last Name">
+                            <input type="text" class="form-control me-1" name="first_name" id="firstName" placeholder="First Name"
+                                aria-label="First Name" required>
+                            <input type="text" class="form-control" name="last_name" id="lastName" placeholder="Last Name"
+                                aria-label="Last Name" required>
                             <span class="btn btn-outline-secondary" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg"
                                     width="20" height="20" fill="currentColor" class="bi bi-person-vcard"
                                     viewBox="0 0 16 16">
@@ -78,17 +78,24 @@ $csrfToken = generateCsrfToken();
                                 </svg></span>
                         </div>
 
-                        <!-- Username with right-side icon using Bootstrap input-group -->
+                        <!-- Username (Email) with right-side icon using Bootstrap input-group -->
                         <div class="input-group mb-3">
-                            <input type="email" class="form-control" id="username" placeholder="Username"
-                                aria-label="Username">
-                            <span class="btn btn-outline-secondary" tabindex="0"><i class="bi bi-person"></i></span>
+                            <input type="email" class="form-control" name="username" id="username" placeholder="Email Address"
+                                aria-label="Email Address" required>
+                            <span class="btn btn-outline-secondary" tabindex="0"><i class="bi bi-envelope"></i></span>
+                        </div>
+
+                        <!-- Phone (optional) with right-side icon using Bootstrap input-group -->
+                        <div class="input-group mb-3">
+                            <input type="tel" class="form-control" name="phone" id="phone" placeholder="Phone Number (Optional)"
+                                aria-label="Phone Number" pattern="[0-9]{3}-?[0-9]{3}-?[0-9]{4}">
+                            <span class="btn btn-outline-secondary" tabindex="0"><i class="bi bi-telephone"></i></span>
                         </div>
 
                         <!-- Password with toggle button on the right -->
                         <div class="input-group mb-3">
-                            <input type="password" class="form-control" id="password" name="password"
-                                placeholder="Password" aria-label="Password" minlength="8" autocomplete="new-password">
+                            <input type="password" class="form-control" name="password" id="password"
+                                placeholder="Password" aria-label="Password" minlength="8" autocomplete="new-password" required>
                             <button type="button" class="btn btn-outline-secondary toggle-password-btn"
                                 data-target="#password" tabindex="-1" aria-label="Toggle password visibility"><i
                                     class="bi bi-eye"></i></button>
@@ -96,18 +103,27 @@ $csrfToken = generateCsrfToken();
 
                         <!-- Confirm Password with toggle button on the right -->
                         <div class="input-group mb-3">
-                            <input type="password" class="form-control" id="cpassword" name="cpassword"
+                            <input type="password" class="form-control" name="confirm_password" id="confirmPassword"
                                 placeholder="Confirm Password" aria-label="Confirm Password" minlength="8"
-                                autocomplete="new-password">
+                                autocomplete="new-password" required>
                             <button type="button" class="btn btn-outline-secondary toggle-password-btn"
-                                data-target="#cpassword" tabindex="-1"
+                                data-target="#confirmPassword" tabindex="-1"
                                 aria-label="Toggle confirm password visibility"><i class="bi bi-eye"></i></button>
                         </div>
 
+                        <!-- Subscription checkbox -->
                         <div class="mb-3">
-                            <input class="form-check-input" type="checkbox" id="Terms-Conditions">
-                            <label class="form-check-label text-white" for="Terms-Conditions">
-                                Approve on Terms and Conditions
+                            <input class="form-check-input" type="checkbox" id="subscribe" name="subscribe" value="1">
+                            <label class="form-check-label text-white" for="subscribe">
+                                Subscribe to newsletter and updates
+                            </label>
+                        </div>
+
+                        <!-- Terms and Conditions -->
+                        <div class="mb-3">
+                            <input class="form-check-input" type="checkbox" id="terms" name="terms" value="1" required>
+                            <label class="form-check-label text-white" for="terms">
+                                I agree to the <a href="#" class="text-white text-decoration-underline">Terms and Conditions</a>
                             </label>
                         </div>
                     </div>
