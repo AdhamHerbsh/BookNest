@@ -10,6 +10,12 @@
     <link rel="stylesheet" href="assets/css/swiper-bundle.min.css" />
     <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="shortcut icon" href="assets/images/BookNest Logo/favicon/favicon-96x96.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="assets/images/BookNest Logo/favicon/android-icon-192x192.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="assets/images/BookNest Logo/favicon/android-icon-144x144.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="assets/images/BookNest Logo/favicon/android-icon-96x96.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="assets/images/BookNest Logo/favicon/android-icon-72x72.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="assets/images/BookNest Logo/favicon/android-icon-48x48.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="assets/images/BookNest Logo/favicon/android-icon-36x36.png" type="image/x-icon" />
     <title>Book Nest</title>
 </head>
 
@@ -30,8 +36,9 @@
 
     <?php
     // Routing logic
-    $page = isset($_GET['page']) ? $_GET['page'] : null;
     $auth = isset($_GET['auth']) ? $_GET['auth'] : null;
+    $page = isset($_GET['page']) ? $_GET['page'] : null;
+    $admin = isset($_GET['admin']) ? $_GET['admin'] : null;
 
 
     if ($auth) {
@@ -46,6 +53,27 @@
                 include("core/pages/404.php");
                 break;
         }
+    } elseif ($admin) {
+        // Admin routing
+        require("core/layout/navbar.php");
+        switch ($admin) {
+            case 'dashboard':
+                include("core/admin/dashboard.php");
+                break;
+            case 'users':
+                include("core/admin/users.php");
+                break;
+            case 'books':
+                include("core/admin/books.php");
+                break;
+            case 'quizzes':
+                include("core/admin/quizzes.php");
+                break;
+            default:
+                include("core/pages/404.php");
+                break;
+        }
+        require("core/layout/footer.php");
     } elseif ($page) {
         require("core/layout/navbar.php");
         switch ($page) {
@@ -77,7 +105,7 @@
                 include("core/pages/edu.php");
                 break;
             case 'books':
-                include("core/pages/edu-books.php");
+                include("core/pages/books.php");
                 break;
             case 'upload':
                 include("core/pages/upload.php");
@@ -98,8 +126,6 @@
         include("core/pages/landing.php");
         include("core/layout/footer.php");
     }
-
-
 
     ?>
 </body>

@@ -1,3 +1,4 @@
+<?php require("core/db/config.php") ?>
 <div class="auth container-fluid">
     <div class="row">
         <div class="col-12 col-md-6 text-center" data-aos="zoom-in">
