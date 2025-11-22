@@ -68,43 +68,44 @@ $csrfToken = generateCsrfToken();
                         <div class="row mb-3">
                             <div class="btn-group justify-content-center" role="group"
                                 aria-label="Basic radio toggle button group">
-                                <input type="radio" class="btn-check" id="check-parent">
+                                <input type="radio" class="btn-check" name="user_type" id="check-parent" value="parent" checked>
                                 <label class="btn btn-outline-primary" for="check-parent">PARENT</label>
 
-                                <input type="radio" class="btn-check" id="check-child">
+                                <input type="radio" class="btn-check" name="user_type" id="check-child" value="child">
                                 <label class="btn btn-outline-primary" for="check-child">CHILD</label>
                             </div>
                         </div>
 
-                        <div id="parent">
+                        <div id="parent" class="user-type-section">
                             <!-- Username with right-side icon using Bootstrap input-group -->
                             <div class="input-group mb-3">
-                                <input type="email" class="form-control" id="username" placeholder="Username"
-                                    aria-label="Username">
+                                <input type="email" class="form-control" name="username" id="username" placeholder="Email"
+                                    aria-label="Email" required>
                                 <span class="btn btn-outline-secondary" tabindex="0"><i class="bi bi-person"></i></span>
                             </div>
 
                             <!-- Password with toggle button on the right -->
                             <div class="input-group mb-3">
-                                <input type="password" class="form-control" id="password" placeholder="Password"
-                                    aria-label="Password">
+                                <input type="password" class="form-control" name="password" id="password" placeholder="Password"
+                                    aria-label="Password" required>
                                 <button id="togglePassword" class="btn btn-outline-secondary" type="button" tabindex="1"
                                     aria-label="Toggle password visibility"><i class="bi bi-eye"></i></button>
                             </div>
                         </div>
-                        <div id="child">
+                        <div id="child" class="user-type-section" style="display: none;">
                             <!-- Code with right-side icon using Bootstrap input-group -->
                             <div class="input-group mb-3">
-                                <input type="number" class="form-control" id="code" placeholder="Code"
-                                    aria-label="Code">
+                                <input type="text" class="form-control" name="child_code" id="child_code" placeholder="Child Code"
+                                    aria-label="Child Code" pattern="[0-9]{4,6}" required>
                                 <span class="btn btn-outline-secondary" tabindex="0"><i class="bi bi-123"></i></span>
                             </div>
 
                             <!-- Passkey with toggle button on the right -->
                             <div class="input-group mb-3">
-                                <input type="password" class="form-control" id="passkey" placeholder="Passkey"
-                                    aria-label="passkey">
-                                <span class="btn btn-outline-secondary" tabindex="1"><i class="bi bi-key"></i></span>
+                                <input type="password" class="form-control" name="child_passkey" id="child_passkey" placeholder="Passkey"
+                                    aria-label="Passkey" required>
+                                <button id="toggleChildPasskey" class="btn btn-outline-secondary" type="button" tabindex="1"
+                                    aria-label="Toggle passkey visibility"><i class="bi bi-eye"></i></button>
                             </div>
                         </div>
 
