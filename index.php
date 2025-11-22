@@ -29,6 +29,18 @@
     </div>
 
     <?php
+    // Include authentication system
+    require_once 'core/auth/session.php';
+
+    // Initialize session
+    initSession();
+
+    // Process form submissions
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        require_once 'core/auth/auth_handler.php';
+        exit;
+    }
+
     // Routing logic
     $page = isset($_GET['page']) ? $_GET['page'] : null;
     $auth = isset($_GET['auth']) ? $_GET['auth'] : null;
