@@ -1,0 +1,31 @@
+-- BookNest Authentication Database Schema
+-- Creates Users and Roles tables with proper relationships
+
+-- Roles table
+CREATE TABLE Roles (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    NAME ENUM('CHILD', 'PARENT', 'ADMIN', 'EDU') NOT NULL UNIQUE
+);
+
+-- Insert default roles
+INSERT INTO Roles (ID, NAME) VALUES
+(1, 'CHILD'),
+(2, 'PARENT'),
+(3, 'ADMIN'),
+(4, 'EDU');
+
+-- Users table
+CREATE TABLE Users (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    FIRST_NAME VARCHAR(100) NOT NULL,
+    LAST_NAME VARCHAR(100) NOT NULL,
+    USERNAME VARCHAR(255) NOT NULL UNIQUE,
+    PASSWORD VARCHAR(255) NULL, -- NULL for CHILD users
+    PHONE VARCHAR(20) NULL,
+    IS_SUBSCRIBED BOOLEAN DEFAULT FALSE,
+    CREATED_DATE DATETIME DEFAULT CURRENT_TIMESTAMP,
+    ROLE_ID INT NOT NULL,
+    FOREIGN KEY (ROLE_ID) REFERENCES Roles(ID) ON DELETE RESTRICT,
+    INDEX idx_username (USERNAME),
+    INDEX idx_role_id (ROLE_ID)
+);
