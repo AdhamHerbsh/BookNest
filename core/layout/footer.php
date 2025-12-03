@@ -15,16 +15,16 @@
                 <div class="row">
                     <div class="col-5">
                         <ul class="list-unstyled footer-links">
-                            <li><a href="#" class="text-white">Home</a></li>
-                            <li><a href="#" class="text-white">Services</a></li>
-                            <li><a href="#" class="text-white">Library</a></li>
+                            <li><a href="?page=landing" class="text-white">Home</a></li>
+                            <li><a href="?page=landing#key-features" class="text-white">Services</a></li>
+                            <li><a href="?page=library" class="text-white">Library</a></li>
                         </ul>
                     </div>
                     <div class="col-7">
                         <ul class="list-unstyled footer-links">
-                            <li><a href="#" class="text-white">Who we are</a></li>
-                            <li><a href="#" class="text-white">Licenses</a></li>
-                            <li><a href="#" class="text-white">Privacy</a></li>
+                            <li><a href="?page=about" class="text-white">Who we are</a></li>
+                            <li><a href="?page=licenses" class="text-white">Licenses</a></li>
+                            <li><a href="?page=privacy" class="text-white">Privacy</a></li>
                         </ul>
                     </div>
                 </div>
@@ -42,22 +42,22 @@
                         Mail</button>
                 </form>
                 <div class="social-icons d-flex gap-3">
-                    <a href="#" aria-label="Google Play" class="text-white fs-4">
+                    <a href="https://play.google.com/" aria-label="Google Play" class="text-white fs-4">
                         <i class="bi bi-google-play"></i>
                     </a>
-                    <a href="#" aria-label="Snapchat" class="text-white fs-4">
+                    <a href="https://mail.google.com/" aria-label="Gmail" class="text-white fs-4">
                         <i class="bi bi-envelope"></i>
                     </a>
-                    <a href="#" aria-label="Gmail" class="text-white fs-4">
+                    <a href="https://www.snapchat.com/" aria-label="Snapchat" class="text-white fs-4">
                         <i class="bi bi-snapchat"></i>
                     </a>
-                    <a href="#" aria-label="Facebook" class="text-white fs-4">
+                    <a href="https://www.facebook.com/" aria-label="Facebook" class="text-white fs-4">
                         <i class="bi bi-facebook"></i>
                     </a>
-                    <a href="#" aria-label="Instagram" class="text-white fs-4">
+                    <a href="https://www.instagram.com/" aria-label="Instagram" class="text-white fs-4">
                         <i class="bi bi-instagram"></i>
                     </a>
-                    <a href="#" aria-label="TikTok" class="text-white fs-4">
+                    <a href="https://www.tiktok.com/" aria-label="TikTok" class="text-white fs-4">
                         <i class="bi bi-tiktok"></i>
                     </a>
                 </div>

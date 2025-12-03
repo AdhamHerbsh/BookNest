@@ -8263,6 +8263,16 @@ fieldset:disabled .btn {
     border-color: rgba(var(--bs-white-rgb), var(--bs-border-opacity)) !important
 }
 
+.border-dashed {
+    --bs-border-width: 2px;
+    border-style: dashed !important;
+}
+
+.border-dotted {
+    --bs-border-width: 2px;
+    border-style: dotted !important;
+}
+
 .border-1 {
     --bs-border-width: 1px
 }

@@ -1,11 +1,13 @@
 <?php
+
 /**
  * BookNest Database Configuration
  * Centralized database connection using PDO with security settings
  */
 
 // Load environment variables
-function loadEnv() {
+function loadEnv()
+{
     $envFile = __DIR__ . '/../.env';
     if (file_exists($envFile)) {
         $lines = file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
@@ -33,7 +35,8 @@ loadEnv();
  * Get database connection
  * @return PDO Database connection
  */
-function getDatabaseConnection() {
+function getDatabaseConnection()
+{
     $host = getenv('DB_HOST') ?: 'localhost';
     $dbname = getenv('DB_NAME') ?: 'booknest';
     $username = getenv('DB_USER') ?: 'root';
@@ -61,13 +64,14 @@ function getDatabaseConnection() {
  * Check if database tables exist
  * @return bool True if tables exist
  */
-function checkDatabaseTables() {
+function checkDatabaseTables()
+{
     try {
         $pdo = getDatabaseConnection();
-        $stmt = $pdo->query("SHOW TABLES LIKE 'Users'");
+        $stmt = $pdo->query("SHOW TABLES LIKE 'users'");
         return $stmt->rowCount() > 0;
     } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
         return false;
     }
 }
-?>

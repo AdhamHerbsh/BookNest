@@ -1,45 +1,148 @@
+<?php
+// library.php - Database-driven version
+
+// Include required files
+require_once 'core/db/config.php';
+include_once 'core/layout/book-card.php';
+
+/**
+ * Fetch books from database with filters
+ * 
+ * @param int|null $limit Maximum books to fetch
+ * @param string|null $ageGroup Filter by age group
+ * @param string|null $searchTerm Search in title/description/author
+ * @return array
+ */
+function fetchBooks($limit = null, $ageGroup = null, $searchTerm = null)
+{
+    $pdo = getDatabaseConnection();
+
+    $sql = "SELECT ID as id, TITLE as title, DESCRIPTION as description, COVER as coverImage 
+            FROM books 
+            WHERE IS_ACTIVE = 'Y'";
+    $params = [];
+
+    // Apply age group filter
+    if ($ageGroup && in_array($ageGroup, ['4-6', '7-9', '10-12'])) {
+        $sql .= " AND AGE_GROUP = :age_group";
+        $params[':age_group'] = $ageGroup;
+    }
+
+    // Apply search filter
+    if ($searchTerm) {
+        $sql .= " AND (TITLE LIKE :search_term OR DESCRIPTION LIKE :search_term OR AUTHOR LIKE :search_term)";
+        $params[':search_term'] = '%' . $searchTerm . '%';
+    }
+
+    $sql .= " ORDER BY CREATED_DATE DESC";
+
+    if ($limit) {
+        $sql .= " LIMIT :limit";
+        $params[':limit'] = (int)$limit;
+    }
+
+    try {
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetchAll();
+    } catch (PDOException $e) {
+        error_log("Query error: " . $e->getMessage());
+        return [];
+    }
+}
+
+// Get filter parameters from URL
+$selectedAgeGroup = isset($_GET['age_group']) && in_array($_GET['age_group'], ['4-6', '7-9', '10-12']) ? $_GET['age_group'] : null;
+$searchTerm = isset($_GET['search']) ? trim($_GET['search']) : null;
+
+// Fetch books for different sections
+$featuredBooks = fetchBooks(12, $selectedAgeGroup, $searchTerm);
+$recentBooks = fetchBooks(12, $selectedAgeGroup, $searchTerm); // Could use different criteria
+
+// Helper function for active button state
+function isAgeGroupActive($group, $selected)
+{
+    return $group === $selected ? 'active' : '';
+}
+
+// Build query string while preserving other parameters
+function buildQueryString($params)
+{
+    return http_build_query(array_merge($_GET, $params));
+}
+?>
 <div class="hero-image library" data-aos="fade"></div>
 <div class="container-fluid">
     <div class="hero-content container text-center">
-        <h1 class="display-1 fw-blod text-white" data-aos="fade-up" data-aos-delay="200">Unlock a World of Stories</h1>
-        <p class="fs-4 mb4 text-white p-5" data-aos="fade-up" data-aos-delay="500">
+        <h1 class="display-1 fw-bold text-white" data-aos="fade-up" data-aos-delay="200">Unlock a World of Stories</h1>
+        <p class="fs-4 mb-4 text-white p-5" data-aos="fade-up" data-aos-delay="500">
             Ignite your child's imagination with our interactive digital library. Featuring audio narration,
             animations, and progress tracking, BookNest makes reading fun and engaging for kids aged 4-12.
         </p>
         <button class="btn btn-primary" data-aos="zoom-in" data-aos-delay="1000">Start Exploring</button>
     </div>
+
     <section class="px-5">
         <div class="mb-4 text-center">
             <h1 class="display-2">Explore by Age</h1>
 
+            <!-- Show active filters -->
+            <?php if ($selectedAgeGroup || $searchTerm): ?>
+                <div class="mt-3">
+                    <small class="text-muted">
+                        Filters:
+                        <?php if ($selectedAgeGroup): echo "Age $selectedAgeGroup";
+                        endif; ?>
+                        <?php if ($searchTerm): echo ($selectedAgeGroup ? ' • ' : '') . "Search: " . htmlspecialchars($searchTerm);
+                        endif; ?>
+                        | <a href="?page=library" class="text-decoration-none">Clear all</a>
+                    </small>
+                </div>
+            <?php endif; ?>
         </div>
+
         <div class="container">
-            <form class="mb-3 w-100">
+            <form class="mb-3 w-100" method="GET" action="">
                 <div class="container">
                     <div class="row d-flex justify-content-center mb-4 g-2">
                         <div class="col-4 col-md-2">
-                            <button type="button" class="btn btn-outline-primary rounded-5">4-6 yrs</button>
+                            <a href="?<?php echo buildQueryString(['age_group' => '4-6']); ?>"
+                                class="btn btn-outline-primary rounded-5 w-100 <?php echo isAgeGroupActive('4-6', $selectedAgeGroup); ?>">
+                                4-6 yrs
+                            </a>
                         </div>
                         <div class="col-4 col-md-2">
-                            <button type="button" class="btn btn-outline-primary rounded-5">7-9 yrs</button>
+                            <a href="?<?php echo buildQueryString(['age_group' => '7-9']); ?>"
+                                class="btn btn-outline-primary rounded-5 w-100 <?php echo isAgeGroupActive('7-9', $selectedAgeGroup); ?>">
+                                7-9 yrs
+                            </a>
                         </div>
                         <div class="col-4 col-md-2">
-                            <button type="button" class="btn btn-outline-primary rounded-5">10-12 yrs</button>
+                            <a href="?<?php echo buildQueryString(['age_group' => '10-12']); ?>"
+                                class="btn btn-outline-primary rounded-5 w-100 <?php echo isAgeGroupActive('10-12', $selectedAgeGroup); ?>">
+                                10-12 yrs
+                            </a>
                         </div>
-
                     </div>
-                    <div class="input-group mx-auto flex-nowrap">
-                        <input type="text" class="form-control-lg w-100 border-0" placeholder="Search"
-                            aria-label="Search" />
-                        <span class="input-group-text bg-white border-0" id="basic-addon1">
-                            <i class="bi bi-search"></i> </span>
+                    <div class="input-group mx-auto flex-nowrap" style="max-width: 600px;">
+                        <input type="text" class="form-control-lg border-0"
+                            placeholder="Search by title, author, or description..."
+                            aria-label="Search"
+                            name="search"
+                            value="<?php echo htmlspecialchars($searchTerm ?? '', ENT_QUOTES); ?>" />
+                        <button type="submit" class="input-group-text bg-white border-0" id="basic-addon1">
+                            <i class="bi bi-search"></i>
+                        </button>
                     </div>
+                    <?php if ($selectedAgeGroup): ?>
+                        <input type="hidden" name="age_group" value="<?php echo htmlspecialchars($selectedAgeGroup); ?>">
+                    <?php endif; ?>
+                    <input type="hidden" name="page" value="library">
                 </div>
             </form>
-
         </div>
-
     </section>
+
     <section class="featured-collections">
         <div class="container-fluid px-4">
             <div class="row mb-4">
@@ -48,145 +151,50 @@
                 </div>
             </div>
 
-            <div class="row">
-                <swiper-container class="book-slider" pagination="true" pagination-clickable="true" navigation="true"
-                    loop="true" autoplay-delay="5000" autoplay-disable-on-interaction="false" slides-per-view="auto"
-                    breakpoints='{
-                "320": {"slidesPerView": 1.2, "spaceBetween": 15},
-                "480": {"slidesPerView": 2.2, "spaceBetween": 15},
-                "768": {"slidesPerView": 3.2, "spaceBetween": 20},
-                "992": {"slidesPerView": 4.2, "spaceBetween": 20},
-                "1200": {"slidesPerView": 5.2, "spaceBetween": 20}
-            }'>
-                    <?php include_once 'core/layout/book-card.php'; ?>
-                    <?php
-                    $books = [
-                        [
-                            'title' => 'Adventures in Wonderland',
-                            'description' => 'Dive into a world of whimsy and wonder with our curated collection of adventure stories.',
-                            'coverImage' => 'assets/images/books/library-book-1.png',
-                            'altText' => 'Adventures in Wonderland cover'
-                        ],
-                        [
-                            'title' => 'Adventures in Wonderland',
-                            'description' => 'Dive into a world of whimsy and wonder with our curated collection of adventure stories.',
-                            'coverImage' => 'assets/images/books/library-book-2.png',
-                            'altText' => 'Adventures in Wonderland cover'
-                        ],
-                        [
-                            'title' => 'Adventures in Wonderland',
-                            'description' => 'Dive into a world of whimsy and wonder with our curated collection of adventure stories.',
-                            'coverImage' => 'assets/images/books/library-book-3.png',
-                            'altText' => 'Adventures in Wonderland cover'
-                        ],
-                        [
-                            'title' => 'Adventures in Wonderland',
-                            'description' => 'Dive into a world of whimsy and wonder with our curated collection of adventure stories.',
-                            'coverImage' => 'assets/images/books/library-book-4.png',
-                            'altText' => 'Adventures in Wonderland cover'
-                        ],
-                        [
-                            'title' => 'Adventures in Wonderland',
-                            'description' => 'Dive into a world of whimsy and wonder with our curated collection of adventure stories.',
-                            'coverImage' => 'assets/images/books/library-book-5.png',
-                            'altText' => 'Adventures in Wonderland cover'
-                        ],
-                        [
-                            'title' => 'Adventures in Wonderland',
-                            'description' => 'Dive into a world of whimsy and wonder with our curated collection of adventure stories.',
-                            'coverImage' => 'assets/images/books/library-book-6.png',
-                            'altText' => 'Adventures in Wonderland cover'
-                        ],
-                        // Add more books as needed
-                    ];
-
-                    foreach ($books as $book) {
-                        echo '<swiper-slide>';
-                        echo renderBookCard($book);
-                        echo '</swiper-slide>';
-                    }
-                    ?>
-                </swiper-container>
-            </div>
-
-            <div class="row">
-                <swiper-container class="book-slider" pagination="true" pagination-clickable="true" navigation="true"
-                    loop="true" autoplay-delay="2500" autoplay-disable-on-interaction="false" slides-per-view="auto"
-                    breakpoints='{
-                "320": {"slidesPerView": 1.2, "spaceBetween": 15},
-                "480": {"slidesPerView": 2.2, "spaceBetween": 15},
-                "768": {"slidesPerView": 3.2, "spaceBetween": 20},
-                "992": {"slidesPerView": 4.2, "spaceBetween": 20},
-                "1200": {"slidesPerView": 5.2, "spaceBetween": 20}
-            }'>
-                    <?php include_once 'core/layout/book-card.php'; ?>
-                    <?php
-                    $books = [
-                        [
-                            'title' => 'Adventures in Wonderland',
-                            'description' => 'Dive into a world of whimsy and wonder with our curated collection of adventure stories.',
-                            'coverImage' => 'assets/images/books/library-book-1.png',
-                            'altText' => 'Adventures in Wonderland cover'
-                        ],
-                        [
-                            'title' => 'Adventures in Wonderland',
-                            'description' => 'Dive into a world of whimsy and wonder with our curated collection of adventure stories.',
-                            'coverImage' => 'assets/images/books/library-book-2.png',
-                            'altText' => 'Adventures in Wonderland cover'
-                        ],
-                        [
-                            'title' => 'Adventures in Wonderland',
-                            'description' => 'Dive into a world of whimsy and wonder with our curated collection of adventure stories.',
-                            'coverImage' => 'assets/images/books/library-book-3.png',
-                            'altText' => 'Adventures in Wonderland cover'
-                        ],
-                        [
-                            'title' => 'Adventures in Wonderland',
-                            'description' => 'Dive into a world of whimsy and wonder with our curated collection of adventure stories.',
-                            'coverImage' => 'assets/images/books/library-book-4.png',
-                            'altText' => 'Adventures in Wonderland cover'
-                        ],
-                        [
-                            'title' => 'Adventures in Wonderland',
-                            'description' => 'Dive into a world of whimsy and wonder with our curated collection of adventure stories.',
-                            'coverImage' => 'assets/images/books/library-book-5.png',
-                            'altText' => 'Adventures in Wonderland cover'
-                        ],
-                        [
-                            'title' => 'Adventures in Wonderland',
-                            'description' => 'Dive into a world of whimsy and wonder with our curated collection of adventure stories.',
-                            'coverImage' => 'assets/images/books/library-book-6.png',
-                            'altText' => 'Adventures in Wonderland cover'
-                        ],
-                        // Add more books as needed
-                    ];
-
-                    foreach ($books as $book) {
-                        echo '<swiper-slide>';
-                        echo renderBookCard($book);
-                        echo '</swiper-slide>';
-                    }
-                    ?>
-                </swiper-container>
-            </div>
+            <?php if (empty($featuredBooks)): ?>
+                <div class="text-center py-5">
+                    <h3>No books found</h3>
+                    <p>Try adjusting your search filters.</p>
+                </div>
+            <?php else: ?>
+                <div class="row">
+                    <swiper-container class="book-slider" pagination="true" pagination-clickable="true" navigation="true"
+                        loop="true" autoplay-delay="5000" autoplay-disable-on-interaction="false" slides-per-view="auto"
+                        breakpoints='{
+                            "320": {"slidesPerView": 1.2, "spaceBetween": 15},
+                            "480": {"slidesPerView": 2.2, "spaceBetween": 15},
+                            "768": {"slidesPerView": 3.2, "spaceBetween": 20},
+                            "992": {"slidesPerView": 4.2, "spaceBetween": 20},
+                            "1200": {"slidesPerView": 5.2, "spaceBetween": 20}
+                        }'>
+                        <?php foreach ($featuredBooks as $book):
+                            $book['altText'] = 'Cover of ' . htmlspecialchars($book['title']);
+                        ?>
+                            <swiper-slide>
+                                <?php echo renderBookCard($book); ?>
+                            </swiper-slide>
+                        <?php endforeach; ?>
+                    </swiper-container>
+                </div>
 
 
+            <?php endif; ?>
         </div>
     </section>
+
     <section class="px-4">
-        <div class="contanier">
+        <div class="container">
             <div class="row text-center text-md-start bg-primary-light rounded-4 p-5">
                 <div class="col-12 col-md-8 mb-4">
-                    <h1>Ready to test your memory ?</h1>
+                    <h1>Ready to test your memory?</h1>
                     <p>Take a quick quiz on the book and earn some shiny rewards!</p>
-                    <a href="?page=quiz" class="btn btn-primary">Start Quiz ??..</a>
+                    <a href="?page=quiz" class="btn btn-primary">Start Quiz</a>
                 </div>
-                <div class="col-12 col-md-2">
+                <div class="col-12 col-md-4 d-flex align-items-center justify-content-center">
                     <img class="img-fluid rounded-circle" src="assets/images/jaredd-craig-croped.jpg"
-                        alt="image not found" />
+                        alt="Quiz challenge" style="max-width: 200px;" />
                 </div>
             </div>
-
         </div>
     </section>
 </div>

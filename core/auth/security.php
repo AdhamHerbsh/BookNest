@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * BookNest Security Utilities
  * Handles password hashing, verification, and input sanitization
@@ -6,70 +9,95 @@
 
 /**
  * Hash password using bcrypt
+ *
  * @param string $password Plain text password
  * @return string Hashed password
  */
-function hashPassword($password) {
-    return password_hash($password, PASSWORD_BCRYPT, ['cost' => 12]);
+function hashPassword(string $password): string
+{
+    return password_hash($password, PASSWORD_DEFAULT);
 }
 
 /**
  * Verify password against hash
+ *
  * @param string $password Plain text password
  * @param string $hash Hashed password
  * @return bool True if password matches
  */
-function verifyPassword($password, $hash) {
+function verifyPassword(string $password, string $hash): bool
+{
     return password_verify($password, $hash);
 }
 
 /**
  * Generate CSRF token
+ *
  * @return string CSRF token
  */
-function generateCsrfToken() {
+function generateCsrfToken(): string
+{
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+
     if (empty($_SESSION['csrf_token'])) {
         $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
     }
+
     return $_SESSION['csrf_token'];
 }
 
 /**
  * Verify CSRF token
+ *
  * @param string $token Token to verify
  * @return bool True if token is valid
  */
-function verifyCsrfToken($token) {
-    if (!isset($_SESSION['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $token)) {
+function verifyCsrfToken(string $token): bool
+{
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    if (!isset($_SESSION['csrf_token'])) {
         return false;
     }
-    return true;
+
+
+    return hash_equals($_SESSION['csrf_token'], $token);
 }
 
 /**
  * Sanitize input data
+ *
  * @param string $input Input to sanitize
  * @return string Sanitized input
  */
-function sanitizeInput($input) {
+function sanitizeInput(string $input): string
+{
     return htmlspecialchars(trim($input), ENT_QUOTES, 'UTF-8');
 }
 
 /**
  * Validate email format
+ *
  * @param string $email Email to validate
  * @return bool True if email is valid
  */
-function validateEmail($email) {
+function validateEmail(string $email): bool
+{
     return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
 }
 
 /**
  * Validate password strength
+ *
  * @param string $password Password to validate
- * @return array Validation result with 'valid' boolean and 'message' string
+ * @return array{valid: bool, message: string} Validation result
  */
-function validatePasswordStrength($password) {
+function validatePasswordStrength(string $password): array
+{
     if (strlen($password) < 8) {
         return ['valid' => false, 'message' => 'Password must be at least 8 characters long'];
     }
@@ -87,10 +115,12 @@ function validatePasswordStrength($password) {
 
 /**
  * Validate name fields
+ *
  * @param string $name Name to validate
- * @return array Validation result
+ * @return array{valid: bool, message: string} Validation result
  */
-function validateName($name) {
+function validateName(string $name): array
+{
     if (empty($name)) {
         return ['valid' => false, 'message' => 'Name is required'];
     }
@@ -99,7 +129,7 @@ function validateName($name) {
         return ['valid' => false, 'message' => 'Name must be between 2 and 50 characters'];
     }
 
-    if (!preg_match('/^[A-Za-z\s\-\'\.]+$/', $name)) {
+    if (!preg_match("/^[A-Za-z\s\-\'\.]+$/", $name)) {
         return ['valid' => false, 'message' => 'Name can only contain letters, spaces, hyphens, apostrophes, and periods'];
     }
 
@@ -108,10 +138,12 @@ function validateName($name) {
 
 /**
  * Validate phone number (optional field)
+ *
  * @param string $phone Phone number to validate
- * @return array Validation result
+ * @return array{valid: bool, message: string} Validation result
  */
-function validatePhone($phone) {
+function validatePhone(string $phone): array
+{
     if (empty($phone)) {
         return ['valid' => true, 'message' => 'Phone number is optional'];
     }
@@ -128,10 +160,12 @@ function validatePhone($phone) {
 
 /**
  * Validate child code (numeric)
+ *
  * @param string $code Child code to validate
- * @return array Validation result
+ * @return array{valid: bool, message: string} Validation result
  */
-function validateChildCode($code) {
+function validateChildCode(string $code): array
+{
     if (empty($code)) {
         return ['valid' => false, 'message' => 'Child code is required'];
     }
@@ -145,10 +179,12 @@ function validateChildCode($code) {
 
 /**
  * Validate child passkey
+ *
  * @param string $passkey Passkey to validate
- * @return array Validation result
+ * @return array{valid: bool, message: string} Validation result
  */
-function validateChildPasskey($passkey) {
+function validateChildPasskey(string $passkey): array
+{
     if (empty($passkey)) {
         return ['valid' => false, 'message' => 'Child passkey is required'];
     }
@@ -163,4 +199,3 @@ function validateChildPasskey($passkey) {
 
     return ['valid' => true, 'message' => 'Child passkey is valid'];
 }
-?>

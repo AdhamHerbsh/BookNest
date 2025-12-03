@@ -1,14 +1,15 @@
 <?php
+
 /**
  * BookNest Authentication Handler
  * Processes login and registration requests
  */
 
 // Include required files
-require_once __DIR__ . '/../config/database.php';
+// require_once dirname(__DIR__, 2) . '/config/database.php';
 require_once __DIR__ . '/security.php';
 require_once __DIR__ . '/session.php';
-
+require_once __DIR__ . '/../db/config.php'; // Fixed: From core/auth/ go up to core/, then to db/
 // Initialize session if not already started
 if (session_status() === PHP_SESSION_NONE) {
     initSession();
@@ -19,7 +20,8 @@ if (session_status() === PHP_SESSION_NONE) {
  * @param string $identifier User identifier (email or IP)
  * @return array Rate limit status
  */
-function checkRateLimit($identifier) {
+function checkRateLimit($identifier)
+{
     $rateLimitFile = __DIR__ . '/../../logs/rate_limits.json';
     $rateLimitDir = dirname($rateLimitFile);
 
@@ -40,7 +42,7 @@ function checkRateLimit($identifier) {
     }
 
     // Clean old entries
-    $rateLimits = array_filter($rateLimits, function($entry) use ($currentTime, $timeWindow) {
+    $rateLimits = array_filter($rateLimits, function ($entry) use ($currentTime, $timeWindow) {
         return ($currentTime - $entry['first_attempt']) < $timeWindow;
     });
 
@@ -71,12 +73,14 @@ function checkRateLimit($identifier) {
     ];
 }
 
+
 /**
  * Process user registration
  * @param array $data Registration form data
  * @return array Result with success status and message
  */
-function processRegistration($data) {
+function processRegistration($data)
+{
     $errors = [];
 
     try {
@@ -153,33 +157,28 @@ function processRegistration($data) {
 
         // Check if username already exists
         $pdo = getDatabaseConnection();
-        $stmt = $pdo->prepare("SELECT ID FROM Users WHERE USERNAME = ?");
+        $stmt = $pdo->prepare("SELECT ID FROM users WHERE USERNAME = ?");
         $stmt->execute([$data['username']]);
+
 
         if ($stmt->fetch()) {
             $errors['username'] = 'This email address is already registered';
             return ['success' => false, 'message' => 'Email already exists', 'errors' => $errors];
         }
 
-        // Hash password
-        $hashedPassword = hashPassword($data['password']);
+        $isSubscribed = !empty($data['subscribe']) ? 'Y' : 'N';
 
         // Insert new user
-        $stmt = $pdo->prepare("
-            INSERT INTO Users (FIRST_NAME, LAST_NAME, USERNAME, PASSWORD, PHONE, IS_SUBSCRIBED, ROLE_ID)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
-        ");
-
-        $isSubscribed = !empty($data['subscribe']) ? 1 : 0;
+        $stmt = $pdo->prepare("INSERT INTO users (FIRST_NAME, LAST_NAME, USERNAME, PASSWORD, PHONE, IS_SUBSCRIBED, ROLE_ID) VALUES (?, ?, ?, ?, ?, ?, ?)");
 
         $stmt->execute([
             sanitizeInput($data['first_name']),
             sanitizeInput($data['last_name']),
             sanitizeInput($data['username']),
-            $hashedPassword,
+            hashPassword($data['password']),
             !empty($data['phone']) ? sanitizeInput($data['phone']) : null,
             $isSubscribed,
-            2 // PARENT role ID
+            3 // PARENT role ID
         ]);
 
         $userId = $pdo->lastInsertId();
@@ -190,12 +189,12 @@ function processRegistration($data) {
         return [
             'success' => true,
             'message' => 'Registration successful! You can now log in.',
-            'user_id' => $userId
+            'user_id' => $userId,
+            'redirect' => 'index.php?auth=login'
         ];
-
     } catch (PDOException $e) {
         error_log("Registration error: " . $e->getMessage());
-        return ['success' => false, 'message' => 'Registration failed. Please try again.'];
+        return ['success' => false, 'message' => 'Registration failed. Please try again.' . $e->getMessage()];
     }
 }
 
@@ -204,7 +203,8 @@ function processRegistration($data) {
  * @param array $data Login form data
  * @return array Result with success status and message
  */
-function processLogin($data) {
+function processLogin($data)
+{
     $errors = [];
 
     try {
@@ -222,7 +222,6 @@ function processLogin($data) {
         } else {
             return ['success' => false, 'message' => 'Invalid user type selected.'];
         }
-
     } catch (Exception $e) {
         error_log("Login error: " . $e->getMessage());
         return ['success' => false, 'message' => 'Login failed. Please try again.'];
@@ -234,7 +233,8 @@ function processLogin($data) {
  * @param array $data Login data
  * @return array Login result
  */
-function processParentLogin($data) {
+function processParentLogin($data)
+{
     $errors = [];
 
     // Validate required fields
@@ -252,14 +252,14 @@ function processParentLogin($data) {
         return ['success' => false, 'message' => 'Please correct the errors below', 'errors' => $errors];
     }
 
-    // Check rate limiting
-    $rateLimit = checkRateLimit($data['username']);
-    if ($rateLimit['blocked']) {
-        return [
-            'success' => false,
-            'message' => 'Too many login attempts. Please try again in ' . ceil($rateLimit['time_until_reset'] / 60) . ' minutes.'
-        ];
-    }
+    // // Check rate limiting
+    // $rateLimit = checkRateLimit($data['username']);
+    // if ($rateLimit['blocked']) {
+    //     return [
+    //         'success' => false,
+    //         'message' => 'Too many login attempts. Please try again in ' . ceil($rateLimit['time_until_reset'] / 60) . ' minutes.'
+    //     ];
+    // }
 
     // Get database connection
     $pdo = getDatabaseConnection();
@@ -267,7 +267,7 @@ function processParentLogin($data) {
     // Find user with role information
     $stmt = $pdo->prepare("
         SELECT u.*, r.NAME as ROLE_NAME
-        FROM Users u
+        FROM users u
         JOIN Roles r ON u.ROLE_ID = r.ID
         WHERE u.USERNAME = ? AND r.NAME IN ('PARENT', 'ADMIN', 'EDU')
     ");
@@ -295,7 +295,8 @@ function processParentLogin($data) {
  * @param array $data Login data
  * @return array Login result
  */
-function processChildLogin($data) {
+function processChildLogin($data)
+{
     $errors = [];
 
     // Validate required fields
@@ -328,7 +329,7 @@ function processChildLogin($data) {
     // Find child user - code can match ID or username
     $stmt = $pdo->prepare("
         SELECT u.*, r.NAME as ROLE_NAME
-        FROM Users u
+        FROM users u
         JOIN Roles r ON u.ROLE_ID = r.ID
         WHERE r.NAME = 'CHILD' AND (
             u.ID = ? OR u.USERNAME = ? OR u.FIRST_NAME = ?
@@ -382,15 +383,21 @@ function processChildLogin($data) {
  * @param string $role User role
  * @return string Dashboard URL
  */
-function getUserDashboard($role) {
+function getUserDashboard($role)
+{
     switch (strtoupper($role)) {
         case 'CHILD':
             return 'index.php?page=library';
+            break;
         case 'PARENT':
             return 'index.php?page=account';
+            break;
         case 'ADMIN':
+            return 'index.php?admin=dashboard';
+            break;
         case 'EDU':
-            return 'index.php?page=account';
+            return 'index.php?page=edu';
+            break;
         default:
             return 'index.php';
     }
@@ -400,20 +407,19 @@ function getUserDashboard($role) {
  * Handle logout request
  * @return array Logout result
  */
-function processLogout() {
+function processLogout()
+{
     logoutUser();
     return ['success' => true, 'message' => 'You have been logged out successfully'];
 }
 
 // Process incoming requests
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    header('Content-Type: application/json');
 
     $response = ['success' => false, 'message' => 'Invalid request'];
 
     try {
         $action = $_POST['action'] ?? '';
-
         switch ($action) {
             case 'register':
                 $response = processRegistration($_POST);
@@ -427,12 +433,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             default:
                 $response = ['success' => false, 'message' => 'Unknown action'];
         }
+        if (!empty($response['errors'])) {
+            $_SESSION['form_errors'] = $response['errors'];
+            $_SESSION['form_values'] = $_POST;
+        }
+        if (!empty($response['message'])) {
+            if (!empty($response['success'])) {
+                $_SESSION['success'] = $response['message'];
+            } else {
+                $_SESSION['error'] = $response['message'];
+            }
+        }
+
+        if (!empty($response['success'])) {
+            $redirect = isset($response['redirect']) ? $response['redirect'] : 'index.php';
+            header("Location: $redirect");
+        } else {
+            $returnTo = ($action === 'register') ? 'index.php?auth=register' : 'index.php?auth=login';
+            header("Location: $returnTo");
+        }
     } catch (Exception $e) {
         error_log("Auth handler error: " . $e->getMessage());
-        $response = ['success' => false, 'message' => 'An error occurred. Please try again.'];
+        $_SESSION['error'] = 'An error occurred. Please try again.';
+        header('Location: index.php?auth=login');
     }
 
-    echo json_encode($response);
     exit;
 }
-?>

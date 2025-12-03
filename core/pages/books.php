@@ -2,136 +2,142 @@
     <div class="my-5 py-5 px-4 bg-white">
         <div class="row">
             <div class="col-8">
-                <h1>Books</h1>
+                <h1>Manage Books</h1>
             </div>
-            <div class="col-4">
-                <a href="?page=upload" class="btn btn-success m-1"><i class="bi bi-cloud-upload me-1"></i>Upload
-                    Books</a>
+            <div class="col-4 text-end">
+                <a href="?page=upload" class="btn btn-success">
+                    <i class="bi bi-cloud-upload me-1"></i>Upload Book
+                </a>
             </div>
         </div>
-
     </div>
+
     <div class="container">
         <div class="row">
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-borderless table-primary align-middle">
                     <thead>
-                        <caption>
-                            Uploaded Books
-                        </caption>
+                        <caption>Uploaded Books</caption>
                         <tr class="table-primary">
-                            <th>Column 1</th>
-                            <th>Column 2</th>
-                            <th>Action</th>
+                            <th>Cover</th>
+                            <th>Title</th>
+                            <th>Author</th>
+                            <th>Language</th>
+                            <th>Age Group</th>
+                            <th>Status</th>
+                            <th class="text-end">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="table-group-divider">
-                        <tr class="table-secondary">
-                            <td>Item</td>
-                            <td>Item</td>
-                            <td scope="row">
-                                <div class="d-flex justify-content-end">
-                                    <buttton class="btn btn-warning py-2 px-3 m-1 rounded-2"><i
-                                            class="bi bi-pencil-square"></i>
-                                    </buttton>
-                                    <buttton class="btn btn-danger py-2 px-3 m-1 rounded-2"><i
-                                            class="bi bi-backspace"></i>
-                                    </buttton>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="table-secondary">
-                            <td>Item</td>
-                            <td>Item</td>
-                            <td scope="row">
-                                <div class="d-flex justify-content-end">
-                                    <buttton class="btn btn-warning py-2 px-3 m-1 rounded-2"><i
-                                            class="bi bi-pencil-square"></i>
-                                    </buttton>
-                                    <buttton class="btn btn-danger py-2 px-3 m-1 rounded-2"><i
-                                            class="bi bi-backspace"></i>
-                                    </buttton>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="table-secondary">
-                            <td>Item</td>
-                            <td>Item</td>
-                            <td scope="row">
-                                <div class="d-flex justify-content-end">
-                                    <buttton class="btn btn-warning py-2 px-3 m-1 rounded-2"><i
-                                            class="bi bi-pencil-square"></i>
-                                    </buttton>
-                                    <buttton class="btn btn-danger py-2 px-3 m-1 rounded-2"><i
-                                            class="bi bi-backspace"></i>
-                                    </buttton>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="table-secondary">
-                            <td>Item</td>
-                            <td>Item</td>
-                            <td scope="row">
-                                <div class="d-flex justify-content-end">
-                                    <buttton class="btn btn-warning py-2 px-3 m-1 rounded-2"><i
-                                            class="bi bi-pencil-square"></i>
-                                    </buttton>
-                                    <buttton class="btn btn-danger py-2 px-3 m-1 rounded-2"><i
-                                            class="bi bi-backspace"></i>
-                                    </buttton>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="table-secondary">
-                            <td>Item</td>
-                            <td>Item</td>
-                            <td scope="row">
-                                <div class="d-flex justify-content-end">
-                                    <buttton class="btn btn-warning py-2 px-3 m-1 rounded-2"><i
-                                            class="bi bi-pencil-square"></i>
-                                    </buttton>
-                                    <buttton class="btn btn-danger py-2 px-3 m-1 rounded-2"><i
-                                            class="bi bi-backspace"></i>
-                                    </buttton>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="table-secondary">
-                            <td>Item</td>
-                            <td>Item</td>
-                            <td scope="row">
-                                <div class="d-flex justify-content-end">
-                                    <buttton class="btn btn-warning py-2 px-3 m-1 rounded-2"><i
-                                            class="bi bi-pencil-square"></i>
-                                    </buttton>
-                                    <buttton class="btn btn-danger py-2 px-3 m-1 rounded-2"><i
-                                            class="bi bi-backspace"></i>
-                                    </buttton>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="table-secondary">
-                            <td>Item</td>
-                            <td>Item</td>
-                            <td scope="row">
-                                <div class="d-flex justify-content-end">
-                                    <buttton class="btn btn-warning py-2 px-3 m-1 rounded-2"><i
-                                            class="bi bi-pencil-square"></i>
-                                    </buttton>
-                                    <buttton class="btn btn-danger py-2 px-3 m-1 rounded-2"><i
-                                            class="bi bi-backspace"></i>
-                                    </buttton>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                    <tfoot>
+                        <?php
+                        require_once 'core/db/config.php';
+                        $pdo = getDatabaseConnection();
+                        $stmt = $pdo->query("SELECT * FROM books ORDER BY CREATED_DATE DESC");
+                        $books = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                    </tfoot>
+                        if (count($books) > 0) {
+                            foreach ($books as $book) {
+                                $statusBadge = $book['IS_ACTIVE'] === 'Y'
+                                    ? '<span class="badge bg-success">Active</span>'
+                                    : '<span class="badge bg-secondary">Inactive</span>';
+
+                                $coverImage = $book['COVER']
+                                    ? htmlspecialchars($book['COVER'])
+                                    : 'assets/images/books/library-book-1.png';
+
+                                echo '<tr class="table-secondary">';
+                                echo '<td><img src="' . $coverImage . '" alt="Book cover" style="width: 60px; height: 80px; object-fit: cover;" class="rounded"></td>';
+                                echo '<td><strong>' . htmlspecialchars($book['TITLE']) . '</strong></td>';
+                                echo '<td>' . htmlspecialchars($book['AUTHOR']) . '</td>';
+                                echo '<td>' . htmlspecialchars($book['LANGUAGE']) . '</td>';
+                                echo '<td>' . htmlspecialchars($book['AGE_GROUP']) . '</td>';
+                                echo '<td>' . $statusBadge . '</td>';
+                                echo '<td class="text-end">
+                                    <div class="btn-group" role="group">
+                                        <a href="?page=read&id=' . $book['ID'] . '" class="btn btn-sm btn-info" title="Read">
+                                            <i class="bi bi-book"></i>
+                                        </a>
+                                        <button class="btn btn-sm btn-warning" onclick="editBook(' . $book['ID'] . ')" title="Edit">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-danger" onclick="deleteBook(' . $book['ID'] . ', \'' . htmlspecialchars($book['TITLE'], ENT_QUOTES) . '\')" title="Delete">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>';
+                                echo '</tr>';
+                            }
+                        } else {
+                            echo '<tr><td colspan="7" class="text-center py-5">
+                                <i class="bi bi-inbox" style="font-size: 3rem; color: #ccc;"></i>
+                                <p class="mt-3 text-muted">No books uploaded yet. Click "Upload Book" to get started!</p>
+                            </td></tr>';
+                        }
+                        ?>
+                    </tbody>
                 </table>
             </div>
-
         </div>
     </div>
-
 </section>
+
+<!-- Edit Book Modal -->
+<div class="modal fade" id="editBookModal" tabindex="-1" aria-labelledby="editBookModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editBookModalLabel">Edit Book</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="editBookForm">
+                <div class="modal-body">
+                    <input type="hidden" id="edit_book_id" name="id">
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="edit_title" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="edit_title" name="title" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="edit_author" class="form-label">Author</label>
+                            <input type="text" class="form-control" id="edit_author" name="author" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="edit_language" class="form-label">Language</label>
+                            <select class="form-select" id="edit_language" name="language" required>
+                                <option value="English">English</option>
+                                <option value="Spanish">Spanish</option>
+                                <option value="French">French</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="edit_age_group" class="form-label">Age Group</label>
+                            <select class="form-select" id="edit_age_group" name="age_group" required>
+                                <option value="4-6">4-6 years</option>
+                                <option value="7-9">7-9 years</option>
+                                <option value="10-12">10-12 years</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="edit_description" class="form-label">Description</label>
+                        <textarea class="form-control" id="edit_description" name="description" rows="3" required></textarea>
+                    </div>
+
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="edit_is_active" name="isActive">
+                        <label class="form-check-label" for="edit_is_active">Active</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

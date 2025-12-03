@@ -3,7 +3,7 @@
     <div class="hero-content container text-center">
         <h1 class="display-1 fw-blod text-white" data-aos="fade-up" data-aos-delay="200">About Our Digital Library for
             Children</h1>
-        <p class="fs-4 mb4 text-white p-5" data-aos="fade-up" data-aos-delay="500">
+        <p class="fs-4 mb4 text-white p-1 p-md-5" data-aos="fade-up" data-aos-delay="500">
             Welcome to the Digital Library for Children — an interactive online space designed to inspire young minds
             through stories, imagination, and learning. Our mission is to make reading enjoyable and accessible for
             every child, anywhere and anytime. We believe that books build curiosity, strengthen creativity, and
@@ -13,12 +13,12 @@
             Our Library</a>
     </div>
     <!-- Our Mission & Vision Section -->
-    <section class="px-5 text-center">
+    <section class="p-1 px-md-5 text-center my-5">
         <div class="mb-5">
             <h1 class="display-2">Our Mission & Vision</h1>
         </div>
         <div class="row">
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-6 mb-2 mb-md-0">
                 <div class="card text-white bg-white shadow-sm rounded-4 h-100 py-2 px-5">
                     <span
                         class="card-icon bg-secondary-light text-secondary rounded-circle py-2 px-3 mx-auto mt-3 mb-2">
@@ -56,67 +56,70 @@
             </div>
         </div>
     </section>
-    <!-- Our Values Section -->
-    <section class="bg-secondary-light">
-        <div class="mb-5 text-center">
-            <h1 class="display-4">Our Values</h1>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-6 col-md-3">
-                    <div class="card bg-transparent h-100 rounded-4 hover border-0">
-                        <img src="assets/images/value-educational.png" class="card-img-top rounded-4 p-2"
-                            alt="image not found" loading="lazy" />
-                        <div class="card-body">
-                            <h5 class="card-title">Education</h5>
-                            <p class="card-text">We believe in the power of stories to educate and
-                                inspire young minds, fostering creativity and
-                                critical thinking.</p>
-                        </div>
+</div>
+<!-- Our Values Section -->
+<section class="bg-secondary-light">
+    <div class="mb-5 text-center">
+        <h1 class="display-4">Our Values</h1>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="card bg-transparent h-100 rounded-4 hover border-0">
+                    <img src="assets/images/value-educational.png" class="card-img-top rounded-4 p-2"
+                        alt="image not found" loading="lazy" />
+                    <div class="card-body">
+                        <h5 class="card-title">Education</h5>
+                        <p class="card-text">We believe in the power of stories to educate and
+                            inspire young minds, fostering creativity and
+                            critical thinking.</p>
                     </div>
-                </div>
-                <div class="col-6 col-md-3">
-                    <div class="card bg-transparent h-100 rounded-4 hover border-0">
-                        <img src="assets/images/value-safety.png" class="card-img-top rounded-4 p-2"
-                            alt="image not found" loading="lazy" />
-                        <div class="card-body">
-                            <h5 class="card-title">Education</h5>
-                            <p class="card-text">We believe in the power of stories to educate and
-                                inspire young minds, fostering creativity and
-                                critical thinking.</p>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="col-6 col-md-3">
-                    <div class="card bg-transparent h-100 rounded-4 hover border-0">
-                        <img src="assets/images/value-accessibility.png" class="card-img-top rounded-4 p-2"
-                            alt="image not found" loading="lazy" />
-                        <div class="card-body">
-                            <h5 class="card-title">Education</h5>
-                            <p class="card-text">We believe in the power of stories to educate and
-                                inspire young minds, fostering creativity and
-                                critical thinking.</p>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="col-6 col-md-3">
-                    <div class="card bg-transparent h-100 rounded-4 hover border-0">
-                        <img src="assets/images/value-partnership.png" class="card-img-top rounded-4 p-2"
-                            alt="image not found" loading="lazy" />
-                        <div class="card-body">
-                            <h5 class="card-title">Education</h5>
-                            <p class="card-text">We believe in the power of stories to educate and
-                                inspire young minds, fostering creativity and
-                                critical thinking.</p>
-                        </div>
-                    </div>
-
                 </div>
             </div>
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="card bg-transparent h-100 rounded-4 hover border-0">
+                    <img src="assets/images/value-safety.png" class="card-img-top rounded-4 p-2" alt="image not found"
+                        loading="lazy" />
+                    <div class="card-body">
+                        <h5 class="card-title">Education</h5>
+                        <p class="card-text">We believe in the power of stories to educate and
+                            inspire young minds, fostering creativity and
+                            critical thinking.</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="card bg-transparent h-100 rounded-4 hover border-0">
+                    <img src="assets/images/value-accessibility.png" class="card-img-top rounded-4 p-2"
+                        alt="image not found" loading="lazy" />
+                    <div class="card-body">
+                        <h5 class="card-title">Education</h5>
+                        <p class="card-text">We believe in the power of stories to educate and
+                            inspire young minds, fostering creativity and
+                            critical thinking.</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="card bg-transparent h-100 rounded-4 hover border-0">
+                    <img src="assets/images/value-partnership.png" class="card-img-top rounded-4 p-2"
+                        alt="image not found" loading="lazy" />
+                    <div class="card-body">
+                        <h5 class="card-title">Education</h5>
+                        <p class="card-text">We believe in the power of stories to educate and
+                            inspire young minds, fostering creativity and
+                            critical thinking.</p>
+                    </div>
+                </div>
+
+            </div>
         </div>
-    </section>
+    </div>
+</section>
+<div class="container-fluid">
+
     <section class="px-4">
         <div class="contanier">
             <div class="text-center">

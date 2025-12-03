@@ -1,3 +1,20 @@
+<?php
+// Include authentication system
+require_once 'session.php';
+require_once 'security.php';
+
+// Initialize session if not already started
+if (session_status() === PHP_SESSION_NONE) {
+    initSession();
+}
+
+// Generate CSRF token
+$csrfToken = generateCsrfToken();
+
+$errors = $_SESSION['form_errors'] ?? [];
+$values = $_SESSION['form_values'] ?? [];
+unset($_SESSION['form_errors'], $_SESSION['form_values']);
+?>
 <div class="auth container-fluid">
     <div class="row">
         <div class="col-12 col-md-6 text-center" data-aos="zoom-in">
@@ -17,32 +34,32 @@
 
             <!-- Error Messages -->
             <?php if (isset($_SESSION['error'])): ?>
-            <div class="row mb-3">
-                <div class="col-12">
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <?php
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <?php
                             echo htmlspecialchars($_SESSION['error']);
                             unset($_SESSION['error']);
                             ?>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
                     </div>
                 </div>
-            </div>
             <?php endif; ?>
 
             <!-- Success Messages -->
             <?php if (isset($_SESSION['success'])): ?>
-            <div class="row mb-3">
-                <div class="col-12">
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <?php
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <?php
                             echo htmlspecialchars($_SESSION['success']);
                             unset($_SESSION['success']);
                             ?>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
                     </div>
                 </div>
-            </div>
             <?php endif; ?>
 
             <!-- Login Form -->
@@ -56,10 +73,11 @@
                             <div class="btn-group justify-content-center" role="group"
                                 aria-label="Basic radio toggle button group">
                                 <input type="radio" class="btn-check" name="user_type" id="check-parent" value="parent"
-                                    checked>
+                                    checked tabindex="1">
                                 <label class="btn btn-outline-primary" for="check-parent">PARENT</label>
 
-                                <input type="radio" class="btn-check" name="user_type" id="check-child" value="child">
+                                <input type="radio" class="btn-check" name="user_type" id="check-child" value="child"
+                                    tabindex="2">
                                 <label class="btn btn-outline-primary" for="check-child">CHILD</label>
                             </div>
                         </div>
@@ -67,40 +85,52 @@
                         <div id="parent" class="user-type-section">
                             <!-- Username with right-side icon using Bootstrap input-group -->
                             <div class="input-group mb-3">
-                                <input type="email" class="form-control" name="username" id="username"
-                                    placeholder="Email" aria-label="Email" required>
-                                <span class="btn btn-outline-secondary" tabindex="0"><i class="bi bi-person"></i></span>
+                                <input type="email" class="form-control <?php echo isset($errors['username']) ? 'is-invalid' : ''; ?>" name="username" id="username"
+                                    placeholder="Email" aria-label="Email" tabindex="3" value="<?php echo htmlspecialchars($values['username'] ?? ''); ?>">
+                                <span class="btn btn-outline-secondary"><i class="bi bi-person"></i></span>
+                                <?php if (isset($errors['username'])): ?>
+                                    <div class="invalid-feedback d-block"><?php echo htmlspecialchars($errors['username']); ?></div>
+                                <?php endif; ?>
                             </div>
 
                             <!-- Password with toggle button on the right -->
                             <div class="input-group mb-3">
-                                <input type="password" class="form-control" name="password" id="password"
-                                    placeholder="Password" aria-label="Password" required>
-                                <button id="togglePassword" class="btn btn-outline-secondary" type="button" tabindex="1"
+                                <input type="password" class="form-control <?php echo isset($errors['password']) ? 'is-invalid' : ''; ?>" name="password" id="password"
+                                    placeholder="Password" aria-label="Password" tabindex="4" value="<?php echo htmlspecialchars($values['password'] ?? ''); ?>">
+                                <button class="btn btn-outline-secondary toggle-password-btn" type="button" tabindex="5"
                                     aria-label="Toggle password visibility"><i class="bi bi-eye"></i></button>
+                                <?php if (isset($errors['password'])): ?>
+                                    <div class="invalid-feedback d-block"><?php echo htmlspecialchars($errors['password']); ?></div>
+                                <?php endif; ?>
                             </div>
                         </div>
-                        <div id="child" class="user-type-section" style="display: none;">
+                        <div id="child" class="user-type-section">
                             <!-- Code with right-side icon using Bootstrap input-group -->
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control" name="child_code" id="child_code"
-                                    placeholder="Child Code" aria-label="Child Code" pattern="[0-9]{4,6}" required>
+                                <input type="text" class="form-control <?php echo isset($errors['child_code']) ? 'is-invalid' : ''; ?>" name="child_code" id="code"
+                                    placeholder="Child Username/Code" aria-label="Child Code" tabindex="6" value="<?php echo htmlspecialchars($values['child_code'] ?? ''); ?>">
                                 <span class="btn btn-outline-secondary" tabindex="0"><i class="bi bi-123"></i></span>
+                                <?php if (isset($errors['child_code'])): ?>
+                                    <div class="invalid-feedback d-block"><?php echo htmlspecialchars($errors['child_code']); ?></div>
+                                <?php endif; ?>
                             </div>
 
                             <!-- Passkey with toggle button on the right -->
                             <div class="input-group mb-3">
-                                <input type="password" class="form-control" name="child_passkey" id="child_passkey"
-                                    placeholder="Passkey" aria-label="Passkey" required>
+                                <input type="password" class="form-control <?php echo isset($errors['child_passkey']) ? 'is-invalid' : ''; ?>" name="child_passkey" id="passkey"
+                                    placeholder="Passkey" aria-label="Passkey" tabindex="7" value="<?php echo htmlspecialchars($values['child_passkey'] ?? ''); ?>">
                                 <button id="toggleChildPasskey" class="btn btn-outline-secondary" type="button"
-                                    tabindex="1" aria-label="Toggle passkey visibility"><i
+                                    tabindex="8" aria-label="Toggle passkey visibility"><i
                                         class="bi bi-eye"></i></button>
+                                <?php if (isset($errors['child_passkey'])): ?>
+                                    <div class="invalid-feedback d-block"><?php echo htmlspecialchars($errors['child_passkey']); ?></div>
+                                <?php endif; ?>
                             </div>
                         </div>
 
 
                         <div class="mb-3">
-                            <input class="form-check-input" type="checkbox" id="rememberMe">
+                            <input class="form-check-input" type="checkbox" id="rememberMe" tabindex="9">
                             <label class="form-check-label text-white" for="rememberMe">
                                 Remember Me
                             </label>
@@ -109,10 +139,10 @@
                 </div>
                 <div class="container">
                     <div class="form-check mb-3">
-                        <button class="btn btn-success" type="submit">Login</button>
+                        <button type="submit" class="btn btn-success" tabindex="10">Login</button>
                     </div>
                     <div class="form-check">
-                        <a class="btn btn-light" href="?auth=register">Register</a>
+                        <a class="btn btn-light" href="?auth=register" tabindex="11">Register</a>
                     </div>
                 </div>
             </form>

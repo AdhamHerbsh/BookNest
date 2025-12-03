@@ -24,44 +24,48 @@
         <div class="row">
             <div class="row">
                 <div class="col-12 col-md-4 m-1 m-md-0">
-                    <div class="card">
-                        <div class="card-body py-5 text-center">
-                            <h3 class="card-title py-4 px-2">
-                                <span class="p-4 rounded-circle fs-2 bg-beige">
-                                    <i class="bi bi-people"></i>
-                                </span>
-                            </h3>
-                            <p class="card-text fs-1">USERS</p>
+                    <a href="?admin=users" class="nav-link">
+                        <div class="card">
+                            <div class="card-body py-5 text-center">
+                                <h3 class="card-title py-4 px-2">
+                                    <span class="p-4 rounded-circle fs-2 bg-beige">
+                                        <i class="bi bi-people"></i>
+                                    </span>
+                                </h3>
+                                <p class="card-text fs-1">USERS</p>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 <div class="col-12 col-md-4 m-3 m-md-0">
-                    <div class="card">
-                        <div class="card-body py-5 text-center">
-                            <h3 class="card-title py-4 px-2">
-                                <span class="p-4 rounded-circle fs-2 bg-beige">
-                                    <i class="bi bi-book"></i>
-                                </span>
-                            </h3>
-                            <p class="card-text fs-1">BOOKS</p>
+                    <a href="?admin=books" class="nav-link">
+                        <div class="card">
+                            <div class="card-body py-5 text-center">
+                                <h3 class="card-title py-4 px-2">
+                                    <span class="p-4 rounded-circle fs-2 bg-beige">
+                                        <i class="bi bi-book"></i>
+                                    </span>
+                                </h3>
+                                <p class="card-text fs-1">BOOKS</p>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 <div class="col-12 col-md-4 m-1 m-md-0">
-                    <div class="card">
-                        <div class="card-body py-5 text-center">
-                            <h3 class="card-title py-4 px-2">
-                                <span class="p-4 rounded-circle fs-2 bg-beige">
-                                    <i class="bi bi-file-earmark"></i>
-                                </span>
-                            </h3>
-                            <p class="card-text fs-1">QUIZZES</p>
+                    <a href="?admin=quizzes" class="nav-link">
+                        <div class="card">
+                            <div class="card-body py-5 text-center">
+                                <h3 class="card-title py-4 px-2">
+                                    <span class="p-4 rounded-circle fs-2 bg-beige">
+                                        <i class="bi bi-file-earmark"></i>
+                                    </span>
+                                </h3>
+                                <p class="card-text fs-1">QUIZZES</p>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
-
         </div>
     </div>
-
 </section>

@@ -28,12 +28,12 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <button type="button" class="btn btn-primary">
+                        <a href="?page=library" class="btn btn-primary">
                             Start Reading
-                        </button>
-                        <button type="button" class="btn btn-light">
+                        </a>
+                        <a href="?page=account" class="btn btn-light">
                             For Parents
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -45,7 +45,7 @@
             </div>
     </section>
 
-    <section class="px-5">
+    <section id="key-features" class="px-5">
         <div class="mb-4">
             <h1 class="display-2">Key Features</h1>
             <p class="text-muted">Explore how BookNest makes reading fun and effective for children.</p>
@@ -108,6 +108,8 @@
                     </p>
                 </div>
                 <div class="accordion" id="howItWorksAccordion">
+
+                    <!-- Sign Up -->
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingSignUp">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse"
@@ -118,92 +120,103 @@
                         <div id="collapseSignUp" class="accordion-collapse collapse show"
                             aria-labelledby="headingSignUp" data-bs-parent="#howItWorksAccordion">
                             <div class="accordion-body">
-                                This is the first item's accordion body. It is hidden by default, until the collapse
-                                plugin adds the appropriate classes that we use to style each element. These classes
-                                control the overall appearance, as well as the showing and hiding via CSS transitions.
+                                <strong>Action:</strong> Supervisory users, primarily Parents and Educational Institutions, register and log in to the application.
+                                <br><br>
+                                <strong>Benefit:</strong> This provides the necessary <em>access</em> to the digital library, which is available anytime and anywhere, helping to solve the problem of difficulty accessing or the high cost of paper books.
                             </div>
                         </div>
                     </div>
 
+                    <!-- Create a Child Profile -->
                     <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingCreateProfile">
+                        <h2 class="accordion-header" id="headingChildProfile">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseCreateProfile" aria-expanded="false"
-                                aria-controls="collapseCreateProfile">
+                                data-bs-target="#collapseChildProfile" aria-expanded="false" aria-controls="collapseChildProfile">
                                 Create a Child Profile
                             </button>
                         </h2>
-                        <div id="collapseCreateProfile" class="accordion-collapse collapse"
-                            aria-labelledby="headingCreateProfile" data-bs-parent="#howItWorksAccordion">
+                        <div id="collapseChildProfile" class="accordion-collapse collapse"
+                            aria-labelledby="headingChildProfile" data-bs-parent="#howItWorksAccordion">
                             <div class="accordion-body">
-                                <!-- Add content here if needed -->
+                                <strong>Action:</strong> Parents and Educational Institutions utilize the Child Management Page to add, update, or delete child profiles. This allows for the creation of multiple profiles for children in the family.
+                                <br><br>
+                                <strong>Benefit:</strong> This function allows parents and educators to <em>supervise</em> and <em>manage profiles</em>, ensuring they can choose books appropriate for the children's ages and educational levels, as content is classified by age group.
                             </div>
                         </div>
                     </div>
 
+                    <!-- Explore Books -->
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingExploreBooks">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseExploreBooks" aria-expanded="false"
-                                aria-controls="collapseExploreBooks">
+                                data-bs-target="#collapseExploreBooks" aria-expanded="false" aria-controls="collapseExploreBooks">
                                 Explore Books
                             </button>
                         </h2>
                         <div id="collapseExploreBooks" class="accordion-collapse collapse"
                             aria-labelledby="headingExploreBooks" data-bs-parent="#howItWorksAccordion">
                             <div class="accordion-body">
-                                <!-- Add content here if needed -->
+                                <strong>Action:</strong> Children log in and use the Browsing/Search Page to easily find books. They can also add books they like to a <em>Favorites List</em>.
+                                <br><br>
+                                <strong>Benefit:</strong> Children gain access to a set of educational and entertaining books through an interface designed to be simple, fun, and attractive.
                             </div>
                         </div>
                     </div>
 
+                    <!-- Read or Listen -->
                     <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingReadOrListen">
+                        <h2 class="accordion-header" id="headingReadListen">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseReadOrListen" aria-expanded="false"
-                                aria-controls="collapseReadOrListen">
+                                data-bs-target="#collapseReadListen" aria-expanded="false" aria-controls="collapseReadListen">
                                 Read or Listen
                             </button>
                         </h2>
-                        <div id="collapseReadOrListen" class="accordion-collapse collapse"
-                            aria-labelledby="headingReadOrListen" data-bs-parent="#howItWorksAccordion">
+                        <div id="collapseReadListen" class="accordion-collapse collapse"
+                            aria-labelledby="headingReadListen" data-bs-parent="#howItWorksAccordion">
                             <div class="accordion-body">
-                                <!-- Add content here if needed -->
+                                <strong>Action:</strong> On the Reading Page, children can read books, which includes <em>interactive content</em> such as Audio reading, Animation, Interactive activities, and Kinetic effects. Audio reading is specifically included for children who are unable to read on their own.
+                                <br><br>
+                                <strong>Benefit:</strong> This interactive approach <em>motivates the child to learn</em> in a fun and unconventional way and helps improve reading and listening skills. By combining reading, animation, and audio interaction, it offers an effective educational experience.
                             </div>
                         </div>
                     </div>
 
+                    <!-- Track Your Child -->
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingTrackChild">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseTrackChild" aria-expanded="false"
-                                aria-controls="collapseTrackChild">
+                                data-bs-target="#collapseTrackChild" aria-expanded="false" aria-controls="collapseTrackChild">
                                 Track Your Child
                             </button>
                         </h2>
                         <div id="collapseTrackChild" class="accordion-collapse collapse"
                             aria-labelledby="headingTrackChild" data-bs-parent="#howItWorksAccordion">
                             <div class="accordion-body">
-                                <!-- Add content here if needed -->
+                                <strong>Action:</strong> Parents and Educational Institutions use the Tracking/Progress Page to monitor the child’s reading activity. This monitoring includes the child’s <em>reading rate</em> and the <em>books completed</em>. The system uses an integrated database to store this progress.
+                                <br><br>
+                                <strong>Benefit:</strong> This feature allows supervisory users (Parents/Educators) to follow up on the child's progress and supports them in their role as educators. Supervisory users can also receive notifications regarding activity.
                             </div>
                         </div>
                     </div>
 
+                    <!-- Take Quizzes -->
                     <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingTakeQuizzes">
+                        <h2 class="accordion-header" id="headingQuizzes">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseTakeQuizzes" aria-expanded="false"
-                                aria-controls="collapseTakeQuizzes">
+                                data-bs-target="#collapseQuizzes" aria-expanded="false" aria-controls="collapseQuizzes">
                                 Take Quizzes
                             </button>
                         </h2>
-                        <div id="collapseTakeQuizzes" class="accordion-collapse collapse"
-                            aria-labelledby="headingTakeQuizzes" data-bs-parent="#howItWorksAccordion">
+                        <div id="collapseQuizzes" class="accordion-collapse collapse"
+                            aria-labelledby="headingQuizzes" data-bs-parent="#howItWorksAccordion">
                             <div class="accordion-body">
-                                <!-- Add content here if needed -->
+                                <strong>Action:</strong> Children have the option to take a <em>short test/quiz</em> after finishing reading a book.
+                                <br><br>
+                                <strong>Benefit:</strong> This adds an <em>educational feature</em> that helps in the development of children's <em>thinking skills</em>.
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
 
@@ -245,6 +258,7 @@
                 <h1 class="mb-4">Frequently asked questions</h1>
 
                 <div class="accordion" id="faqAccordion">
+
                     <!-- FAQ Item 1: Open by default -->
                     <div class="accordion-item border-bottom">
                         <h2 class="accordion-header" id="faqHeadingOne">
@@ -256,10 +270,8 @@
                         <div id="faqCollapseOne" class="accordion-collapse collapse show"
                             aria-labelledby="faqHeadingOne" data-bs-parent="#faqAccordion">
                             <div class="accordion-body">
-                                <p>Nibh quisque suscipit fermentum netus nulla cras porttitor euismod nulla. Orci,
-                                    dictumst
-                                    nec aliquet id ullamcorper venenatis.</p>
-
+                                <p>The project's primary goal is to provide an <strong>affordable digital alternative to paper books</strong>, aiming to solve the problem of high costs or lack of availability of physical books.</p>
+                                <p>While the exact cost is not specified, the system is designed to accommodate a subscription model. The database includes an <code>IS_SUBSCRIBED</code> field in the <code>USERS</code> table. Furthermore, the project's limitations note that <strong>some features may require subscription to track the child's progress</strong>.</p>
                             </div>
                         </div>
                     </div>
@@ -272,10 +284,10 @@
                                 Can I use BookNest on multiple devices?
                             </button>
                         </h2>
-                        <div id="faqCollapseTwo" class="accordion-collapse collapse" aria-labelledby="faqHeadingTwo"
-                            data-bs-parent="#faqAccordion">
+                        <div id="faqCollapseTwo" class="accordion-collapse collapse"
+                            aria-labelledby="faqHeadingTwo" data-bs-parent="#faqAccordion">
                             <div class="accordion-body">
-                                <!-- Placeholder content, add details here -->
+                                <p><strong>Yes</strong>, the platform is designed for cross-device access. It is a <strong>digital web platform</strong> accessible from <strong>smart devices (phones and tablets)</strong>. One of the main benefits is that it provides access to the digital library <strong>anytime, anywhere</strong>.</p>
                             </div>
                         </div>
                     </div>
@@ -284,15 +296,20 @@
                     <div class="accordion-item border-bottom">
                         <h2 class="accordion-header" id="faqHeadingThree">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#faqCollapseThree" aria-expanded="false"
-                                aria-controls="faqCollapseThree">
+                                data-bs-target="#faqCollapseThree" aria-expanded="false" aria-controls="faqCollapseThree">
                                 Do you offer parental controls?
                             </button>
                         </h2>
-                        <div id="faqCollapseThree" class="accordion-collapse collapse" aria-labelledby="faqHeadingThree"
-                            data-bs-parent="#faqAccordion">
+                        <div id="faqCollapseThree" class="accordion-collapse collapse"
+                            aria-labelledby="faqHeadingThree" data-bs-parent="#faqAccordion">
                             <div class="accordion-body">
-                                <!-- Placeholder content, add details here -->
+                                <p><strong>Yes</strong>, parental controls and supervision are a central feature of the system. Parents and Educational Institutions are defined as <strong>supervisory users</strong>.</p>
+                                <ul>
+                                    <li><strong>Child Management:</strong> Supervisory users access the <em>Child Management Page</em> to add, update, or delete child profiles. The system supports creating multiple profiles for each child in the family.</li>
+                                    <li><strong>Appropriate Content Selection:</strong> Parents and educators can choose books appropriate for the children's ages and educational levels, as the content is classified by age group.</li>
+                                    <li><strong>Tracking:</strong> Supervisory users use the <em>Tracking/Progress Page</em> to monitor the child’s reading activity, including the reading rate and the books completed.</li>
+                                    <li><strong>Notifications:</strong> Supervisory users have a <em>Notification Page</em> that allows them to receive system notifications.</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -305,10 +322,15 @@
                                 Can I download books for offline reading?
                             </button>
                         </h2>
-                        <div id="faqCollapseFour" class="accordion-collapse collapse" aria-labelledby="faqHeadingFour"
-                            data-bs-parent="#faqAccordion">
+                        <div id="faqCollapseFour" class="accordion-collapse collapse"
+                            aria-labelledby="faqHeadingFour" data-bs-parent="#faqAccordion">
                             <div class="accordion-body">
-                                <!-- Placeholder content, add details here -->
+                                <p>The sources present a nuanced answer regarding offline reading:</p>
+                                <ul>
+                                    <li>The system is a <strong>digital web platform</strong> that relies on an internet connection to download books and use some features.</li>
+                                    <li>However, the project limitations state that <strong>offline reading may be supported for some pre-loaded content</strong>.</li>
+                                    <li>In a comparative study of similar applications, the Digital Library for Children platform feature analysis listed <strong>Offline reading</strong> as <strong>No</strong>.</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -321,10 +343,11 @@
                                 Is BookNest suitable for all age groups?
                             </button>
                         </h2>
-                        <div id="faqCollapseFive" class="accordion-collapse collapse" aria-labelledby="faqHeadingFive"
-                            data-bs-parent="#faqAccordion">
+                        <div id="faqCollapseFive" class="accordion-collapse collapse"
+                            aria-labelledby="faqHeadingFive" data-bs-parent="#faqAccordion">
                             <div class="accordion-body">
-                                <!-- Placeholder content, add details here -->
+                                <p>No, the project <strong>targets children from 4 to 12 years old</strong>.</p>
+                                <p>The platform contains educational and entertaining books that are suitable for different age groups of children. Importantly, the <strong>content is classified by age group</strong>.</p>
                             </div>
                         </div>
                     </div>
@@ -337,13 +360,14 @@
                                 How do I contact customer support?
                             </button>
                         </h2>
-                        <div id="faqCollapseSix" class="accordion-collapse collapse" aria-labelledby="faqHeadingSix"
-                            data-bs-parent="#faqAccordion">
+                        <div id="faqCollapseSix" class="accordion-collapse collapse"
+                            aria-labelledby="faqHeadingSix" data-bs-parent="#faqAccordion">
                             <div class="accordion-body">
-                                <!-- Placeholder content, add details here -->
+                                <p>The functional requirements for the Parent, Educational Institution, and Child interfaces include <strong>Account Update Pages</strong>. However, the sources do not list a dedicated contact, support, or help desk function as a functional requirement for any user type.</p>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
 

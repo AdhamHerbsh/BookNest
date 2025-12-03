@@ -11,6 +11,10 @@
     font-display: swap;
 }
 
+:root {
+    --primary-color: #2a3380;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -250,7 +254,7 @@ button.position-absolute {
 }
 
 .pages-title {
-    color: #4c6ef5;
+    color: var(--primary-color);
     /* a bold blue */
     user-select: none;
     margin-bottom: 1rem;
@@ -303,7 +307,7 @@ button.position-absolute {
     padding: 0.5rem 0.6rem;
     width: 48px;
     height: 48px;
-    box-shadow: 2px 2px 5px rgb(0 0 0 / 0.1);
+    box-shadow: 2px 2px 5px rgb(255 159 115 / 0.1);
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -312,18 +316,14 @@ button.position-absolute {
 }
 
 .toolbar button:hover {
-    box-shadow: 4px 4px 7px rgb(0 0 0 / 0.3);
-}
-
-.toolbar button svg {
-    fill: #2c3e9e;
-    width: 22px;
-    height: 22px;
+    color: white;
+    background-color: var(--primary-color);
+    box-shadow: 4px 4px 7px rgb(255 159 115 / 0.3);
 }
 
 .page-indicator {
     background-color: #fefbf4;
-    color: #1f255e;
+    color: var(--primary-color);
     border-radius: 1.5rem;
     padding: 0.3rem 1.2rem;
     user-select: none;
@@ -334,11 +334,13 @@ button.position-absolute {
 }
 
 .pdf-viewer {
-    background-color: #116161;
-    border-radius: 2rem;
+    background-color: #1161614d;
+    border-radius: 1rem;
     padding: 2rem 3rem;
     width: 100%;
-    max-width: 860px;
+    max-width: 100%;
+    min-height: 80vh;
+    max-height: 100%;
     position: relative;
     box-shadow: inset -8px -8px 15px #0a3a3a, inset 8px 8px 15px #158585;
     display: flex;

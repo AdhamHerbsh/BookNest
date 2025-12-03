@@ -1,8 +1,88 @@
-<section class="mt-5 p-5">
+<?php
+include_once 'core/layout/book-card.php';
+$books = [
+    [
+        'title' => 'Adventures in Wonderland',
+        'description' => 'Dive into a world of whimsy and wonder with our curated collection of adventure stories.',
+        'coverImage' => 'assets/images/books/library-book-1.png',
+        'altText' => 'Adventures in Wonderland cover'
+    ],
+    [
+        'title' => 'Adventures in Wonderland',
+        'description' => 'Dive into a world of whimsy and wonder with our curated collection of adventure stories.',
+        'coverImage' => 'assets/images/books/library-book-2.png',
+        'altText' => 'Adventures in Wonderland cover'
+    ],
+    [
+        'title' => 'Adventures in Wonderland',
+        'description' => 'Dive into a world of whimsy and wonder with our curated collection of adventure stories.',
+        'coverImage' => 'assets/images/books/library-book-3.png',
+        'altText' => 'Adventures in Wonderland cover'
+    ],
+    [
+        'title' => 'Adventures in Wonderland',
+        'description' => 'Dive into a world of whimsy and wonder with our curated collection of adventure stories.',
+        'coverImage' => 'assets/images/books/library-book-4.png',
+        'altText' => 'Adventures in Wonderland cover'
+    ],
+    [
+        'title' => 'Adventures in Wonderland',
+        'description' => 'Dive into a world of whimsy and wonder with our curated collection of adventure stories.',
+        'coverImage' => 'assets/images/books/library-book-5.png',
+        'altText' => 'Adventures in Wonderland cover'
+    ],
+    [
+        'title' => 'Adventures in Wonderland',
+        'description' => 'Dive into a world of whimsy and wonder with our curated collection of adventure stories.',
+        'coverImage' => 'assets/images/books/library-book-6.png',
+        'altText' => 'Adventures in Wonderland cover'
+    ],
+    // Add more books as needed
+];
+
+?>
+<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+    tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalToggleLabel">
+                    Session Debug
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <?php $session = getSessionInfo(); ?>
+                <?php foreach ($session as $key => $value) : ?>
+                <p><strong><?php echo htmlspecialchars((string)$key); ?>:</strong>
+                    <?php echo htmlspecialchars((string)$value); ?></p>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<a class="btn btn-primary position-fixed bottom-0 end-0 m-3" style="z-index: 9999;" data-bs-toggle="modal"
+    href="#exampleModalToggle" role="button">Session</a>
+
+
+<section class="mt-5 p-2 p-md-5">
     <div class="container-fluid">
         <div class="row my-5">
+            <div class="text-end">
+                <form action="./" method="POST" class="d-inline">
+                    <input type="hidden" name="action" value="logout">
+                    <input type="hidden" name="csrf_token" value="<?php  // echo htmlspecialchars(generateCsrfToken()); 
+                                                                    ?>">
+                    <button type="submit" class="btn btn-light rounded-circle">
+                        <i class="bi bi-door-open"></i>
+                    </button>
+                </form>
+            </div>
             <h1>Account Settings</h1>
 
+        </div>
+        <div class="row my-5">
             <!-- Profile Cards -->
             <div class="row g-3 align-items-stretch">
                 <!-- Parent Card -->
@@ -16,10 +96,13 @@
                                     <i class="bi bi-person fs-4"></i>
                                 </span>
                                 <div>
-                                    <h5 class="mb-0 fw-bold">Sophia Carter</h5>
+                                    <h5 class="mb-0 fw-bold"><?php echo htmlspecialchars($_SESSION['user_name']); ?>
+                                    </h5>
                                 </div>
                             </div>
-                            <h6 class="rounded-pill text-bg-primary px-3 py-2">Parent</h6>
+                            <h6 class="rounded-pill text-bg-primary px-3 py-2">
+                                <?php echo htmlspecialchars($_SESSION['role']); ?>
+                            </h6>
                         </div>
                         <p class="mb-0 mt-3">PassKey #22890</p>
                     </div>
@@ -39,7 +122,8 @@
                                 </div>
                             </div>
                             <div class="d-flex align-items-center gap-2">
-                                <h6 class="rounded-pill text-bg-secondary px-3 py-2">Child</h6>
+                                <h6 class="rounded-pill text-bg-secondary px-3 py-2">
+                                    Child</h6>
                             </div>
                             <button class="btn btn-light rounded-circle p-2 pt-1" style="width:40px; height:40px;">
                                 <i class="bi bi-trash text-danger"></i>
@@ -103,7 +187,8 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-end">
-                                <button type="submit" class="btn btn-primary rounded-4">Save Changes</button>
+                                <button type="submit" class="btn btn-primary rounded-4">Save
+                                    Changes</button>
                             </div>
                         </form>
                     </div>
@@ -137,7 +222,8 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-end">
-                                <button type="submit" class="btn btn-primary rounded-4">Save Changes</button>
+                                <button type="submit" class="btn btn-primary rounded-4">Save
+                                    Changes</button>
                             </div>
                         </form>
                     </div>
@@ -170,7 +256,7 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-between">
-                                <button type="button" class="btn btn-light shadow rounded-4">Forget
+                                <button type="button" class="btn btn-light rounded-4">Forget
                                     Password !</button>
                                 <button type="submit" class="btn btn-primary rounded-4">Save
                                     Changes</button>
@@ -196,46 +282,15 @@
                         <!-- Books Grid -->
                         <div class="row g-4">
                             <!-- Book 1 -->
-                            <div class="col-lg-3 col-md-4 col-sm-6">
-                                <div class="card border-0 shadow-sm">
-                                    <div class="rounded-3 p-3" style="background-color: #5eead4;">
-                                        <img src="assets/images/books/library-book-1.png" class="card-img-top rounded-3"
-                                            alt="Book Cover">
-                                    </div>
-                                    <div class="card-body">
-                                        <h6 class="card-title fw-bold mb-1">The Magical Treehouse Adventure</h6>
-                                        <p class="card-text text-muted small mb-0">Sarah Miller</p>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <!-- Book 2 -->
-                            <div class="col-lg-3 col-md-4 col-sm-6">
-                                <div class="card border-0 shadow-sm">
-                                    <div class="rounded-3 p-3" style="background-color: #2c5f5d;">
-                                        <img src="assets/images/books/library-book-2.png" class="card-img-top rounded-3"
-                                            alt="Book Cover">
-                                    </div>
-                                    <div class="card-body">
-                                        <h6 class="card-title fw-bold mb-1">Journey to the Stars</h6>
-                                        <p class="card-text text-muted small mb-0">Emily Carter</p>
-                                    </div>
-                                </div>
-                            </div>
+                            <?php
+                            foreach ($books as $book) {
+                                echo '<div class="col-lg-3 col-md-4 col-sm-6">';
+                                echo renderBookCard($book);
+                                echo '</div>';
+                            }
+                            ?>
 
-                            <!-- Book 3 -->
-                            <div class="col-lg-3 col-md-4 col-sm-6">
-                                <div class="card border-0 shadow-sm">
-                                    <div class="rounded-3 p-3" style="background-color: #86a59c;">
-                                        <img src="assets/images/books/library-book-3.png" class="card-img-top rounded-3"
-                                            alt="Book Cover">
-                                    </div>
-                                    <div class="card-body">
-                                        <h6 class="card-title fw-bold mb-1">The Boy Who Befriended a Cloud</h6>
-                                        <p class="card-text text-muted small mb-0">Robert Wilson</p>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
