@@ -124,8 +124,8 @@ function buildQueryString($params)
                             </a>
                         </div>
                     </div>
-                    <div class="input-group mx-auto flex-nowrap" style="max-width: 600px;">
-                        <input type="text" class="form-control-lg border-0"
+                    <div class="input-group mx-auto flex-nowrap">
+                        <input type="text" class="form-control-lg w-100 border-0"
                             placeholder="Search by title, author, or description..."
                             aria-label="Search"
                             name="search"

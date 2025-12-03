@@ -15,6 +15,7 @@
       this.initFormValidation();
       this.initFavorites();
       this.initLoginToggle();
+      this.initUsersManagement();
       this.initBookUpload();
       this.initBooksManagement();
     },
@@ -318,6 +319,236 @@
 
       // Initial state
       updateView();
+    },
+
+    /**
+     * Initialize Users Management (Edit & Delete)
+     */
+    initUsersManagement() {
+      // Only run on users management page
+      if (!document.getElementById("editUserModal")) return;
+
+      // Make openEditModal globally accessible
+      window.openEditModal = function (userId) {
+        fetch(`core/api/users/get.php?id=${userId}`)
+          .then((response) => {
+            // Always read the response as text first to handle potential non-JSON prefixes
+            return response.text().then((text) => {
+              if (!response.ok) {
+                // If response is not OK, try to parse error JSON or use text
+                try {
+                  const errorData = JSON.parse(text);
+                  throw new Error(
+                    errorData.message ||
+                      `HTTP error! Status: ${response.status}`
+                  );
+                } catch (e) {
+                  // If not JSON, use the raw text as error message
+                  throw new Error(
+                    text || `HTTP error! Status: ${response.status}`
+                  );
+                }
+              }
+
+              // For successful responses, attempt to clean and parse JSON
+              // Remove "Done" prefix if present, which caused the "Unexpected token 'D'" error
+              const jsonString = text.startsWith("Done")
+                ? text.substring(4).trim()
+                : text.trim();
+              try {
+                return JSON.parse(jsonString);
+              } catch (e) {
+                console.error(
+                  "Failed to parse JSON from server response:",
+                  e,
+                  "Original text:",
+                  text
+                );
+                throw new Error("Invalid JSON response from server.");
+              }
+            });
+          })
+          .then((data) => {
+            if (data.success) {
+              const user = data.user;
+              document.getElementById("editUserId").value = user.ID;
+              document.getElementById("editFirstName").value =
+                user.FIRST_NAME || "";
+              document.getElementById("editLastName").value =
+                user.LAST_NAME || "";
+              document.getElementById("editUsername").value =
+                user.USERNAME || "";
+              document.getElementById("editPhone").value = user.PHONE || "";
+              document.getElementById("editRole").value = user.ROLE_ID || "";
+              document.getElementById("editSubscribed").checked =
+                user.IS_SUBSCRIBED === "Y";
+
+              // Show modal
+              const modal = new bootstrap.Modal(
+                document.getElementById("editUserModal")
+              );
+              modal.show();
+            } else {
+              alert("Error loading user data: " + data.message);
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            alert("Failed to load user data");
+          });
+      };
+
+      // Make saveUser globally accessible
+      window.saveUser = function () {
+        const form = document.getElementById("editUserForm");
+        const formData = new FormData(form);
+
+        // Convert FormData to JSON object
+        const data = {};
+        formData.forEach((value, key) => {
+          data[key] = value;
+        });
+
+        // Handle checkbox
+        data.is_subscribed = document.getElementById("editSubscribed").checked
+          ? "Y"
+          : "N";
+
+        const saveBtn = document.querySelector("#editUserModal .btn-primary");
+        const originalText = saveBtn.textContent;
+        saveBtn.disabled = true;
+        saveBtn.textContent = "Saving...";
+
+        fetch("core/api/users/update.php", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => {
+            return response.text().then((text) => {
+              if (!response.ok) {
+                try {
+                  const errorData = JSON.parse(text);
+                  throw new Error(
+                    errorData.message ||
+                      `HTTP error! Status: ${response.status}`
+                  );
+                } catch (e) {
+                  throw new Error(
+                    text || `HTTP error! Status: ${response.status}`
+                  );
+                }
+              }
+
+              // Remove "Done" prefix if present
+              const jsonString = text.startsWith("Done")
+                ? text.substring(4).trim()
+                : text.trim();
+              try {
+                return JSON.parse(jsonString);
+              } catch (e) {
+                console.error(
+                  "Failed to parse JSON:",
+                  e,
+                  "Original text:",
+                  text
+                );
+                throw new Error("Invalid JSON response from server.");
+              }
+            });
+          })
+          .then((data) => {
+            if (data.success) {
+              alert("User updated successfully");
+              bootstrap.Modal.getInstance(
+                document.getElementById("editUserModal")
+              ).hide();
+              location.reload();
+            } else {
+              alert("Error: " + data.message);
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            alert("Failed to save changes: " + error.message);
+          })
+          .finally(() => {
+            saveBtn.disabled = false;
+            saveBtn.textContent = originalText;
+          });
+      };
+
+      // Make deleteUser globally accessible
+      window.deleteUser = function (userId) {
+        if (
+          confirm(
+            "Are you sure you want to delete this user? This action cannot be undone."
+          )
+        ) {
+          fetch("core/api/users/delete.php", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ id: userId }),
+          })
+            .then((response) => {
+              return response.text().then((text) => {
+                if (!response.ok) {
+                  try {
+                    const errorData = JSON.parse(text);
+                    throw new Error(
+                      errorData.message ||
+                        `HTTP error! Status: ${response.status}`
+                    );
+                  } catch (e) {
+                    throw new Error(
+                      text || `HTTP error! Status: ${response.status}`
+                    );
+                  }
+                }
+
+                // Remove "Done" prefix if present
+                const jsonString = text.startsWith("Done")
+                  ? text.substring(4).trim()
+                  : text.trim();
+                try {
+                  return JSON.parse(jsonString);
+                } catch (e) {
+                  console.error(
+                    "Failed to parse JSON:",
+                    e,
+                    "Original text:",
+                    text
+                  );
+                  throw new Error("Invalid JSON response from server.");
+                }
+              });
+            })
+            .then((data) => {
+              if (data.success) {
+                alert("User deleted successfully");
+                document.querySelector(`tr[data-user-id="${userId}"]`).remove();
+                // Update count
+                const caption = document.querySelector("table caption");
+                const currentCount = parseInt(
+                  caption.textContent.match(/\d+/)[0]
+                );
+                caption.textContent = `Users - Total: ${
+                  currentCount - 1
+                } records`;
+              } else {
+                alert("Error: " + data.message);
+              }
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              alert("Failed to delete user: " + error.message);
+            });
+        }
+      };
     },
 
     /**
