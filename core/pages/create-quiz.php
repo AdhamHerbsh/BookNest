@@ -1,3 +1,10 @@
+<?php
+if (!isEducator()) {
+    include "core/pages/401.php";
+    exit;
+}
+?>
+
 <section>
     <div class="container py-5">
         <div class="bg-light p-4 rounded-4 my-5">

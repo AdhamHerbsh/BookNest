@@ -119,7 +119,7 @@ unset($_SESSION['form_errors'], $_SESSION['form_values']);
                             <div class="input-group mb-3">
                                 <input type="password" class="form-control <?php echo isset($errors['child_passkey']) ? 'is-invalid' : ''; ?>" name="child_passkey" id="passkey"
                                     placeholder="Passkey" aria-label="Passkey" tabindex="7" value="<?php echo htmlspecialchars($values['child_passkey'] ?? ''); ?>">
-                                <button id="toggleChildPasskey" class="btn btn-outline-secondary" type="button"
+                                <button class="btn btn-outline-secondary toggle-password-btn" type="button"
                                     tabindex="8" aria-label="Toggle passkey visibility"><i
                                         class="bi bi-eye"></i></button>
                                 <?php if (isset($errors['child_passkey'])): ?>
@@ -134,6 +134,9 @@ unset($_SESSION['form_errors'], $_SESSION['form_values']);
                             <label class="form-check-label text-white" for="rememberMe">
                                 Remember Me
                             </label>
+                        </div>
+                        <div class="mb-3">
+                            <a href="?auth=forgot-password" class="btn btn-light">Forgot Password</a>
                         </div>
                     </div>
                 </div>

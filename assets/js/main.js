@@ -16,6 +16,9 @@
       this.initFavorites();
       this.initLoginToggle();
       this.initUsersManagement();
+      this.initChildrenManagement();
+      this.initAccountTabs();
+      this.initProfileManagement();
       this.initBookUpload();
       this.initBooksManagement();
     },
@@ -226,34 +229,131 @@
      * Initialize Favorites Button
      */
     initFavorites() {
-      document.querySelectorAll(".btn-favorite").forEach((btn) => {
-        btn.addEventListener("click", function (e) {
+      const favButtons = document.querySelectorAll(".btn-favorite");
+      if (favButtons.length === 0) return;
+
+      // Load favorites from backend on page load
+      fetch("core/api/favorites/status.php")
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success && data.favorites) {
+            // Apply favorited state to buttons
+            favButtons.forEach((btn) => {
+              const bookId = parseInt(btn.dataset.bookId);
+              if (data.favorites.includes(bookId)) {
+                this.setFavoriteState(btn, true);
+              }
+            });
+          }
+        })
+        .catch((err) => {
+          console.error("Failed to load favorites:", err);
+        });
+
+      // Add click handlers
+      favButtons.forEach((btn) => {
+        btn.addEventListener("click", (e) => {
           e.preventDefault();
-          this.classList.toggle("btn-danger");
-          const isPressed = this.classList.contains("btn-danger");
-          this.setAttribute("aria-pressed", isPressed);
-
-          const icon = this.querySelector("i");
-          if (icon) {
-            icon.classList.toggle("bi-heart");
-            icon.classList.toggle("bi-heart-fill");
-          }
-
-          // Persist to localStorage
-          try {
-            const bookId = this.dataset.bookId;
-            if (bookId) {
-              const key = "favorites_v1";
-              const stored = JSON.parse(localStorage.getItem(key) || "{}");
-              if (isPressed) stored[bookId] = true;
-              else delete stored[bookId];
-              localStorage.setItem(key, JSON.stringify(stored));
-            }
-          } catch (err) {
-            console.error("Storage error", err);
-          }
+          this.toggleFavorite(btn);
         });
       });
+    },
+
+    /**
+     * Set favorite button state
+     */
+    setFavoriteState(btn, isFavorited) {
+      const isTextButton = btn.classList.contains("text");
+
+      // Update button color and aria
+      if (isFavorited) {
+        btn.classList.add("btn-danger");
+        btn.setAttribute("aria-pressed", "true");
+      } else {
+        btn.classList.remove("btn-danger");
+        btn.setAttribute("aria-pressed", "false");
+      }
+
+      // Handle icon (for both icon-only and text buttons)
+      const icon = btn.querySelector("i");
+      if (icon) {
+        if (isFavorited) {
+          icon.classList.remove("bi-heart");
+          icon.classList.add("bi-heart-fill");
+        } else {
+          icon.classList.remove("bi-heart-fill");
+          icon.classList.add("bi-heart");
+        }
+      }
+
+      // Handle text button (toggle text content)
+      if (isTextButton) {
+        const textSpan = btn.querySelector(".btn-text");
+        if (textSpan) {
+          textSpan.textContent = isFavorited
+            ? "Remove from Favorites"
+            : "Add to Favorites";
+        }
+        // Update aria-label
+        const bookTitle = btn.dataset.bookTitle || "this book";
+        btn.setAttribute(
+          "aria-label",
+          isFavorited
+            ? `Remove ${bookTitle} from favorites`
+            : `Add ${bookTitle} to favorites`
+        );
+      }
+    },
+
+    /**
+     * Toggle favorite status
+     */
+    toggleFavorite(btn) {
+      const bookId = parseInt(btn.dataset.bookId);
+      const isCurrentlyFavorited = btn.classList.contains("btn-danger");
+      const action = isCurrentlyFavorited ? "unlike" : "like";
+
+      // Optimistically update UI
+      this.setFavoriteState(btn, !isCurrentlyFavorited);
+
+      // Send to backend
+      fetch("core/api/favorites/toggle.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          book_id: bookId,
+          action: action,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success) {
+            // Update localStorage for offline support
+            try {
+              const key = "favorites_v1";
+              const stored = JSON.parse(localStorage.getItem(key) || "{}");
+              if (data.is_favorited) {
+                stored[bookId] = true;
+              } else {
+                delete stored[bookId];
+              }
+              localStorage.setItem(key, JSON.stringify(stored));
+            } catch (err) {
+              console.error("Storage error", err);
+            }
+          } else {
+            // Revert UI on error
+            this.setFavoriteState(btn, isCurrentlyFavorited);
+            console.error("Failed to toggle favorite:", data.message);
+          }
+        })
+        .catch((err) => {
+          // Revert UI on error
+          this.setFavoriteState(btn, isCurrentlyFavorited);
+          console.error("API error:", err);
+        });
     },
 
     /**
@@ -549,6 +649,486 @@
             });
         }
       };
+    },
+
+    /**
+     * Initialize Children Management
+     */
+    initChildrenManagement() {
+      // Only run on account page with children management
+      if (!document.getElementById("childrenListContainer")) return;
+
+      // Helper function to parse API response
+      const parseApiResponse = (response) => {
+        return response.text().then((text) => {
+          if (!response.ok) {
+            try {
+              const errorData = JSON.parse(text);
+              throw new Error(
+                errorData.message || `HTTP error! Status: ${response.status}`
+              );
+            } catch (e) {
+              throw new Error(text || `HTTP error! Status: ${response.status}`);
+            }
+          }
+          const jsonString = text.startsWith("Done")
+            ? text.substring(4).trim()
+            : text.trim();
+          try {
+            return JSON.parse(jsonString);
+          } catch (e) {
+            console.error("Failed to parse JSON:", e, "Original text:", text);
+            throw new Error("Invalid JSON response from server.");
+          }
+        });
+      };
+
+      // Escape HTML helper
+      const escapeHtml = (text) => {
+        if (!text) return "";
+        return text
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      };
+
+      // Fetch children
+      const fetchChildren = () => {
+        fetch("core/api/children/list.php")
+          .then((response) => parseApiResponse(response))
+          .then((data) => {
+            if (data.success) {
+              renderChildren(data.children);
+              updateParentPasskey(data.parent_passkey);
+            } else {
+              console.error("Failed to fetch children:", data.message);
+            }
+          })
+          .catch((error) => console.error("Error:", error));
+      };
+
+      // Update parent passkey display
+      const updateParentPasskey = (passkey) => {
+        const display = document.getElementById("parentPasskeyDisplay");
+        if (display) {
+          display.textContent = passkey ? `#${passkey}` : "Not set";
+        }
+      };
+
+      // Render children
+      const renderChildren = (children) => {
+        const container = document.getElementById("childrenListContainer");
+        const summaryContainer = document.getElementById("childSummaryCards");
+
+        if (!container) return;
+
+        if (children.length === 0) {
+          container.innerHTML =
+            '<div class="col-12 text-center text-muted py-4">No children added yet. Click "Add Child" to get started.</div>';
+          if (summaryContainer) summaryContainer.innerHTML = "";
+          return;
+        }
+
+        // Render List in Tab
+        container.innerHTML = children
+          .map(
+            (child) => `
+          <div class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow-sm">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                  <div class="rounded-circle bg-warning text-white d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                    <i class="bi bi-emoji-smile fs-3"></i>
+                  </div>
+                  <div>
+                    <h5 class="card-title mb-0">${escapeHtml(child.NAME)}</h5>
+                    <small class="text-muted">Age: ${child.AGE} years</small>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label class="small text-muted d-block">Login Code</label>
+                  <div class="input-group input-group-sm">
+                    <input type="text" class="form-control bg-light" value="${
+                      child.CODE
+                    }" readonly>
+                    <button class="btn btn-outline-secondary" onclick="copyToClipboard('${
+                      child.CODE
+                    }')">
+                      <i class="bi bi-clipboard"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-end gap-2">
+                  <button class="btn btn-sm btn-outline-primary" onclick="openEditChildModal(${
+                    child.ID
+                  }, '${escapeHtml(child.NAME)}', '${child.DOB}')">
+                    <i class="bi bi-pencil"></i> Edit
+                  </button>
+                  <button class="btn btn-sm btn-outline-danger" onclick="deleteChild(${
+                    child.ID
+                  }, '${escapeHtml(child.NAME)}')">
+                    <i class="bi bi-trash"></i> Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+          )
+          .join("");
+
+        // Render Summary Cards (Top)
+        if (summaryContainer) {
+          summaryContainer.innerHTML = children
+            .map(
+              (child) => `
+            <div class="col-12 col-md-4 col-lg-3">
+              <div class="rounded-4 p-4 shadow-sm h-100" style="background-color:#ffedd5;">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="d-flex align-items-center gap-3">
+                    <span class="rounded-circle d-flex align-items-center justify-content-center text-white"
+                      style="background-color:#fb923c; width: 50px; height: 50px;">
+                      <i class="bi bi-person fs-4"></i>
+                    </span>
+                    <div>
+                      <h5 class="mb-0 fw-bold">${escapeHtml(child.NAME)}</h5>
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center gap-2">
+                    <h6 class="rounded-pill text-bg-secondary px-3 py-2">Child</h6>
+                  </div>
+                </div>
+                <p class="mb-0 mt-3 small text-truncate">Code: ${child.CODE}</p>
+              </div>
+            </div>
+          `
+            )
+            .join("");
+        }
+      };
+
+      // Make functions globally accessible
+      window.submitAddChild = function () {
+        const form = document.getElementById("addChildForm");
+        const errorDiv = document.getElementById("addChildError");
+        const btn = document.querySelector("#addChildModal .btn-primary");
+
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+
+        btn.disabled = true;
+        btn.textContent = "Adding...";
+        errorDiv.classList.add("d-none");
+
+        fetch("core/api/children/add.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        })
+          .then((response) => parseApiResponse(response))
+          .then((result) => {
+            if (result.success) {
+              const modal = bootstrap.Modal.getInstance(
+                document.getElementById("addChildModal")
+              );
+              modal.hide();
+              form.reset();
+              fetchChildren();
+              alert("Child added successfully!");
+            } else {
+              errorDiv.textContent = result.message || "Failed to add child";
+              errorDiv.classList.remove("d-none");
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            errorDiv.textContent = "An error occurred. Please try again.";
+            errorDiv.classList.remove("d-none");
+          })
+          .finally(() => {
+            btn.disabled = false;
+            btn.textContent = "Add Child";
+          });
+      };
+
+      window.openEditChildModal = function (id, name, dob) {
+        document.getElementById("editChildId").value = id;
+        document.getElementById("editChildName").value = name;
+        document.getElementById("editChildDob").value = dob;
+
+        const modal = new bootstrap.Modal(
+          document.getElementById("editChildModal")
+        );
+        modal.show();
+      };
+
+      window.submitEditChild = function () {
+        const form = document.getElementById("editChildForm");
+        const errorDiv = document.getElementById("editChildError");
+        const btn = document.querySelector("#editChildModal .btn-primary");
+
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+
+        btn.disabled = true;
+        btn.textContent = "Saving...";
+        errorDiv.classList.add("d-none");
+
+        fetch("core/api/children/update.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        })
+          .then((response) => parseApiResponse(response))
+          .then((result) => {
+            if (result.success) {
+              const modal = bootstrap.Modal.getInstance(
+                document.getElementById("editChildModal")
+              );
+              modal.hide();
+              fetchChildren();
+              alert("Child profile updated successfully!");
+            } else {
+              errorDiv.textContent = result.message || "Failed to update child";
+              errorDiv.classList.remove("d-none");
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            errorDiv.textContent = "An error occurred. Please try again.";
+            errorDiv.classList.remove("d-none");
+          })
+          .finally(() => {
+            btn.disabled = false;
+            btn.textContent = "Save Changes";
+          });
+      };
+
+      window.deleteChild = function (id, name) {
+        if (
+          !confirm(
+            `Are you sure you want to delete ${name}? This action cannot be undone.`
+          )
+        ) {
+          return;
+        }
+
+        fetch("core/api/children/delete.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id: id }),
+        })
+          .then((response) => parseApiResponse(response))
+          .then((result) => {
+            if (result.success) {
+              fetchChildren();
+            } else {
+              alert("Failed to delete child: " + result.message);
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            alert("An error occurred while deleting.");
+          });
+      };
+
+      window.copyToClipboard = function (text) {
+        navigator.clipboard
+          .writeText(text)
+          .then(() => {
+            alert("Code copied to clipboard!");
+          })
+          .catch((err) => {
+            console.error("Failed to copy: ", err);
+          });
+      };
+
+      // Initial fetch
+      fetchChildren();
+    },
+
+    /**
+     * Initialize Account Page Tab Persistence
+     */
+    initAccountTabs() {
+      // Only run on account page
+      const tabContainer = document.querySelector("#underlineTabs");
+      if (!tabContainer) return;
+
+      const tabStorageKey = "activeAccountTab";
+      const tabTriggerList = document.querySelectorAll(
+        '#underlineTabs button[data-bs-toggle="tab"]'
+      );
+
+      // Restore last active tab
+      const savedTab = localStorage.getItem(tabStorageKey);
+      if (savedTab) {
+        const savedTabElement = document.querySelector(
+          `[data-bs-target="${savedTab}"]`
+        );
+        if (savedTabElement) {
+          const tab = new bootstrap.Tab(savedTabElement);
+          tab.show();
+        }
+      } else {
+        // Default to first tab if none saved
+        const firstTab = document.querySelector(
+          '#underlineTabs button[data-bs-toggle="tab"]'
+        );
+        if (firstTab) {
+          const tab = new bootstrap.Tab(firstTab);
+          tab.show();
+        }
+      }
+
+      // Save tab state when changed
+      tabTriggerList.forEach((tabTrigger) => {
+        tabTrigger.addEventListener("shown.bs.tab", function (event) {
+          const targetSelector = event.target.getAttribute("data-bs-target");
+          localStorage.setItem(tabStorageKey, targetSelector);
+        });
+      });
+    },
+
+    /**
+     * Initialize Profile Management (Personal Info & Password)
+     */
+    initProfileManagement() {
+      // Personal Info Form
+      const personalInfoForm = document.getElementById("personalInfoForm");
+      if (personalInfoForm) {
+        personalInfoForm.addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const errorDiv = document.getElementById("personalInfoError");
+          const successDiv = document.getElementById("personalInfoSuccess");
+          const submitBtn = this.querySelector('button[type="submit"]');
+          const originalText = submitBtn.textContent;
+
+          errorDiv.classList.add("d-none");
+          successDiv.classList.add("d-none");
+
+          const formData = new FormData(this);
+          const data = Object.fromEntries(formData.entries());
+
+          submitBtn.disabled = true;
+          submitBtn.textContent = "Saving...";
+
+          try {
+            const response = await fetch("core/api/users/update-profile.php", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(data),
+            });
+
+            const text = await response.text();
+            const jsonString = text.startsWith("Done")
+              ? text.substring(4).trim()
+              : text.trim();
+
+            let result;
+            try {
+              result = JSON.parse(jsonString);
+            } catch (e) {
+              throw new Error("Invalid JSON response");
+            }
+
+            if (result.success) {
+              successDiv.textContent = result.message;
+              successDiv.classList.remove("d-none");
+              // Update displayed name if needed
+              setTimeout(() => location.reload(), 1500);
+            } else {
+              errorDiv.textContent = result.message;
+              errorDiv.classList.remove("d-none");
+            }
+          } catch (error) {
+            console.error("Error:", error);
+            errorDiv.textContent = "An error occurred. Please try again.";
+            errorDiv.classList.remove("d-none");
+          } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+          }
+        });
+      }
+
+      // Password Form
+      const passwordForm = document.getElementById("passwordForm");
+      if (passwordForm) {
+        passwordForm.addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const errorDiv = document.getElementById("passwordError");
+          const successDiv = document.getElementById("passwordSuccess");
+          const submitBtn = this.querySelector('button[type="submit"]');
+          const originalText = submitBtn.textContent;
+
+          errorDiv.classList.add("d-none");
+          successDiv.classList.add("d-none");
+
+          const formData = new FormData(this);
+          const data = Object.fromEntries(formData.entries());
+
+          // Basic client-side validation
+          if (data.new_password !== data.confirm_password) {
+            errorDiv.textContent = "New password and confirmation do not match";
+            errorDiv.classList.remove("d-none");
+            return;
+          }
+
+          submitBtn.disabled = true;
+          submitBtn.textContent = "Updating...";
+
+          try {
+            const response = await fetch("core/api/users/update-password.php", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(data),
+            });
+
+            const text = await response.text();
+            const jsonString = text.startsWith("Done")
+              ? text.substring(4).trim()
+              : text.trim();
+
+            let result;
+            try {
+              result = JSON.parse(jsonString);
+            } catch (e) {
+              throw new Error("Invalid JSON response");
+            }
+
+            if (result.success) {
+              successDiv.textContent = result.message;
+              successDiv.classList.remove("d-none");
+              this.reset();
+            } else {
+              errorDiv.textContent = result.message;
+              errorDiv.classList.remove("d-none");
+            }
+          } catch (error) {
+            console.error("Error:", error);
+            errorDiv.textContent = "An error occurred. Please try again.";
+            errorDiv.classList.remove("d-none");
+          } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+          }
+        });
+      }
     },
 
     /**

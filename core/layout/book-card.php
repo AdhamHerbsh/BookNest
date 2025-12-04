@@ -1,4 +1,11 @@
 <?php
+
+// Initialize session if not already started 
+if (session_status() === PHP_SESSION_NONE) {
+    require_once __DIR__ . '/../auth/session.php';
+    initSession();
+}
+
 // book-card.php - Enhanced version
 function renderBookCard($book)
 {
@@ -8,7 +15,7 @@ function renderBookCard($book)
     $description = htmlspecialchars($book['description'] ?? 'Book description here...');
     $coverImage = htmlspecialchars($book['coverImage'] ?? 'assets/images/books/library-book-1.png');
     $altText = htmlspecialchars($book['altText'] ?? 'Book cover');
-
+    $userid = htmlspecialchars($_SESSION['user_id'] ?? '');
     // Generate URLs
     $readUrl = "?page=book&id={$id}";
     $detailsUrl = "?page=book&id={$id}";
@@ -19,7 +26,9 @@ function renderBookCard($book)
         <div class="position-relative">
             <button type="button"
                 class="btn-favorite btn btn-light rounded-circle shadow-sm position-absolute top-0 end-0 m-2"
-                data-book-id="{$id}"
+                data-user-id="{$userid}"
+                data-book-id="{$id}"                
+                data-book-title="{$title}"
                 aria-pressed="false"
                 aria-label="Add {$title} to favorites"
                 title="Add to favorites">

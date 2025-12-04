@@ -1,3 +1,10 @@
+<?php
+if (!isEducator()) {
+    header("Location: ?page=landing");
+    exit;
+}
+?>
+
 <section class="mt-5">
     <div class="my-5 py-5 px-4 bg-white">
         <div class="row">
@@ -52,19 +59,22 @@
                                 echo '<td>' . htmlspecialchars($book['LANGUAGE']) . '</td>';
                                 echo '<td>' . htmlspecialchars($book['AGE_GROUP']) . '</td>';
                                 echo '<td>' . $statusBadge . '</td>';
-                                echo '<td class="text-end">
-                                    <div class="btn-group" role="group">
-                                        <a href="?page=read&id=' . $book['ID'] . '" class="btn btn-sm btn-info" title="Read">
-                                            <i class="bi bi-book"></i>
-                                        </a>
-                                        <button class="btn btn-sm btn-warning" onclick="editBook(' . $book['ID'] . ')" title="Edit">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-danger" onclick="deleteBook(' . $book['ID'] . ', \'' . htmlspecialchars($book['TITLE'], ENT_QUOTES) . '\')" title="Delete">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </div>
-                                </td>';
+                                echo '
+                                <td scope="row">
+                                        <div class="d-flex justify-content-end">
+                                            <button class="btn btn-warning btn-sm py-2 px-3 m-1 rounded-2"
+                                                onclick="editBook(' . $book['ID']  . ')"
+                                                title="Edit user">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </button>
+                                            <button class="btn btn-danger btn-sm py-2 px-3 m-1 rounded-2"
+                                                onclick="deleteBook(' . $book['ID'] . ', \'' . htmlspecialchars($book['TITLE'], ENT_QUOTES) . '\')"
+                                                title="Delete user">
+                                                <i class="bi bi-backspace"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                ';
                                 echo '</tr>';
                             }
                         } else {

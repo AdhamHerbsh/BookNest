@@ -23,15 +23,3 @@ function getDatabaseConnection()
         throw new RuntimeException("Database connection failed. Please try again later.");
     }
 }
-
-
-// Check if username already exists
-$pdo = getDatabaseConnection();
-$query = $pdo->prepare('SELECT * FROM users');
-
-$users = $query->fetchAll();
-
-foreach ($users as $user) {
-    echo $user['USERNAME'];
-}
-echo "Done";

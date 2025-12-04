@@ -4,8 +4,7 @@ require_once 'core/db/config.php';
 
 /**
  * Fetch all users with their roles
- * 
- * @return array Array of user records with role names
+ * * @return array Array of user records with role names
  */
 function fetchAllUsers()
 {
@@ -74,14 +73,17 @@ $users = fetchAllUsers();
                                     <td><?php echo date('M d, Y', strtotime($user['CREATED_DATE'])); ?></td>
                                     <td scope="row">
                                         <div class="d-flex justify-content-end">
-                                            <button class="btn btn-warning btn-sm py-2 px-3 m-1 rounded-2"
-                                                onclick="openEditModal(<?php echo htmlspecialchars($user['ID']); ?>)"
-                                                title="Edit user">
+                                            <!-- Manage Children Button -->
+                                            <a href="?admin=children&user_id=<?php echo htmlspecialchars($user['ID']); ?>"
+                                                class="btn btn-info btn-sm py-2 px-3 m-1 rounded-2"
+                                                title="Manage children">
+                                                <i class="bi bi-people"></i>
+                                            </a>
+                                            <!-- Existing Edit/Delete buttons -->
+                                            <button class="btn btn-warning btn-sm py-2 px-3 m-1 rounded-2" onclick="openEditModal(<?php echo htmlspecialchars($user['ID']); ?>)" title="Edit user">
                                                 <i class="bi bi-pencil-square"></i>
                                             </button>
-                                            <button class="btn btn-danger btn-sm py-2 px-3 m-1 rounded-2"
-                                                onclick="deleteUser(<?php echo htmlspecialchars($user['ID']); ?>)"
-                                                title="Delete user">
+                                            <button class="btn btn-danger btn-sm py-2 px-3 m-1 rounded-2" onclick="deleteUser(<?php echo htmlspecialchars($user['ID']); ?>)" title="Delete user">
                                                 <i class="bi bi-backspace"></i>
                                             </button>
                                         </div>
@@ -103,7 +105,6 @@ $users = fetchAllUsers();
     </div>
 </section>
 
-<!-- Edit User Modal -->
 <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">

@@ -1,3 +1,9 @@
+<?php
+if (!isEducator()) {
+    include "core/pages/401.php";
+    exit;
+}
+?>
 <section>
     <div class="container py-5">
         <!-- First Row -->
@@ -9,13 +15,13 @@
                         class="card-header bg-white border-bottom d-flex justify-content-between align-items-center py-3">
                         <h5 class="mb-0">Quiz 1</h5>
                         <div class="d-flex gap-2">
-                            <button class="btn btn-success d-flex align-items-center gap-1 px-3">
+                            <button class="btn btn-secondary-light d-flex align-items-center gap-1 px-3">
                                 <i class="bi bi-pencil-square"></i>
-                                <span>Edit</span>
+                                <span class="fs-6">Edit</span>
                             </button>
                             <button class="btn btn-danger d-flex align-items-center gap-1 px-3">
                                 <i class="bi bi-trash"></i>
-                                <span>Delete</span>
+                                <span class="fs-6">Delete</span>
                             </button>
                         </div>
                     </div>
@@ -36,13 +42,13 @@
                         class="card-header bg-white border-bottom d-flex justify-content-between align-items-center py-3">
                         <h5 class="mb-0">Quiz 2</h5>
                         <div class="d-flex gap-2">
-                            <button class="btn btn-success d-flex align-items-center gap-1 px-3">
+                            <button class="btn btn-secondary-light d-flex align-items-center gap-1 px-3">
                                 <i class="bi bi-pencil-square"></i>
-                                <span>Edit</span>
+                                <span class="fs-6">Edit</span>
                             </button>
                             <button class="btn btn-danger d-flex align-items-center gap-1 px-3">
                                 <i class="bi bi-trash"></i>
-                                <span>Delete</span>
+                                <span class="fs-6">Delete</span>
                             </button>
                         </div>
                     </div>
@@ -63,13 +69,13 @@
                         class="card-header bg-white border-bottom d-flex justify-content-between align-items-center py-3">
                         <h5 class="mb-0">Quiz 3</h5>
                         <div class="d-flex gap-2">
-                            <button class="btn btn-success d-flex align-items-center gap-1 px-3">
+                            <button class="btn btn-secondary-light d-flex align-items-center gap-1 px-3">
                                 <i class="bi bi-pencil-square"></i>
-                                <span>Edit</span>
+                                <span class="fs-6">Edit</span>
                             </button>
                             <button class="btn btn-danger d-flex align-items-center gap-1 px-3">
                                 <i class="bi bi-trash"></i>
-                                <span>Delete</span>
+                                <span class="fs-6">Delete</span>
                             </button>
                         </div>
                     </div>
@@ -93,13 +99,13 @@
                         class="card-header bg-white border-bottom d-flex justify-content-between align-items-center py-3">
                         <h5 class="mb-0">Quiz 4</h5>
                         <div class="d-flex gap-2">
-                            <button class="btn btn-success d-flex align-items-center gap-1 px-3">
+                            <button class="btn btn-secondary-light d-flex align-items-center gap-1 px-3">
                                 <i class="bi bi-pencil-square"></i>
-                                <span>Edit</span>
+                                <span class="fs-6">Edit</span>
                             </button>
                             <button class="btn btn-danger d-flex align-items-center gap-1 px-3">
                                 <i class="bi bi-trash"></i>
-                                <span>Delete</span>
+                                <span class="fs-6">Delete</span>
                             </button>
                         </div>
                     </div>
@@ -120,13 +126,13 @@
                         class="card-header bg-white border-bottom d-flex justify-content-between align-items-center py-3">
                         <h5 class="mb-0">Quiz 5</h5>
                         <div class="d-flex gap-2">
-                            <button class="btn btn-success d-flex align-items-center gap-1 px-3">
+                            <button class="btn btn-secondary-light d-flex align-items-center gap-1 px-3">
                                 <i class="bi bi-pencil-square"></i>
-                                <span>Edit</span>
+                                <span class="fs-6">Edit</span>
                             </button>
                             <button class="btn btn-danger d-flex align-items-center gap-1 px-3">
                                 <i class="bi bi-trash"></i>
-                                <span>Delete</span>
+                                <span class="fs-6">Delete</span>
                             </button>
                         </div>
                     </div>

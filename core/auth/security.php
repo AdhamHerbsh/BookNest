@@ -164,14 +164,16 @@ function validatePhone(string $phone): array
  * @param string $code Child code to validate
  * @return array{valid: bool, message: string} Validation result
  */
+
 function validateChildCode(string $code): array
 {
     if (empty($code)) {
         return ['valid' => false, 'message' => 'Child code is required'];
     }
 
-    if (!preg_match('/^[0-9]{4,6}$/', $code)) {
-        return ['valid' => false, 'message' => 'Child code must be 4-6 digits'];
+    // Format: CHILD-{ParentID}-{rand 6 digits}
+    if (!preg_match('/^CHILD-\d+-\d{6}$/', $code)) {
+        return ['valid' => false, 'message' => 'Child code must be in the format CHILD-{ParentID}-{6-digit-number}'];
     }
 
     return ['valid' => true, 'message' => 'Child code is valid'];
@@ -193,8 +195,8 @@ function validateChildPasskey(string $passkey): array
         return ['valid' => false, 'message' => 'Child passkey must be 4-8 characters'];
     }
 
-    if (!preg_match('/^[A-Za-z0-9]+$/', $passkey)) {
-        return ['valid' => false, 'message' => 'Child passkey can only contain letters and numbers'];
+    if (!preg_match('/^[0-9]+$/', $passkey)) {
+        return ['valid' => false, 'message' => 'Child passkey can only contain numbers'];
     }
 
     return ['valid' => true, 'message' => 'Child passkey is valid'];

@@ -39,6 +39,7 @@ $admin = filter_input(INPUT_GET, 'admin', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     <link rel="shortcut icon" href="assets/images/BookNest Logo/favicon/android-icon-72x72.png" type="image/x-icon" />
     <link rel="shortcut icon" href="assets/images/BookNest Logo/favicon/android-icon-48x48.png" type="image/x-icon" />
     <link rel="shortcut icon" href="assets/images/BookNest Logo/favicon/android-icon-36x36.png" type="image/x-icon" />
+
     <title>Book Nest</title>
 </head>
 
@@ -69,31 +70,41 @@ $admin = filter_input(INPUT_GET, 'admin', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             case 'register':
                 include "core/auth/register.php";
                 break;
+            case 'forgot-password':
+                include "core/auth/forgot-password.php";
+                break;
             default:
                 include "core/pages/404.php";
                 break;
         }
     } elseif ($admin) {
-        // Admin routing
-        require "core/layout/header.php";
-        switch ($admin) {
-            case 'dashboard':
-                include "core/admin/dashboard.php";
-                break;
-            case 'users':
-                include "core/admin/users.php";
-                break;
-            case 'books':
-                include "core/admin/books.php";
-                break;
-            case 'quizzes':
-                include "core/admin/quizzes.php";
-                break;
-            default:
-                include "core/pages/404.php";
-                break;
+        if (isAdmin()) {
+            // Admin routing
+            require "core/layout/header.php";
+            switch ($admin) {
+                case 'dashboard':
+                    include "core/admin/dashboard.php";
+                    break;
+                case 'users':
+                    include "core/admin/users.php";
+                    break;
+                case 'children':
+                    include "core/admin/children.php";
+                    break;
+                case 'books':
+                    include "core/admin/books.php";
+                    break;
+                case 'quizzes':
+                    include "core/admin/quizzes.php";
+                    break;
+                default:
+                    include "core/pages/404.php";
+                    break;
+            }
+            require "core/layout/footer.php";
+        } else {
+            include "core/pages/401.php";
         }
-        require "core/layout/footer.php";
     } elseif ($page) {
 
         // Whitelist allowed pages to prevent LFI (Local File Inclusion)
@@ -138,7 +149,6 @@ $admin = filter_input(INPUT_GET, 'admin', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     ?>
 
     <script src="assets/js/aos.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/swiper-bundle.min.js"></script>
     <script src="assets/js/main.js"></script>

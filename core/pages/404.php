@@ -16,7 +16,7 @@
                 <i class="bi bi-house-door me-2"></i>
                 Return Home
             </a>
-            <a href="/library" class="btn btn-outline-primary btn-lg px-4 py-2">
+            <a href="?page=library" class="btn btn-outline-primary btn-lg px-4 py-2">
                 <i class="bi bi-book me-2"></i>
                 Visit Library
             </a>

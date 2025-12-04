@@ -326,47 +326,49 @@ function processChildLogin($data)
     // Get database connection
     $pdo = getDatabaseConnection();
 
-    // Find child user - code can match ID or username
+    // 1. Find child by CODE in children table
     $stmt = $pdo->prepare("
-        SELECT u.*, r.NAME as ROLE_NAME
-        FROM users u
-        JOIN Roles r ON u.ROLE_ID = r.ID
-        WHERE r.NAME = 'CHILD' AND (
-            u.ID = ? OR u.USERNAME = ? OR u.FIRST_NAME = ?
-        )
+        SELECT c.*, r.NAME as ROLE_NAME
+        FROM children c
+        LEFT JOIN roles r ON c.ROLE_ID = r.ID
+        WHERE c.CODE = ?
     ");
-    $stmt->execute([
-        sanitizeInput($data['child_code']),
-        sanitizeInput($data['child_code']),
-        sanitizeInput($data['child_code'])
-    ]);
-    $user = $stmt->fetch();
+    $stmt->execute([sanitizeInput($data['child_code'])]);
+    $child = $stmt->fetch();
 
-    if (!$user) {
+    if (!$child) {
         logAuth('failed_login', 0, $data['child_code'], 'Child code not found');
         return ['success' => false, 'message' => 'Invalid child code or passkey'];
     }
 
-    // For child users, passkey can be:
-    // 1. The PASSWORD field if set
-    // 2. A combination of ID and name
-    // 3. A simple passkey stored in USERNAME or FIRST_NAME
-    $validPasskey = false;
+    // 2. Find Parent (User) to check PassKey
+    $stmt = $pdo->prepare("SELECT PASSKEY FROM users WHERE ID = ?");
+    $stmt->execute([$child['USER_ID']]);
+    $parent = $stmt->fetch();
 
-    if ($user['PASSWORD'] && verifyPassword($data['child_passkey'], $user['PASSWORD'])) {
-        $validPasskey = true;
-    } elseif ($data['child_passkey'] === $user['USERNAME']) {
-        $validPasskey = true;
-    } elseif ($data['child_passkey'] === $user['FIRST_NAME']) {
-        $validPasskey = true;
-    } elseif (hash('sha256', $data['child_passkey'] . $user['ID']) === $user['PASSWORD']) {
-        $validPasskey = true;
+    if (!$parent) {
+        logAuth('failed_login', 0, $data['child_code'], 'Parent not found');
+        return ['success' => false, 'message' => 'Parent account not found'];
     }
 
-    if (!$validPasskey) {
-        logAuth('failed_login', $user['ID'], $user['USERNAME'], 'Invalid child passkey');
+    // 3. Verify PassKey
+    if ($data['child_passkey'] !== (string)$parent['PASSKEY']) {
+        logAuth('failed_login', $child['ID'], $child['NAME'], 'Invalid child passkey');
         return ['success' => false, 'message' => 'Invalid child code or passkey'];
     }
+
+    // 4. Prepare User Array for Session
+    // Map child fields to user fields expected by loginUser/session
+    $user = [
+        'ID' => $child['ID'],
+        'USERNAME' => $child['NAME'], // Use Name as Username
+        'FIRST_NAME' => $child['NAME'],
+        'LAST_NAME' => '',
+        'ROLE_NAME' => $child['ROLE_NAME'] ?? 'CHILD',
+        'ROLE_ID' => $child['ROLE_ID'],
+        'IS_CHILD' => true, // Flag to identify child session
+        'PARENT_ID' => $child['USER_ID']
+    ];
 
     // Login successful - create session
     loginUser($user);

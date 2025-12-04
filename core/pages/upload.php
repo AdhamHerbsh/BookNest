@@ -1,3 +1,9 @@
+<?php
+if (!isEducator()) {
+    include "core/pages/401.php";
+    exit;
+}
+?>
 <section class="mt-5">
     <div class="container">
         <div class="row">

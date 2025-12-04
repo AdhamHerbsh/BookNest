@@ -121,10 +121,12 @@ $relatedBooks = $book['ageGroup'] ? fetchRelatedBooks($book['ageGroup'], $book['
                         <div class="col-6">
                             <div class="d-grid gap-2">
                                 <button type="button"
-                                    class="btn btn-light"
+                                    class="btn-favorite text btn btn-light"
                                     data-book-id="<?php echo htmlspecialchars($book['id']); ?>"
-                                    onclick="toggleFavorite(this)">
-                                    Add to Favorites
+                                    data-book-title="<?php echo htmlspecialchars($book['title']); ?>"
+                                    aria-pressed="false"
+                                    aria-label="Add <?php echo htmlspecialchars($book['title']); ?> to favorites">
+                                    <span class="btn-text">Add to Favorites</span>
                                 </button>
                             </div>
                         </div>
@@ -197,22 +199,3 @@ $relatedBooks = $book['ageGroup'] ? fetchRelatedBooks($book['ageGroup'], $book['
         </div>
     </section>
 </div>
-
-<script>
-    // Simple favorite toggle function (enhance as needed)
-    function toggleFavorite(button) {
-        const bookId = button.getAttribute('data-book-id');
-        const isFavorited = button.classList.contains('favorited');
-
-        // Here you would typically make an AJAX call to save the favorite status
-        console.log('Toggle favorite for book:', bookId);
-
-        if (isFavorited) {
-            button.classList.remove('favorited');
-            button.textContent = 'Add to Favorites';
-        } else {
-            button.classList.add('favorited');
-            button.textContent = 'Remove from Favorites';
-        }
-    }
-</script>

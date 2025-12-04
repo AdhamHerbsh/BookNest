@@ -79,7 +79,7 @@ function buildQueryString($params)
             Ignite your child's imagination with our interactive digital library. Featuring audio narration,
             animations, and progress tracking, BookNest makes reading fun and engaging for kids aged 4-12.
         </p>
-        <button class="btn btn-primary" data-aos="zoom-in" data-aos-delay="1000">Start Exploring</button>
+        <a href="#featured-collections" class="btn btn-primary" data-aos="zoom-in" data-aos-delay="1000">Start Exploring</a>
     </div>
 
     <section class="px-5">
@@ -95,7 +95,7 @@ function buildQueryString($params)
                         endif; ?>
                         <?php if ($searchTerm): echo ($selectedAgeGroup ? ' • ' : '') . "Search: " . htmlspecialchars($searchTerm);
                         endif; ?>
-                        | <a href="?page=library" class="text-decoration-none">Clear all</a>
+                        | <a href="?page=library#featured-collections" class="text-decoration-none">Clear all</a>
                     </small>
                 </div>
             <?php endif; ?>
@@ -106,19 +106,19 @@ function buildQueryString($params)
                 <div class="container">
                     <div class="row d-flex justify-content-center mb-4 g-2">
                         <div class="col-4 col-md-2">
-                            <a href="?<?php echo buildQueryString(['age_group' => '4-6']); ?>"
+                            <a href="?<?php echo buildQueryString(['age_group' => '4-6']); ?>#featured-collections"
                                 class="btn btn-outline-primary rounded-5 w-100 <?php echo isAgeGroupActive('4-6', $selectedAgeGroup); ?>">
                                 4-6 yrs
                             </a>
                         </div>
                         <div class="col-4 col-md-2">
-                            <a href="?<?php echo buildQueryString(['age_group' => '7-9']); ?>"
+                            <a href="?<?php echo buildQueryString(['age_group' => '7-9']); ?>#featured-collections"
                                 class="btn btn-outline-primary rounded-5 w-100 <?php echo isAgeGroupActive('7-9', $selectedAgeGroup); ?>">
                                 7-9 yrs
                             </a>
                         </div>
                         <div class="col-4 col-md-2">
-                            <a href="?<?php echo buildQueryString(['age_group' => '10-12']); ?>"
+                            <a href="?<?php echo buildQueryString(['age_group' => '10-12']); ?>#featured-collections"
                                 class="btn btn-outline-primary rounded-5 w-100 <?php echo isAgeGroupActive('10-12', $selectedAgeGroup); ?>">
                                 10-12 yrs
                             </a>
@@ -143,7 +143,7 @@ function buildQueryString($params)
         </div>
     </section>
 
-    <section class="featured-collections">
+    <section id="featured-collections" class="featured-collection">
         <div class="container-fluid px-4">
             <div class="row mb-4">
                 <div class="col-12 text-center">
