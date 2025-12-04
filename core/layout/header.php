@@ -7,7 +7,7 @@
                 </div>
                 <div>
                     <h4 class="m-0 fw-bold">BookNest</h4>
-                    <small>Digital Library For Children</small>
+                    <small data-i18n="header.subtitle">Digital Library For Children</small>
                 </div>
 
             </a>

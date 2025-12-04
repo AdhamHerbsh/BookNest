@@ -7,15 +7,15 @@
             </div>
             <div class="col-12 col-md-6">
                 <div class="bg-white rounded-4 shadow-sm p-4">
-                    <h1 class="display-5 fw-bold text-danger mb-3">Unauthorized</h1>
-                    <p class="text-muted mb-4">
+                    <h1 class="display-5 fw-bold text-danger mb-3" data-i18n="error_401.title">Unauthorized</h1>
+                    <p class="text-muted mb-4" data-i18n="error_401.message">
                         You don’t have permission to access this page. Please log in or create an account to continue.
                     </p>
                     <div class="d-flex flex-column flex-sm-row gap-3">
-                        <a href="index.php?auth=login" class="btn btn-primary btn-lg">
+                        <a href="index.php?auth=login" class="btn btn-primary btn-lg" data-i18n="error_401.btn_login">
                             Login
                         </a>
-                        <a href="index.php?auth=register" class="btn btn-outline-primary btn-lg">
+                        <a href="index.php?auth=register" class="btn btn-outline-primary btn-lg" data-i18n="error_401.btn_register">
                             Register
                         </a>
                     </div>

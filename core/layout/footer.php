@@ -6,7 +6,7 @@
             <div class="col-md-4 mb-4 mb-md-0 d-flex flex-column align-items-center align-items-md-center">
                 <img src="assets/images/BookNest Logo/Logo Square RBG.png" alt="BookNest Logo"
                     class="footer-logo mb-2" />
-                <p class="copyright text-white mb-0">
+                <p class="copyright text-white mb-0" data-i18n="footer.copyright">
                     © 2025 BookNest. All rights reserved.
                 </p>
             </div>
@@ -15,16 +15,16 @@
                 <div class="row">
                     <div class="col-5">
                         <ul class="list-unstyled footer-links">
-                            <li><a href="?page=landing" class="text-white">Home</a></li>
-                            <li><a href="?page=landing#key-features" class="text-white">Services</a></li>
-                            <li><a href="?page=library" class="text-white">Library</a></li>
+                            <li><a href="?page=landing" class="text-white" data-i18n="footer.nav_home">Home</a></li>
+                            <li><a href="?page=landing#key-features" class="text-white" data-i18n="footer.nav_services">Services</a></li>
+                            <li><a href="?page=library" class="text-white" data-i18n="footer.nav_library">Library</a></li>
                         </ul>
                     </div>
                     <div class="col-7">
                         <ul class="list-unstyled footer-links">
-                            <li><a href="?page=about" class="text-white">Who we are</a></li>
-                            <li><a href="?page=licenses" class="text-white">Licenses</a></li>
-                            <li><a href="?page=privacy" class="text-white">Privacy</a></li>
+                            <li><a href="?page=about" class="text-white" data-i18n="footer.nav_about">Who we are</a></li>
+                            <li><a href="?page=licenses" class="text-white" data-i18n="footer.nav_licenses">Licenses</a></li>
+                            <li><a href="?page=privacy" class="text-white" data-i18n="footer.nav_privacy">Privacy</a></li>
                         </ul>
                     </div>
                 </div>
@@ -34,11 +34,11 @@
                 <form class="mb-3 w-100" style="max-width: 250px;">
                     <div class="input-group">
                         <input type="email" class="form-control form-control-sm border-0" placeholder="Subscribe"
-                            aria-label="Subscribe" />
+                            aria-label="Subscribe" data-i18n-placeholder="footer.subscribe_placeholder" />
                         <span class="input-group-text bg-white" id="basic-addon1">
                             <i class="bi bi-cursor text-success"></i> </span>
                     </div>
-                    <button type="submit" class="btn btn-outline-success btn-sm w-100 mt-2 bg-white text-success">Send
+                    <button type="submit" class="btn btn-outline-success btn-sm w-100 mt-2 bg-white text-success" data-i18n="footer.subscribe_button">Send
                         Mail</button>
                 </form>
                 <div class="social-icons d-flex gap-3">

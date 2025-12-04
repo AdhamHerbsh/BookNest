@@ -32,6 +32,7 @@ $admin = filter_input(INPUT_GET, 'admin', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     <link rel="stylesheet" href="assets/css/bootstrap-icons.css" />
     <link rel="stylesheet" href="assets/css/swiper-bundle.min.css" />
     <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/custom.rtl.css" />
     <link rel="shortcut icon" href="assets/images/BookNest Logo/favicon/favicon-96x96.png" type="image/x-icon" />
     <link rel="shortcut icon" href="assets/images/BookNest Logo/favicon/android-icon-192x192.png" type="image/x-icon" />
     <link rel="shortcut icon" href="assets/images/BookNest Logo/favicon/android-icon-144x144.png" type="image/x-icon" />
@@ -53,10 +54,10 @@ $admin = filter_input(INPUT_GET, 'admin', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
                 alt="BookNest Logo" />
             <div class="spinner-container">
                 <div class="spinner-border text-primary" role="status">
-                    <span class="visually-hidden">Loading...</span>
+                    <span class="visually-hidden" data-i18n="index.loading_spinner">Loading...</span>
                 </div>
             </div>
-            <p class="loading-text mt-3">Loading your reading adventure...</p>
+            <p class="loading-text mt-3" data-i18n="index.loading_text">Loading your reading adventure...</p>
         </div>
     </div>
 

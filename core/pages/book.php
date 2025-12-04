@@ -102,7 +102,7 @@ $relatedBooks = $book['ageGroup'] ? fetchRelatedBooks($book['ageGroup'], $book['
             <div class="col-12 col-md-8">
                 <div class="container">
                     <span class="badge-lg py-2 px-4 rounded-pill bg-primary-light text-primary">
-                        Age <?php echo htmlspecialchars($ageBadge); ?>
+                        <span data-i18n="book.age_prefix">Age</span> <?php echo htmlspecialchars($ageBadge); ?>
                     </span>
                     <h1 class="fw-bold my-2"><?php echo htmlspecialchars($book['title']); ?></h1>
                     <p class="fs-2">By <?php echo htmlspecialchars($book['author']); ?></p>
@@ -114,7 +114,7 @@ $relatedBooks = $book['ageGroup'] ? fetchRelatedBooks($book['ageGroup'], $book['
                                 <a href="<?php echo htmlspecialchars($book['filePath'] ?: '#'); ?>"
                                     class="btn btn-primary"
                                     target="_blank">
-                                    Read Now
+                                    <span data-i18n="book.btn_read_now">Read Now</span>
                                 </a>
                             </div>
                         </div>
@@ -126,29 +126,29 @@ $relatedBooks = $book['ageGroup'] ? fetchRelatedBooks($book['ageGroup'], $book['
                                     data-book-title="<?php echo htmlspecialchars($book['title']); ?>"
                                     aria-pressed="false"
                                     aria-label="Add <?php echo htmlspecialchars($book['title']); ?> to favorites">
-                                    <span class="btn-text">Add to Favorites</span>
+                                    <span class="btn-text" data-i18n="book.btn_add_favorites">Add to Favorites</span>
                                 </button>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12 my-4 mx-auto rounded-4 bg-light p-4">
-                            <h3 class="mb-3">Interactive Features</h3>
+                            <h3 class="mb-3" data-i18n="book.interactive_title">Interactive Features</h3>
                             <div class="d-flex flex-column gap-3">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <span class="fw-semibold text-dark">Audio Narration</span>
+                                    <span class="fw-semibold text-dark" data-i18n="book.audio_narration">Audio Narration</span>
                                     <div class="form-check form-switch m-0">
                                         <input class="form-check-input" type="checkbox" id="audioNarration" checked>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <span class="fw-semibold text-dark">Interactive Elements</span>
+                                    <span class="fw-semibold text-dark" data-i18n="book.interactive_elements">Interactive Elements</span>
                                     <div class="form-check form-switch m-0">
                                         <input class="form-check-input" type="checkbox" id="interactiveElements" checked>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <span class="fw-semibold text-dark">Animations</span>
+                                    <span class="fw-semibold text-dark" data-i18n="book.animations">Animations</span>
                                     <div class="form-check form-switch m-0">
                                         <input class="form-check-input" type="checkbox" id="animations" checked>
                                     </div>
@@ -164,12 +164,12 @@ $relatedBooks = $book['ageGroup'] ? fetchRelatedBooks($book['ageGroup'], $book['
     <section class="featured-collections">
         <div class="container-fluid px-4">
             <div class="row mb-4">
-                <h2 class="fw-bold">You Might Also Like</h2>
+                <h2 class="fw-bold" data-i18n="book.related_title">You Might Also Like</h2>
             </div>
 
             <?php if (empty($relatedBooks)): ?>
                 <div class="text-center py-4">
-                    <p class="text-muted">No related books found.</p>
+                    <p class="text-muted" data-i18n="book.no_related_books">No related books found.</p>
                 </div>
             <?php else: ?>
                 <div class="row">
@@ -186,9 +186,9 @@ $relatedBooks = $book['ageGroup'] ? fetchRelatedBooks($book['ageGroup'], $book['
                                     <p class="card-text">By <?php echo htmlspecialchars($relatedBook['author']); ?></p>
                                     <div class="card-overlay rounded-4">
                                         <a href="?page=book&id=<?php echo htmlspecialchars($relatedBook['id']); ?>"
-                                            class="btn btn-primary mb-4">Read</a>
+                                            class="btn btn-primary mb-4" data-i18n="book.btn_read">Read</a>
                                         <a href="?page=book&id=<?php echo htmlspecialchars($relatedBook['id']); ?>"
-                                            class="text-white">View Details</a>
+                                            class="text-white" data-i18n="book.btn_view_details">View Details</a>
                                     </div>
                                 </div>
                             </div>

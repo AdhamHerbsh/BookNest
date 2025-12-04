@@ -46,7 +46,7 @@ $isParent = isset($_SESSION['role']) && $_SESSION['role'] === 'PARENT';
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalToggleLabel">Session Debug</h5>
+                <h5 class="modal-title" id="exampleModalToggleLabel" data-i18n="account.session_debug_title">Session Debug</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -60,7 +60,7 @@ $isParent = isset($_SESSION['role']) && $_SESSION['role'] === 'PARENT';
     </div>
 </div>
 
-<a class="btn btn-primary position-fixed bottom-0 end-0 m-3" style="z-index: 9999;" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Session</a>
+<a class="btn btn-primary position-fixed bottom-0 end-0 m-3" style="z-index: 9999;" data-bs-toggle="modal" href="#exampleModalToggle" role="button" data-i18n="account.btn_session">Session</a>
 
 <section class="mt-5 p-2 p-md-5">
     <div class="container-fluid">
@@ -75,7 +75,7 @@ $isParent = isset($_SESSION['role']) && $_SESSION['role'] === 'PARENT';
                     </button>
                 </form>
             </div>
-            <h1>Account Settings</h1>
+            <h1 data-i18n="account.page_title">Account Settings</h1>
         </div>
 
         <div class="row my-5">
@@ -98,7 +98,7 @@ $isParent = isset($_SESSION['role']) && $_SESSION['role'] === 'PARENT';
                             </h6>
                         </div>
                         <?php if ($isParent): ?>
-                            <p class="mb-0 mt-3">PassKey: <strong id="parentPasskeyDisplay">...</strong></p>
+                            <p class="mb-0 mt-3"><span data-i18n="account.passkey_label">PassKey:</span> <strong id="parentPasskeyDisplay">...</strong></p>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -116,24 +116,24 @@ $isParent = isset($_SESSION['role']) && $_SESSION['role'] === 'PARENT';
             <ul class="nav nav-tabs mb-4 border-bottom" id="underlineTabs" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link border-0 text-primary" id="personal-tab" data-bs-toggle="tab" data-bs-target="#personal" type="button" role="tab">
-                        Personal Information
+                        <span data-i18n="account.tab_personal">Personal Information</span>
                     </button>
                 </li>
                 <?php if ($isParent): ?>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link border-0 text-primary" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab">
-                            Child Profiles
+                            <span data-i18n="account.tab_profiles">Child Profiles</span>
                         </button>
                     </li>
                 <?php endif; ?>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link border-0 text-primary" id="security-tab" data-bs-toggle="tab" data-bs-target="#security" type="button" role="tab">
-                        Password & Security
+                        <span data-i18n="account.tab_security">Password & Security</span>
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link border-0 text-primary" id="favorites-tab" data-bs-toggle="tab" data-bs-target="#favorites" type="button" role="tab">
-                        Favorites
+                        <span data-i18n="account.tab_favorites">Favorites</span>
                     </button>
                 </li>
             </ul>
@@ -144,27 +144,27 @@ $isParent = isset($_SESSION['role']) && $_SESSION['role'] === 'PARENT';
                 <div class="tab-pane fade show" id="personal" role="tabpanel">
                     <div class="bg-light p-4 rounded-4 my-5">
                         <form id="personalInfoForm" class="form-container">
-                            <h3 class="mb-4 fw-bold">Personal Information</h3>
+                            <h3 class="mb-4 fw-bold" data-i18n="account.personal_title">Personal Information</h3>
                             <div class="row g-3 mb-3">
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" id="firstName" name="first_name" placeholder="First Name" value="<?php echo htmlspecialchars($user['FIRST_NAME'] ?? ''); ?>" required />
+                                    <input type="text" class="form-control" id="firstName" name="first_name" placeholder="First Name" value="<?php echo htmlspecialchars($user['FIRST_NAME'] ?? ''); ?>" required data-i18n-placeholder="account.placeholder_firstname" />
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" id="lastName" name="last_name" placeholder="Last Name" value="<?php echo htmlspecialchars($user['LAST_NAME'] ?? ''); ?>" required />
+                                    <input type="text" class="form-control" id="lastName" name="last_name" placeholder="Last Name" value="<?php echo htmlspecialchars($user['LAST_NAME'] ?? ''); ?>" required data-i18n-placeholder="account.placeholder_lastname" />
                                 </div>
                             </div>
                             <div class="row g-3 mb-4">
                                 <div class="col-md-6">
-                                    <input type="email" class="form-control" placeholder="Email Address" value="<?php echo htmlspecialchars($user['USERNAME'] ?? ''); ?>" readonly />
+                                    <input type="email" class="form-control" placeholder="Email Address" value="<?php echo htmlspecialchars($user['USERNAME'] ?? ''); ?>" readonly data-i18n-placeholder="account.placeholder_email" />
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="tel" class="form-control" id="phone" name="phone" placeholder="Phone Number" value="<?php echo htmlspecialchars($user['PHONE'] ?? ''); ?>" />
+                                    <input type="tel" class="form-control" id="phone" name="phone" placeholder="Phone Number" value="<?php echo htmlspecialchars($user['PHONE'] ?? ''); ?>" data-i18n-placeholder="account.placeholder_phone" />
                                 </div>
                             </div>
                             <div class="alert alert-danger d-none" id="personalInfoError"></div>
                             <div class="alert alert-success d-none" id="personalInfoSuccess"></div>
                             <div class="d-flex justify-content-end">
-                                <button type="submit" class="btn btn-primary rounded-4">Save Changes</button>
+                                <button type="submit" class="btn btn-primary rounded-4" data-i18n="account.btn_save_changes">Save Changes</button>
                             </div>
                         </form>
                     </div>
@@ -175,10 +175,10 @@ $isParent = isset($_SESSION['role']) && $_SESSION['role'] === 'PARENT';
                     <div class="tab-pane fade" id="profile" role="tabpanel">
                         <div class="bg-light p-4 rounded-4 my-5">
                             <div class="d-flex justify-content-between align-items-center mb-4">
-                                <h3 class="mb-0 fw-bold">Child Profiles</h3>
+                                <h3 class="mb-0 fw-bold" data-i18n="account.profiles_title">Child Profiles</h3>
                                 <button type="button" class="btn btn-success d-flex align-items-center gap-2 px-3" data-bs-toggle="modal" data-bs-target="#addChildModal">
                                     <i class="bi bi-plus-lg"></i>
-                                    <span>Add Child</span>
+                                    <span data-i18n="account.btn_add_child">Add Child</span>
                                 </button>
                             </div>
 
@@ -186,7 +186,7 @@ $isParent = isset($_SESSION['role']) && $_SESSION['role'] === 'PARENT';
                             <div id="childrenListContainer" class="row g-3">
                                 <div class="text-center py-5">
                                     <div class="spinner-border text-primary" role="status">
-                                        <span class="visually-hidden">Loading...</span>
+                                        <span class="visually-hidden" data-i18n="account.loading">Loading...</span>
                                     </div>
                                 </div>
                             </div>
@@ -198,18 +198,18 @@ $isParent = isset($_SESSION['role']) && $_SESSION['role'] === 'PARENT';
                 <div class="tab-pane fade" id="security" role="tabpanel">
                     <div class="bg-light p-4 rounded-4 my-5">
                         <form id="passwordForm" class="form-container">
-                            <h3 class="mb-4 fw-bold">Password & Security</h3>
+                            <h3 class="mb-4 fw-bold" data-i18n="account.security_title">Password & Security</h3>
                             <div class="row g-3 mb-3">
                                 <div class="col-md-6">
-                                    <input type="password" class="form-control mb-3" id="newPassword" name="new_password" placeholder="New Password" required />
-                                    <input type="password" class="form-control mb-3" id="confirmPassword" name="confirm_password" placeholder="Confirm Password" required />
-                                    <input type="password" class="form-control mb-3" id="oldPassword" name="old_password" placeholder="Old Password" required />
+                                    <input type="password" class="form-control mb-3" id="newPassword" name="new_password" placeholder="New Password" required data-i18n-placeholder="account.placeholder_new_password" />
+                                    <input type="password" class="form-control mb-3" id="confirmPassword" name="confirm_password" placeholder="Confirm Password" required data-i18n-placeholder="account.placeholder_confirm_password" />
+                                    <input type="password" class="form-control mb-3" id="oldPassword" name="old_password" placeholder="Old Password" required data-i18n-placeholder="account.placeholder_old_password" />
                                 </div>
                             </div>
                             <div class="alert alert-danger d-none" id="passwordError"></div>
                             <div class="alert alert-success d-none" id="passwordSuccess"></div>
                             <div class="d-flex justify-content-end">
-                                <button type="submit" class="btn btn-primary rounded-4">Update Password</button>
+                                <button type="submit" class="btn btn-primary rounded-4" data-i18n="account.btn_update_password">Update Password</button>
                             </div>
                         </form>
                     </div>
@@ -221,18 +221,18 @@ $isParent = isset($_SESSION['role']) && $_SESSION['role'] === 'PARENT';
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <h3 class="mb-0 fw-bold">
                                 <i class="bi bi-heart-fill me-2"></i>
-                                Favorites
+                                <span data-i18n="account.favorites_title">Favorites</span>
                             </h3>
                             <button type="button" class="btn btn-light d-flex align-items-center gap-2 px-3">
                                 <i class="bi bi-trash text-danger"></i>
-                                <span class="text-danger">Clear All</span>
+                                <span class="text-danger" data-i18n="account.btn_clear_all">Clear All</span>
                             </button>
                         </div>
 
                         <!-- Books Grid -->
                         <div class="row g-4">
                             <?php if (empty($books)): ?>
-                                <p class="text-center text-muted">No favorite books yet.</p>
+                                <p class="text-center text-muted" data-i18n="account.no_favorites">No favorite books yet.</p>
                             <?php else: ?>
                                 <?php foreach ($books as $book): ?>
                                     <div class="col-lg-3 col-md-4 col-sm-6">
@@ -254,25 +254,25 @@ $isParent = isset($_SESSION['role']) && $_SESSION['role'] === 'PARENT';
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addChildModalLabel">Add New Child</h5>
+                    <h5 class="modal-title" id="addChildModalLabel" data-i18n="account.modal_add_child_title">Add New Child</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form id="addChildForm">
                         <div class="mb-3">
-                            <label for="childName" class="form-label">Child Name</label>
+                            <label for="childName" class="form-label" data-i18n="account.label_child_name">Child Name</label>
                             <input type="text" class="form-control" id="childName" name="name" required>
                         </div>
                         <div class="mb-3">
-                            <label for="childDob" class="form-label">Date of Birth</label>
+                            <label for="childDob" class="form-label" data-i18n="account.label_dob">Date of Birth</label>
                             <input type="date" class="form-control" id="childDob" name="dob" min="2013-01-01" max="2022-01-01" required>
                         </div>
                         <div class="alert alert-danger d-none" id="addChildError"></div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" onclick="submitAddChild()">Add Child</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-i18n="account.btn_cancel">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="submitAddChild()" data-i18n="account.btn_add_child_submit">Add Child</button>
                 </div>
             </div>
         </div>
@@ -283,26 +283,26 @@ $isParent = isset($_SESSION['role']) && $_SESSION['role'] === 'PARENT';
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editChildModalLabel">Edit Child Profile</h5>
+                    <h5 class="modal-title" id="editChildModalLabel" data-i18n="account.modal_edit_child_title">Edit Child Profile</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form id="editChildForm">
                         <input type="hidden" id="editChildId" name="id">
                         <div class="mb-3">
-                            <label for="editChildName" class="form-label">Child Name</label>
+                            <label for="editChildName" class="form-label" data-i18n="account.label_child_name">Child Name</label>
                             <input type="text" class="form-control" id="editChildName" name="name" required>
                         </div>
                         <div class="mb-3">
-                            <label for="editChildDob" class="form-label">Date of Birth</label>
+                            <label for="editChildDob" class="form-label" data-i18n="account.label_dob">Date of Birth</label>
                             <input type="date" class="form-control" id="editChildDob" name="dob" required>
                         </div>
                         <div class="alert alert-danger d-none" id="editChildError"></div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" onclick="submitEditChild()">Save Changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-i18n="account.btn_cancel">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="submitEditChild()" data-i18n="account.btn_save_changes_child">Save Changes</button>
                 </div>
             </div>
         </div>

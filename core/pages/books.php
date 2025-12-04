@@ -9,11 +9,11 @@ if (!isEducator()) {
     <div class="my-5 py-5 px-4 bg-white">
         <div class="row">
             <div class="col-8">
-                <h1>Manage Books</h1>
+                <h1 data-i18n="books_manage.page_title">Manage Books</h1>
             </div>
             <div class="col-4 text-end">
                 <a href="?page=upload" class="btn btn-success">
-                    <i class="bi bi-cloud-upload me-1"></i>Upload Book
+                    <i class="bi bi-cloud-upload me-1"></i><span data-i18n="books_manage.btn_upload_book">Upload Book</span>
                 </a>
             </div>
         </div>
@@ -24,15 +24,15 @@ if (!isEducator()) {
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-borderless table-primary align-middle">
                     <thead>
-                        <caption>Uploaded Books</caption>
+                        <caption data-i18n="books_manage.table_caption">Uploaded Books</caption>
                         <tr class="table-primary">
-                            <th>Cover</th>
-                            <th>Title</th>
-                            <th>Author</th>
-                            <th>Language</th>
-                            <th>Age Group</th>
-                            <th>Status</th>
-                            <th class="text-end">Actions</th>
+                            <th data-i18n="books_manage.th_cover">Cover</th>
+                            <th data-i18n="books_manage.th_title">Title</th>
+                            <th data-i18n="books_manage.th_author">Author</th>
+                            <th data-i18n="books_manage.th_language">Language</th>
+                            <th data-i18n="books_manage.th_age_group">Age Group</th>
+                            <th data-i18n="books_manage.th_status">Status</th>
+                            <th class="text-end" data-i18n="books_manage.th_actions">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="table-group-divider">
@@ -80,7 +80,7 @@ if (!isEducator()) {
                         } else {
                             echo '<tr><td colspan="7" class="text-center py-5">
                                 <i class="bi bi-inbox" style="font-size: 3rem; color: #ccc;"></i>
-                                <p class="mt-3 text-muted">No books uploaded yet. Click "Upload Book" to get started!</p>
+                                <p class="mt-3 text-muted" data-i18n="books_manage.no_books_message">No books uploaded yet. Click "Upload Book" to get started!</p>
                             </td></tr>';
                         }
                         ?>
@@ -96,7 +96,7 @@ if (!isEducator()) {
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editBookModalLabel">Edit Book</h5>
+                <h5 class="modal-title" id="editBookModalLabel" data-i18n="books_manage.modal_edit_title">Edit Book</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form id="editBookForm">
@@ -105,18 +105,18 @@ if (!isEducator()) {
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="edit_title" class="form-label">Title</label>
+                            <label for="edit_title" class="form-label" data-i18n="books_manage.label_title">Title</label>
                             <input type="text" class="form-control" id="edit_title" name="title" required>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="edit_author" class="form-label">Author</label>
+                            <label for="edit_author" class="form-label" data-i18n="books_manage.label_author">Author</label>
                             <input type="text" class="form-control" id="edit_author" name="author" required>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="edit_language" class="form-label">Language</label>
+                            <label for="edit_language" class="form-label" data-i18n="books_manage.label_language">Language</label>
                             <select class="form-select" id="edit_language" name="language" required>
                                 <option value="English">English</option>
                                 <option value="Spanish">Spanish</option>
@@ -124,7 +124,7 @@ if (!isEducator()) {
                             </select>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="edit_age_group" class="form-label">Age Group</label>
+                            <label for="edit_age_group" class="form-label" data-i18n="books_manage.label_age_group">Age Group</label>
                             <select class="form-select" id="edit_age_group" name="age_group" required>
                                 <option value="4-6">4-6 years</option>
                                 <option value="7-9">7-9 years</option>
@@ -134,18 +134,18 @@ if (!isEducator()) {
                     </div>
 
                     <div class="mb-3">
-                        <label for="edit_description" class="form-label">Description</label>
+                        <label for="edit_description" class="form-label" data-i18n="books_manage.label_description">Description</label>
                         <textarea class="form-control" id="edit_description" name="description" rows="3" required></textarea>
                     </div>
 
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" id="edit_is_active" name="isActive">
-                        <label class="form-check-label" for="edit_is_active">Active</label>
+                        <label class="form-check-label" for="edit_is_active" data-i18n="books_manage.label_active">Active</label>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-i18n="books_manage.btn_cancel">Cancel</button>
+                    <button type="submit" class="btn btn-primary" data-i18n="books_manage.btn_save_changes">Save Changes</button>
                 </div>
             </form>
         </div>

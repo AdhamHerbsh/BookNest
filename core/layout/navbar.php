@@ -2,45 +2,45 @@
 
     <nav>
         <a href="?page=landing"
-            class="nav-link d-inline-block px-3 <?= ($_GET['page'] ?? '') == 'landing' ? 'text-primary' : 'text-black' ?>">Home</a>
+            class="nav-link d-inline-block px-3 <?= ($_GET['page'] ?? '') == 'landing' ? 'text-primary' : 'text-black' ?>" data-i18n="navbar.nav_home">Home</a>
 
         <?php if (isLoggedIn()) : ?>
             <?php if (isParent()) : ?>
 
                 <a href="?page=library"
-                    class="nav-link d-inline-block px-3 <?= ($_GET['page'] ?? '') == 'library' ? 'text-primary' : 'text-black' ?>">Library</a>
+                    class="nav-link d-inline-block px-3 <?= ($_GET['page'] ?? '') == 'library' ? 'text-primary' : 'text-black' ?>" data-i18n="navbar.nav_library">Library</a>
                 <a href="?page=about"
-                    class="nav-link d-inline-block px-3 <?= ($_GET['page'] ?? '') == 'about' ? 'text-primary' : 'text-black' ?>">About</a>
+                    class="nav-link d-inline-block px-3 <?= ($_GET['page'] ?? '') == 'about' ? 'text-primary' : 'text-black' ?>" data-i18n="navbar.nav_about">About</a>
 
             <?php elseif (isEducator()) : ?>
 
                 <a href="?page=books"
-                    class="nav-link d-inline-block px-3 <?= ($_GET['page'] ?? '') == 'books' ? 'text-primary' : 'text-black' ?>">Books</a>
+                    class="nav-link d-inline-block px-3 <?= ($_GET['page'] ?? '') == 'books' ? 'text-primary' : 'text-black' ?>" data-i18n="navbar.nav_books">Books</a>
                 <a href="?page=quizzes"
-                    class="nav-link d-inline-block px-3 <?= ($_GET['page'] ?? '') == 'quizzes' ? 'text-primary' : 'text-black' ?>">Quizzes</a>
+                    class="nav-link d-inline-block px-3 <?= ($_GET['page'] ?? '') == 'quizzes' ? 'text-primary' : 'text-black' ?>" data-i18n="navbar.nav_quizzes">Quizzes</a>
 
             <?php elseif (isAdmin()) : ?>
 
                 <a href="?admin=dashboard"
-                    class="nav-link d-inline-block px-3 <?= ($_GET['admin'] ?? '') == 'dashboard' ? 'text-primary' : 'text-black' ?>">Dashoard</a>
+                    class="nav-link d-inline-block px-3 <?= ($_GET['admin'] ?? '') == 'dashboard' ? 'text-primary' : 'text-black' ?>" data-i18n="navbar.nav_dashboard">Dashoard</a>
                 <a href="?admin=users"
-                    class="nav-link d-inline-block px-3 <?= ($_GET['admin'] ?? '') == 'users' ? 'text-primary' : 'text-black' ?>">Users</a>
+                    class="nav-link d-inline-block px-3 <?= ($_GET['admin'] ?? '') == 'users' ? 'text-primary' : 'text-black' ?>" data-i18n="navbar.nav_users">Users</a>
                 <a href="?admin=books"
-                    class="nav-link d-inline-block px-3 <?= ($_GET['admin'] ?? '') == 'books' ? 'text-primary' : 'text-black' ?>">Books</a>
+                    class="nav-link d-inline-block px-3 <?= ($_GET['admin'] ?? '') == 'books' ? 'text-primary' : 'text-black' ?>" data-i18n="navbar.nav_books">Books</a>
                 <a href="?admin=quizzes"
-                    class="nav-link d-inline-block px-3 <?= ($_GET['admin'] ?? '') == 'quizzes' ? 'text-primary' : 'text-black' ?>">Quizzes</a>
+                    class="nav-link d-inline-block px-3 <?= ($_GET['admin'] ?? '') == 'quizzes' ? 'text-primary' : 'text-black' ?>" data-i18n="navbar.nav_quizzes">Quizzes</a>
 
             <?php endif; ?>
         <?php else: ?>
 
             <a href="?page=library"
-                class="nav-link d-inline-block px-3 <?= ($_GET['page'] ?? '') == 'library' ? 'text-primary' : 'text-black' ?>">Library</a>
+                class="nav-link d-inline-block px-3 <?= ($_GET['page'] ?? '') == 'library' ? 'text-primary' : 'text-black' ?>" data-i18n="navbar.nav_library">Library</a>
             <a href="?page=about"
-                class="nav-link d-inline-block px-3 <?= ($_GET['page'] ?? '') == 'about' ? 'text-primary' : 'text-black' ?>">About</a>
-            <a href="?page=library" class="btn btn-light rounded-pill py-2 px-3 text-black">
+                class="nav-link d-inline-block px-3 <?= ($_GET['page'] ?? '') == 'about' ? 'text-primary' : 'text-black' ?>" data-i18n="navbar.nav_about">About</a>
+            <a href="?page=library" class="btn btn-light rounded-pill py-2 px-3 text-black" data-i18n="navbar.btn_start_reading">
                 Start Reading
             </a>
-            <a href="?page=account" class="btn btn-light rounded-pill py-2 px-3 text-black">
+            <a href="?page=account" class="btn btn-light rounded-pill py-2 px-3 text-black" data-i18n="navbar.btn_for_parents">
                 For Parents
             </a>
 
@@ -64,20 +64,20 @@
                         <hr class="dropdown-divider">
                     </li>
                     <li>
-                        <a class="dropdown-item" href="?page=account">
+                        <a class="dropdown-item" href="?page=account" data-i18n="navbar.dropdown_my_account">
                             <i class="bi bi-person me-2"></i>My Account
                         </a>
                     </li>
                     <?php if (isParent() || isAdmin()): ?>
                         <li>
-                            <a class="dropdown-item" href="?page=account&tab=children">
+                            <a class="dropdown-item" href="?page=account&tab=children" data-i18n="navbar.dropdown_manage_children">
                                 <i class="bi bi-people me-2"></i>Manage Children
                             </a>
                         </li>
                     <?php endif; ?>
                     <?php if (isAdmin() || isEducator()): ?>
                         <li>
-                            <a class="dropdown-item" href="?page=edu">
+                            <a class="dropdown-item" href="?page=edu" data-i18n="navbar.dropdown_education_tools">
                                 <i class="bi bi-mortarboard me-2"></i>Education Tools
                             </a>
                         </li>
@@ -91,7 +91,7 @@
                             <input type="hidden" name="csrf_token" value="<?php  // echo htmlspecialchars(generateCsrfToken()); 
                                                                             ?>">
                             <button type="submit" class="dropdown-item"
-                                style="border: none; background: none; width: 100%; text-align: left; padding: 0.5rem 1rem; cursor: pointer;">
+                                style="border: none; background: none; width: 100%; text-align: left; padding: 0.5rem 1rem; cursor: pointer;" data-i18n="navbar.dropdown_logout">
                                 <i class="bi bi-box-arrow-right me-2"></i>Logout
                             </button>
                         </form>

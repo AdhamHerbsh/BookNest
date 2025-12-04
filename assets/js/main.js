@@ -93,6 +93,7 @@
       };
 
       const applyTranslations = (data) => {
+        // Handle data-i18n attributes
         document.querySelectorAll("[data-i18n]").forEach((el) => {
           const key = el.getAttribute("data-i18n");
           const value = key
@@ -102,7 +103,21 @@
               data
             );
           if (value !== undefined && value !== null) {
-            el.textContent = value;
+            el.innerHTML = value;
+          }
+        });
+
+        // Handle data-i18n-placeholder attributes
+        document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+          const key = el.getAttribute("data-i18n-placeholder");
+          const value = key
+            .split(".")
+            .reduce(
+              (o, i) => (o && o[i] !== undefined ? o[i] : undefined),
+              data
+            );
+          if (value !== undefined && value !== null) {
+            el.placeholder = value;
           }
         });
       };

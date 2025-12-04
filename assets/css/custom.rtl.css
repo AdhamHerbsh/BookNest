@@ -1,0 +1,19 @@
+.btn-group>.btn:nth-child(n+3) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.btn-group>.btn:not(:last-child):not(.dropdown-toggle) {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.input-group>:not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.accordion-button::after {
+    margin-left: 0;
+    margin-right: auto;
+}

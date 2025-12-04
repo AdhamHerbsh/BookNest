@@ -74,28 +74,28 @@ function buildQueryString($params)
 <div class="hero-image library" data-aos="fade"></div>
 <div class="container-fluid">
     <div class="hero-content container text-center">
-        <h1 class="display-1 fw-bold text-white" data-aos="fade-up" data-aos-delay="200">Unlock a World of Stories</h1>
-        <p class="fs-4 mb-4 text-white p-5" data-aos="fade-up" data-aos-delay="500">
+        <h1 class="display-1 fw-bold text-white" data-aos="fade-up" data-aos-delay="200" data-i18n="library.hero_title">Unlock a World of Stories</h1>
+        <p class="fs-4 mb-4 text-white p-5" data-aos="fade-up" data-aos-delay="500" data-i18n="library.hero_text">
             Ignite your child's imagination with our interactive digital library. Featuring audio narration,
             animations, and progress tracking, BookNest makes reading fun and engaging for kids aged 4-12.
         </p>
-        <a href="#featured-collections" class="btn btn-primary" data-aos="zoom-in" data-aos-delay="1000">Start Exploring</a>
+        <a href="#featured-collections" class="btn btn-primary" data-aos="zoom-in" data-aos-delay="1000" data-i18n="library.btn_start_exploring">Start Exploring</a>
     </div>
 
     <section class="px-5">
         <div class="mb-4 text-center">
-            <h1 class="display-2">Explore by Age</h1>
+            <h1 class="display-2" data-i18n="library.explore_by_age">Explore by Age</h1>
 
             <!-- Show active filters -->
             <?php if ($selectedAgeGroup || $searchTerm): ?>
                 <div class="mt-3">
                     <small class="text-muted">
-                        Filters:
+                        <span data-i18n="library.filters_label">Filters:</span>
                         <?php if ($selectedAgeGroup): echo "Age $selectedAgeGroup";
                         endif; ?>
                         <?php if ($searchTerm): echo ($selectedAgeGroup ? ' • ' : '') . "Search: " . htmlspecialchars($searchTerm);
                         endif; ?>
-                        | <a href="?page=library#featured-collections" class="text-decoration-none">Clear all</a>
+                        | <a href="?page=library#featured-collections" class="text-decoration-none" data-i18n="library.clear_all">Clear all</a>
                     </small>
                 </div>
             <?php endif; ?>
@@ -129,7 +129,8 @@ function buildQueryString($params)
                             placeholder="Search by title, author, or description..."
                             aria-label="Search"
                             name="search"
-                            value="<?php echo htmlspecialchars($searchTerm ?? '', ENT_QUOTES); ?>" />
+                            value="<?php echo htmlspecialchars($searchTerm ?? '', ENT_QUOTES); ?>"
+                            data-i18n-placeholder="library.search_placeholder" />
                         <button type="submit" class="input-group-text bg-white border-0" id="basic-addon1">
                             <i class="bi bi-search"></i>
                         </button>
@@ -147,14 +148,14 @@ function buildQueryString($params)
         <div class="container-fluid px-4">
             <div class="row mb-4">
                 <div class="col-12 text-center">
-                    <h1 class="display-4 fw-bold">Featured Collections</h1>
+                    <h1 class="display-4 fw-bold" data-i18n="library.featured_collections">Featured Collections</h1>
                 </div>
             </div>
 
             <?php if (empty($featuredBooks)): ?>
                 <div class="text-center py-5">
-                    <h3>No books found</h3>
-                    <p>Try adjusting your search filters.</p>
+                    <h3 data-i18n="library.no_books_found">No books found</h3>
+                    <p data-i18n="library.try_adjusting_filters">Try adjusting your search filters.</p>
                 </div>
             <?php else: ?>
                 <div class="row">
@@ -186,9 +187,9 @@ function buildQueryString($params)
         <div class="container">
             <div class="row text-center text-md-start bg-primary-light rounded-4 p-5">
                 <div class="col-12 col-md-8 mb-4">
-                    <h1>Ready to test your memory?</h1>
-                    <p>Take a quick quiz on the book and earn some shiny rewards!</p>
-                    <a href="?page=quiz" class="btn btn-primary">Start Quiz</a>
+                    <h1 data-i18n="library.quiz_title">Ready to test your memory?</h1>
+                    <p data-i18n="library.quiz_text">Take a quick quiz on the book and earn some shiny rewards!</p>
+                    <a href="?page=quiz" class="btn btn-primary" data-i18n="library.btn_start_quiz">Start Quiz</a>
                 </div>
                 <div class="col-12 col-md-4 d-flex align-items-center justify-content-center">
                     <img class="img-fluid rounded-circle" src="assets/images/jaredd-craig-croped.jpg"

@@ -21,7 +21,7 @@ unset($_SESSION['form_errors'], $_SESSION['form_values']);
             <div class="row">
                 <div class="col-6 m-4">
                     <img src="assets/images/Icons/person-bounding-box.svg" alt="BookNest" width="70" />
-                    <h1 class="d-inline text-primary fw-bold m-1">Register</h1>
+                    <h1 class="d-inline text-primary fw-bold m-1" data-i18n="auth.register_title">Register</h1>
                 </div>
                 <div class="col-6">
                     <img src="assets/images/BookNest Logo/Logo Square RBG.png" alt="BookNest" class="login-logo" />
@@ -62,7 +62,7 @@ unset($_SESSION['form_errors'], $_SESSION['form_values']);
             <form action="./" method="POST" class="row w-75 m-auto text-center" id="registerForm">
                 <input type="hidden" name="action" value="register">
                 <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrfToken); ?>">
-                <h6>
+                <h6 data-i18n="auth.register_subtitle">
                     Register a new account as parent has personal account
                 </h6>
                 <div class="container bg-secondary p-4 rounded-4 shadow-lg mb-3">
@@ -71,11 +71,11 @@ unset($_SESSION['form_errors'], $_SESSION['form_values']);
                             <input type="text"
                                 class="form-control me-1 <?php echo isset($errors['first_name']) ? 'is-invalid' : ''; ?>"
                                 name="first_name" id="first_name" placeholder="First Name" aria-label="First Name"
-                                tabindex="1" value="<?php echo htmlspecialchars($values['first_name'] ?? ''); ?>">
+                                tabindex="1" value="<?php echo htmlspecialchars($values['first_name'] ?? ''); ?>" data-i18n-placeholder="auth.placeholder_first_name">
                             <input type="text"
                                 class="form-control <?php echo isset($errors['last_name']) ? 'is-invalid' : ''; ?>"
                                 name="last_name" id="last_name" placeholder="Last Name" aria-label="Last Name"
-                                tabindex="2" value="<?php echo htmlspecialchars($values['last_name'] ?? ''); ?>">
+                                tabindex="2" value="<?php echo htmlspecialchars($values['last_name'] ?? ''); ?>" data-i18n-placeholder="auth.placeholder_last_name">
                             <span class="btn btn-outline-secondary"><svg xmlns="http://www.w3.org/2000/svg" width="20"
                                     height="20" fill="currentColor" class="bi bi-person-vcard" viewBox="0 0 16 16">
                                     <path
@@ -90,7 +90,7 @@ unset($_SESSION['form_errors'], $_SESSION['form_values']);
                             <input type="email"
                                 class="form-control <?php echo isset($errors['username']) ? 'is-invalid' : ''; ?>"
                                 name="username" id="username" placeholder="Email Address" aria-label="Email Address"
-                                tabindex="2" value="<?php echo htmlspecialchars($values['username'] ?? ''); ?>">
+                                tabindex="2" value="<?php echo htmlspecialchars($values['username'] ?? ''); ?>" data-i18n-placeholder="auth.placeholder_email_address">
                             <span class="btn btn-outline-secondary"><i class="bi bi-envelope"></i></span>
                             <?php if (isset($errors['username'])): ?>
                             <div class="invalid-feedback d-block"><?php echo htmlspecialchars($errors['username']); ?>
@@ -102,7 +102,7 @@ unset($_SESSION['form_errors'], $_SESSION['form_values']);
                         <div class="input-group mb-3">
                             <input type="tel" class="form-control" name="phone" id="phone"
                                 placeholder="Phone Number (Optional)" aria-label="Phone Number"
-                                pattern="[0-9]{3}-?[0-9]{3}-?[0-9]{4}" tabindex="3">
+                                pattern="[0-9]{3}-?[0-9]{3}-?[0-9]{4}" tabindex="3" data-i18n-placeholder="auth.placeholder_phone_optional">
                             <span class="btn btn-outline-secondary"><i class="bi bi-telephone"></i></span>
                         </div>
 
@@ -112,7 +112,7 @@ unset($_SESSION['form_errors'], $_SESSION['form_values']);
                                 class="form-control <?php echo isset($errors['password']) ? 'is-invalid' : ''; ?>"
                                 name="password" id="password" placeholder="Password" aria-label="Password" minlength="8"
                                 autocomplete="new-password" tabindex="4"
-                                value="<?php echo htmlspecialchars($values['password'] ?? ''); ?>">
+                                value="<?php echo htmlspecialchars($values['password'] ?? ''); ?>" data-i18n-placeholder="auth.placeholder_password">
                             <button type="button" class="btn btn-outline-secondary toggle-password-btn"
                                 data-target="#password" tabindex="5" aria-label="Toggle password visibility"><i
                                     class="bi bi-eye"></i></button>
@@ -128,7 +128,7 @@ unset($_SESSION['form_errors'], $_SESSION['form_values']);
                                 class="form-control <?php echo isset($errors['confirm_password']) ? 'is-invalid' : ''; ?>"
                                 name="confirm_password" id="confirmPassword" placeholder="Confirm Password"
                                 aria-label="Confirm Password" minlength="8" autocomplete="new-password" tabindex="6"
-                                value="<?php echo htmlspecialchars($values['confirm_password'] ?? ''); ?>">
+                                value="<?php echo htmlspecialchars($values['confirm_password'] ?? ''); ?>" data-i18n-placeholder="auth.placeholder_confirm_password">
                             <button type="button" class="btn btn-outline-secondary toggle-password-btn"
                                 data-target="#confirmPassword" tabindex="7"
                                 aria-label="Toggle confirm password visibility"><i class="bi bi-eye"></i></button>
@@ -142,7 +142,7 @@ unset($_SESSION['form_errors'], $_SESSION['form_values']);
                         <div class="mb-3">
                             <input class="form-check-input" type="checkbox" id="subscribe" name="subscribe" value="1"
                                 tabindex="8">
-                            <label class="form-check-label text-white" for="subscribe">
+                            <label class="form-check-label text-white" for="subscribe" data-i18n="auth.label_subscribe">
                                 Subscribe to newsletter and updates
                             </label>
                         </div>
@@ -152,7 +152,7 @@ unset($_SESSION['form_errors'], $_SESSION['form_values']);
                             <input class="form-check-input" type="checkbox" id="terms" name="terms" value="1"
                                 tabindex="9" required>
                             <label class="form-check-label text-white" for="terms">
-                                I agree to the <a href="#" class="text-white text-decoration-underline">Terms and
+                                <span data-i18n="auth.label_terms">I agree to the</span> <a href="#" class="text-white text-decoration-underline" data-i18n="auth.terms_link">Terms and
                                     Conditions</a>
                             </label>
                         </div>
@@ -160,10 +160,10 @@ unset($_SESSION['form_errors'], $_SESSION['form_values']);
                 </div>
                 <div class="container">
                     <div class="form-check mb-3">
-                        <button class="btn btn-success" type="submit">Register</button>
+                        <button class="btn btn-success" type="submit" data-i18n="auth.btn_register">Register</button>
                     </div>
                     <div class="form-check">
-                        <a class="btn btn-light" href="?auth=login">Login</a>
+                        <a class="btn btn-light" href="?auth=login" data-i18n="auth.btn_login_link">Login</a>
                     </div>
                 </div>
             </form>
