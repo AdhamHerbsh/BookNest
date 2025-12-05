@@ -64,7 +64,7 @@ $isParent = isset($_SESSION['role']) && $_SESSION['role'] === 'PARENT';
 
 <section class="mt-5 p-2 p-md-5">
     <div class="container-fluid">
-        <div class="row my-5">
+        <div class="row mt-5">
             <div class="text-end">
                 <form action="./" method="POST" class="d-inline">
                     <input type="hidden" name="action" value="logout">
@@ -78,7 +78,7 @@ $isParent = isset($_SESSION['role']) && $_SESSION['role'] === 'PARENT';
             <h1 data-i18n="account.page_title">Account Settings</h1>
         </div>
 
-        <div class="row my-5">
+        <div class="row mb-5">
             <!-- Profile Cards -->
             <div class="row g-3 align-items-stretch">
                 <!-- Parent Card -->
@@ -90,11 +90,11 @@ $isParent = isset($_SESSION['role']) && $_SESSION['role'] === 'PARENT';
                                     <i class="bi bi-person fs-4"></i>
                                 </span>
                                 <div>
-                                    <h5 class="mb-0 fw-bold"><?php echo htmlspecialchars($_SESSION['user_name'] ?? 'User'); ?></h5>
+                                    <h5 class="mb-0 fw-bold"><?php echo htmlspecialchars($user['FIRST_NAME'] . ' ' . $user['LAST_NAME']); ?></h5>
                                 </div>
                             </div>
                             <h6 class="rounded-pill text-bg-primary px-3 py-2">
-                                <?php echo htmlspecialchars($_SESSION['role'] ?? 'Guest'); ?>
+                                <?php echo htmlspecialchars($_SESSION['role'] ?? 'Geust'); ?>
                             </h6>
                         </div>
                         <?php if ($isParent): ?>

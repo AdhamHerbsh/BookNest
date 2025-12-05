@@ -108,19 +108,19 @@ function buildQueryString($params)
                         <div class="col-4 col-md-2">
                             <a href="?<?php echo buildQueryString(['age_group' => '4-6']); ?>#featured-collections"
                                 class="btn btn-outline-primary rounded-5 w-100 <?php echo isAgeGroupActive('4-6', $selectedAgeGroup); ?>">
-                                4-6 yrs
+                                4-6
                             </a>
                         </div>
                         <div class="col-4 col-md-2">
                             <a href="?<?php echo buildQueryString(['age_group' => '7-9']); ?>#featured-collections"
                                 class="btn btn-outline-primary rounded-5 w-100 <?php echo isAgeGroupActive('7-9', $selectedAgeGroup); ?>">
-                                7-9 yrs
+                                7-9
                             </a>
                         </div>
                         <div class="col-4 col-md-2">
                             <a href="?<?php echo buildQueryString(['age_group' => '10-12']); ?>#featured-collections"
                                 class="btn btn-outline-primary rounded-5 w-100 <?php echo isAgeGroupActive('10-12', $selectedAgeGroup); ?>">
-                                10-12 yrs
+                                10-12
                             </a>
                         </div>
                     </div>

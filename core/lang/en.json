@@ -208,9 +208,7 @@
     "btn_cancel": "Cancel",
     "btn_add_child_submit": "Add Child",
     "modal_edit_child_title": "Edit Child Profile",
-    "btn_save_changes_child": "Save Changes",
-    "session_debug_title": "Session Debug",
-    "btn_session": "Session"
+    "btn_save_changes_child": "Save Changes"
   },
   "book": {
     "book_not_found_title": "Book Not Found",
@@ -285,6 +283,7 @@
     "nav_home": "Home",
     "nav_library": "Library",
     "nav_about": "About",
+    "nav_edu_tools": "Edu Tools",
     "nav_books": "Books",
     "nav_quizzes": "Quizzes",
     "nav_dashboard": "Dashboard",

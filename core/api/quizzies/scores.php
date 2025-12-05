@@ -95,48 +95,30 @@ try {
         echo json_encode(['success' => true, 'data' => $summaryData]);
     } else if ($view === 'detailed') {
         // --- DETAILED VIEW (For Educator Dashboard) ---
-        // Get comprehensive list of all scores for all associated children
+        // Get comprehensive list of ALL scores for all associated children (no filters)
 
         $sql = "
-            SELECT 
-                qs.ID,
-                qs.SCORE_PERCENTAGE,
-                qs.DATE_COMPLETED,
-                qs.TOTAL_QUESTIONS,
-                qs.CORRECT_ANSWERS,
-                c.ID as child_id,
-                c.NAME as child_name,
-                q.TITLE as quiz_title,
-                b.TITLE as book_title
-            FROM scores qs
-            JOIN children c ON qs.CHILD_ID = c.ID
-            JOIN quizzes q ON qs.QUIZ_ID = q.ID
-            LEFT JOIN books b ON q.BOOK_ID = b.ID
-            WHERE c.USER_ID = :userId
+        SELECT
+            qs.ID,
+            qs.SCORE_PERCENTAGE,
+            qs.DATE_COMPLETED,
+            qs.TOTAL_QUESTIONS,
+            qs.CORRECT_ANSWERS,
+            c.ID AS child_id,
+            c.NAME AS child_name,
+            q.ID AS quiz_id,
+            q.TITLE AS quiz_title,
+            b.TITLE AS book_title
+        FROM scores qs
+        JOIN children c ON qs.CHILD_ID = c.ID
+        JOIN quizzes q ON qs.QUIZ_ID = q.ID
+        LEFT JOIN books b ON q.BOOK_ID = b.ID
+       
+        ORDER BY qs.DATE_COMPLETED DESC
         ";
 
-        $params = [':userId' => $userId];
-
-        // Apply filters
-        if ($childId) {
-            $sql .= " AND c.ID = :childId";
-            $params[':childId'] = $childId;
-        }
-
-        // Filter by date range if provided
-        if (isset($_GET['start_date']) && !empty($_GET['start_date'])) {
-            $sql .= " AND qs.DATE_COMPLETED >= :startDate";
-            $params[':startDate'] = $_GET['start_date'];
-        }
-        if (isset($_GET['end_date']) && !empty($_GET['end_date'])) {
-            $sql .= " AND qs.DATE_COMPLETED <= :endDate";
-            $params[':endDate'] = $_GET['end_date'] . ' 23:59:59';
-        }
-
-        $sql .= " ORDER BY qs.DATE_COMPLETED DESC";
-
         $stmt = $pdo->prepare($sql);
-        $stmt->execute($params);
+        $stmt->execute();
         $scores = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         // Calculate class summary metrics

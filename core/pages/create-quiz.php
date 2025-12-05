@@ -18,7 +18,7 @@ $isAdminUser = isAdmin();
 // Fetch books for dropdown
 require_once 'core/db/config.php';
 $pdo = getDatabaseConnection();
-$booksStmt = $pdo->query("SELECT ID, TITLE FROM books WHERE IS_ACTIVE = 'Y' AND ID NOT IN (SELECT BOOK_ID FROM QUIZZES) ORDER BY TITLE");
+$booksStmt = $pdo->query("SELECT b.ID, b.TITLE FROM books b LEFT JOIN quizzes q ON b.ID = q.BOOK_ID WHERE b.IS_ACTIVE = 'Y' AND q.BOOK_ID IS NULL");
 $books = $booksStmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 

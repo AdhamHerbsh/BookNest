@@ -3124,8 +3124,6 @@
 
       const elements = {
         tableBody: document.getElementById("eduScoresBody"),
-        filterForm: document.getElementById("eduFilterForm"),
-        studentSelect: document.getElementById("filterStudent"),
         statTotal: document.getElementById("statTotalStudents"),
         statAvg: document.getElementById("statClassAverage"),
         statDiff: document.getElementById("statDifficultQuiz"),
@@ -3136,15 +3134,8 @@
 
       const loadDashboardData = async () => {
         try {
-          // Get filter values
-          const studentId = elements.studentSelect.value;
-          const startDate = document.getElementById("filterStartDate").value;
-          const endDate = document.getElementById("filterEndDate").value;
-
-          let url = "core/api/quizzies/scores.php?view=detailed";
-          if (studentId) url += `&child_id=${studentId}`;
-          if (startDate) url += `&start_date=${startDate}`;
-          if (endDate) url += `&end_date=${endDate}`;
+          // Fetch ALL data without any filters
+          const url = "core/api/quizzies/scores.php?view=detailed";
 
           const response = await fetch(url);
           const result = await response.json();
@@ -3152,11 +3143,6 @@
           if (result.success) {
             allData = result.data;
             updateDashboard(result.data, result.summary);
-
-            // Populate student filter if empty (first load)
-            if (elements.studentSelect.options.length <= 1) {
-              populateStudentFilter(result.data);
-            }
           } else {
             showError(result.message);
           }
@@ -3182,7 +3168,7 @@
             <tr>
                 <td colspan="6" class="text-center py-5 text-muted">
                     <i class="bi bi-inbox fs-1 d-block mb-3"></i>
-                    No quiz records found matching your criteria.
+                    No quiz records found.
                 </td>
             </tr>
           `;
@@ -3221,12 +3207,9 @@
                     ${new Date(row.DATE_COMPLETED).toLocaleDateString()}
                 </td>
                 <td class="px-4 text-end">
-                    <button class="btn btn-sm btn-outline-primary rounded-pill" 
-                            onclick="App.showScoreDetails(${escapeHtml(
-                              JSON.stringify(row)
-                            )})">
-                        Details
-                    </button>
+                    <span class="badge bg-light text-muted">${
+                      row.CORRECT_ANSWERS
+                    }/${row.TOTAL_QUESTIONS}</span>
                 </td>
             </tr>
         `
@@ -3236,68 +3219,14 @@
         elements.showingCount.textContent = `Showing ${data.length} results`;
       };
 
-      const populateStudentFilter = (data) => {
-        const students = new Map();
-        data.forEach((row) => {
-          if (!students.has(row.child_id)) {
-            students.set(row.child_id, row.child_name);
-          }
-        });
-
-        students.forEach((name, id) => {
-          const option = document.createElement("option");
-          option.value = id;
-          option.textContent = name;
-          elements.studentSelect.appendChild(option);
-        });
-      };
-
       const showError = (msg) => {
         elements.tableBody.innerHTML = `
             <tr><td colspan="6" class="text-center text-danger py-4">${msg}</td></tr>
         `;
       };
 
-      // Event Listeners
-      elements.filterForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        loadDashboardData();
-      });
-
       // Initial Load
       loadDashboardData();
-    },
-
-    /**
-     * Show Score Details Modal (Global Helper)
-     */
-    showScoreDetails(row) {
-      if (typeof row === "string") {
-        try {
-          row = JSON.parse(row);
-        } catch (e) {
-          console.error("Invalid row data", e);
-          return;
-        }
-      }
-
-      const modal = document.getElementById("scoreDetailsModal");
-      if (!modal) return;
-
-      document.getElementById("modalScoreVal").textContent = `${Math.round(
-        row.SCORE_PERCENTAGE
-      )}%`;
-      document.getElementById(
-        "modalScoreText"
-      ).textContent = `${row.CORRECT_ANSWERS}/${row.TOTAL_QUESTIONS} Correct`;
-      document.getElementById("modalStudentName").textContent = row.child_name;
-      document.getElementById("modalDate").textContent = new Date(
-        row.DATE_COMPLETED
-      ).toLocaleDateString();
-      document.getElementById("modalQuizTitle").textContent = row.quiz_title;
-
-      const bsModal = new bootstrap.Modal(modal);
-      bsModal.show();
     },
   };
 
