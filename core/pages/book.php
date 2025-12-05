@@ -111,9 +111,9 @@ $relatedBooks = $book['ageGroup'] ? fetchRelatedBooks($book['ageGroup'], $book['
                     <div class="row">
                         <div class="col-6">
                             <div class="d-grid gap-2">
-                                <a href="<?php echo htmlspecialchars($book['filePath'] ?: '#'); ?>"
-                                    class="btn btn-primary"
-                                    target="_blank">
+                                <a href="?page=read&id=<?php echo htmlspecialchars($book['id']); ?>"
+                                    class="btn btn-primary">
+
                                     <span data-i18n="book.btn_read_now">Read Now</span>
                                 </a>
                             </div>

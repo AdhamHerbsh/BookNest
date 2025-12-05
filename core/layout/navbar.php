@@ -14,6 +14,8 @@
 
             <?php elseif (isEducator()) : ?>
 
+                <a href="?page=edu"
+                    class="nav-link d-inline-block px-3 <?= ($_GET['page'] ?? '') == 'edu' ? 'text-primary' : 'text-black' ?>" data-i18n="navbar.nav_edu_tools">Edu Tools</a>
                 <a href="?page=books"
                     class="nav-link d-inline-block px-3 <?= ($_GET['page'] ?? '') == 'books' ? 'text-primary' : 'text-black' ?>" data-i18n="navbar.nav_books">Books</a>
                 <a href="?page=quizzes"
@@ -30,6 +32,11 @@
                 <a href="?admin=quizzes"
                     class="nav-link d-inline-block px-3 <?= ($_GET['admin'] ?? '') == 'quizzes' ? 'text-primary' : 'text-black' ?>" data-i18n="navbar.nav_quizzes">Quizzes</a>
 
+            <?php elseif (isChild()) : ?>
+                <a href="?page=library#featured-collections"
+                    class="nav-link d-inline-block px-3 <?= ($_GET['page'] ?? '') == 'library' ? 'text-primary' : 'text-black' ?>" data-i18n="navbar.nav_library">Library</a>
+                <a href="?page=about"
+                    class="nav-link d-inline-block px-3 <?= ($_GET['page'] ?? '') == 'about' ? 'text-primary' : 'text-black' ?>" data-i18n="navbar.nav_about">About</a>
             <?php endif; ?>
         <?php else: ?>
 
@@ -68,20 +75,6 @@
                             <i class="bi bi-person me-2"></i>My Account
                         </a>
                     </li>
-                    <?php if (isParent() || isAdmin()): ?>
-                        <li>
-                            <a class="dropdown-item" href="?page=account&tab=children" data-i18n="navbar.dropdown_manage_children">
-                                <i class="bi bi-people me-2"></i>Manage Children
-                            </a>
-                        </li>
-                    <?php endif; ?>
-                    <?php if (isAdmin() || isEducator()): ?>
-                        <li>
-                            <a class="dropdown-item" href="?page=edu" data-i18n="navbar.dropdown_education_tools">
-                                <i class="bi bi-mortarboard me-2"></i>Education Tools
-                            </a>
-                        </li>
-                    <?php endif; ?>
                     <li>
                         <hr class="dropdown-divider">
                     </li>

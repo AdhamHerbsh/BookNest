@@ -215,7 +215,7 @@ function processLogin($data)
 
         $userType = $data['user_type'] ?? 'parent';
 
-        if ($userType === 'parent') {
+        if ($userType === 'parent' || $userType === 'edu') {
             return processParentLogin($data);
         } elseif ($userType === 'child') {
             return processChildLogin($data);

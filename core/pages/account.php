@@ -140,6 +140,8 @@ $isParent = isset($_SESSION['role']) && $_SESSION['role'] === 'PARENT';
 
             <!-- Tab Content -->
             <div class="tab-content" id="underlineTabsContent">
+                <!--  -->
+
                 <!-- Personal Information Tab -->
                 <div class="tab-pane fade show" id="personal" role="tabpanel">
                     <div class="bg-light p-4 rounded-4 my-5">
@@ -180,6 +182,21 @@ $isParent = isset($_SESSION['role']) && $_SESSION['role'] === 'PARENT';
                                     <i class="bi bi-plus-lg"></i>
                                     <span data-i18n="account.btn_add_child">Add Child</span>
                                 </button>
+                            </div>
+
+
+                            <!-- Quiz Progress -->
+                            <div class="bg-light p-4 rounded-4 my-5">
+                                <h3 class="mb-4 fw-bold" data-i18n="account.quiz_progress_title">Quiz Progress</h3>
+
+                                <!-- Quiz Progress Container -->
+                                <div id="quizProgressContainer" class="d-flex flex-column gap-4">
+                                    <div class="text-center py-5">
+                                        <div class="spinner-border text-primary" role="status">
+                                            <span class="visually-hidden" data-i18n="account.loading">Loading...</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                             <!-- Children List Container -->

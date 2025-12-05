@@ -76,17 +76,22 @@ unset($_SESSION['form_errors'], $_SESSION['form_values']);
                                     checked tabindex="1">
                                 <label class="btn btn-outline-primary" for="check-parent" data-i18n="auth.user_type_parent">PARENT</label>
 
-                                <input type="radio" class="btn-check" name="user_type" id="check-child" value="child"
+                                <input type="radio" class="btn-check" name="user_type" id="check-edu" value="edu"
                                     tabindex="2">
+                                <label class="btn btn-outline-primary" for="check-edu" data-i18n="auth.user_type_edu">EDUCATOR</label>
+
+                                <input type="radio" class="btn-check" name="user_type" id="check-child" value="child"
+                                    tabindex="3">
                                 <label class="btn btn-outline-primary" for="check-child" data-i18n="auth.user_type_child">CHILD</label>
                             </div>
                         </div>
 
+                        <!-- Parent/Educator Login Section (Email + Password) -->
                         <div id="parent" class="user-type-section">
                             <!-- Username with right-side icon using Bootstrap input-group -->
                             <div class="input-group mb-3">
                                 <input type="email" class="form-control <?php echo isset($errors['username']) ? 'is-invalid' : ''; ?>" name="username" id="username"
-                                    placeholder="Email" aria-label="Email" tabindex="3" value="<?php echo htmlspecialchars($values['username'] ?? ''); ?>" data-i18n-placeholder="auth.placeholder_email">
+                                    placeholder="Email" aria-label="Email" tabindex="4" value="<?php echo htmlspecialchars($values['username'] ?? ''); ?>" data-i18n-placeholder="auth.placeholder_email">
                                 <span class="btn btn-outline-secondary"><i class="bi bi-person"></i></span>
                                 <?php if (isset($errors['username'])): ?>
                                     <div class="invalid-feedback d-block"><?php echo htmlspecialchars($errors['username']); ?></div>
@@ -96,19 +101,21 @@ unset($_SESSION['form_errors'], $_SESSION['form_values']);
                             <!-- Password with toggle button on the right -->
                             <div class="input-group mb-3">
                                 <input type="password" class="form-control <?php echo isset($errors['password']) ? 'is-invalid' : ''; ?>" name="password" id="password"
-                                    placeholder="Password" aria-label="Password" tabindex="4" value="<?php echo htmlspecialchars($values['password'] ?? ''); ?>" data-i18n-placeholder="auth.placeholder_password">
-                                <button class="btn btn-outline-secondary toggle-password-btn" type="button" tabindex="5"
+                                    placeholder="Password" aria-label="Password" tabindex="5" value="<?php echo htmlspecialchars($values['password'] ?? ''); ?>" data-i18n-placeholder="auth.placeholder_password">
+                                <button class="btn btn-outline-secondary toggle-password-btn" type="button" tabindex="6"
                                     aria-label="Toggle password visibility"><i class="bi bi-eye"></i></button>
                                 <?php if (isset($errors['password'])): ?>
                                     <div class="invalid-feedback d-block"><?php echo htmlspecialchars($errors['password']); ?></div>
                                 <?php endif; ?>
                             </div>
                         </div>
+
+                        <!-- Child Login Section (Code + Passkey) -->
                         <div id="child" class="user-type-section">
                             <!-- Code with right-side icon using Bootstrap input-group -->
                             <div class="input-group mb-3">
                                 <input type="text" class="form-control <?php echo isset($errors['child_code']) ? 'is-invalid' : ''; ?>" name="child_code" id="code"
-                                    placeholder="Child Username/Code" aria-label="Child Code" tabindex="6" value="<?php echo htmlspecialchars($values['child_code'] ?? ''); ?>" data-i18n-placeholder="auth.placeholder_child_code">
+                                    placeholder="Child Username/Code" aria-label="Child Code" tabindex="7" value="<?php echo htmlspecialchars($values['child_code'] ?? ''); ?>" data-i18n-placeholder="auth.placeholder_child_code">
                                 <span class="btn btn-outline-secondary" tabindex="0"><i class="bi bi-123"></i></span>
                                 <?php if (isset($errors['child_code'])): ?>
                                     <div class="invalid-feedback d-block"><?php echo htmlspecialchars($errors['child_code']); ?></div>
@@ -118,9 +125,9 @@ unset($_SESSION['form_errors'], $_SESSION['form_values']);
                             <!-- Passkey with toggle button on the right -->
                             <div class="input-group mb-3">
                                 <input type="password" class="form-control <?php echo isset($errors['child_passkey']) ? 'is-invalid' : ''; ?>" name="child_passkey" id="passkey"
-                                    placeholder="Passkey" aria-label="Passkey" tabindex="7" value="<?php echo htmlspecialchars($values['child_passkey'] ?? ''); ?>" data-i18n-placeholder="auth.placeholder_passkey">
+                                    placeholder="Passkey" aria-label="Passkey" tabindex="8" value="<?php echo htmlspecialchars($values['child_passkey'] ?? ''); ?>" data-i18n-placeholder="auth.placeholder_passkey">
                                 <button class="btn btn-outline-secondary toggle-password-btn" type="button"
-                                    tabindex="8" aria-label="Toggle passkey visibility"><i
+                                    tabindex="9" aria-label="Toggle passkey visibility"><i
                                         class="bi bi-eye"></i></button>
                                 <?php if (isset($errors['child_passkey'])): ?>
                                     <div class="invalid-feedback d-block"><?php echo htmlspecialchars($errors['child_passkey']); ?></div>
@@ -130,7 +137,7 @@ unset($_SESSION['form_errors'], $_SESSION['form_values']);
 
 
                         <div class="mb-3">
-                            <input class="form-check-input" type="checkbox" id="rememberMe" tabindex="9">
+                            <input class="form-check-input" type="checkbox" id="rememberMe" tabindex="10">
                             <label class="form-check-label text-white" for="rememberMe" data-i18n="auth.label_remember_me">
                                 Remember Me
                             </label>
@@ -142,10 +149,10 @@ unset($_SESSION['form_errors'], $_SESSION['form_values']);
                 </div>
                 <div class="container">
                     <div class="form-check mb-3">
-                        <button type="submit" class="btn btn-success" tabindex="10" data-i18n="auth.btn_login">Login</button>
+                        <button type="submit" class="btn btn-success" tabindex="11" data-i18n="auth.btn_login">Login</button>
                     </div>
                     <div class="form-check">
-                        <a class="btn btn-light" href="?auth=register" tabindex="11" data-i18n="auth.btn_register">Register</a>
+                        <a class="btn btn-light" href="?auth=register" tabindex="12" data-i18n="auth.btn_register">Register</a>
                     </div>
                 </div>
             </form>
