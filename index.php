@@ -119,6 +119,7 @@ $admin = filter_input(INPUT_GET, 'admin', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             'privacy'
         ];
         $unallowedPages = [
+            'favorites',
             'account',
             'read',
             'quiz',

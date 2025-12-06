@@ -32,10 +32,12 @@ if (!isset($_SESSION['user_id'])) {
 
 $userId = $_SESSION['user_id'];
 
+
 // Get JSON input
 $input = json_decode(file_get_contents('php://input'), true);
 $bookId = isset($input['book_id']) ? (int)$input['book_id'] : 0;
 $action = isset($input['action']) ? $input['action'] : '';
+
 
 // Validate inputs
 if (!$bookId || !in_array($action, ['like', 'unlike'])) {

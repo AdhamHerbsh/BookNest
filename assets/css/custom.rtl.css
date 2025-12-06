@@ -17,3 +17,7 @@
     margin-left: 0;
     margin-right: auto;
 }
+
+:dir(rtl) .contact .row {
+    justify-content: flex-end;
+}

@@ -1,4 +1,9 @@
 <?php
+
+if (isChild()) {
+    echo "<script>window.location.href = '?page=landing';</script>";
+}
+
 // Include database configuration
 require_once 'core/db/config.php';
 include_once 'core/layout/book-card.php';
@@ -240,7 +245,7 @@ $isParent = isset($_SESSION['role']) && $_SESSION['role'] === 'PARENT';
                                 <i class="bi bi-heart-fill me-2"></i>
                                 <span data-i18n="account.favorites_title">Favorites</span>
                             </h3>
-                            <button type="button" class="btn btn-light d-flex align-items-center gap-2 px-3">
+                            <button type="button" class="btn btn-light d-flex align-items-center gap-2 px-3" onclick="clearAllFavorites()">
                                 <i class="bi bi-trash text-danger"></i>
                                 <span class="text-danger" data-i18n="account.btn_clear_all">Clear All</span>
                             </button>

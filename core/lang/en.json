@@ -282,6 +282,7 @@
   "navbar": {
     "nav_home": "Home",
     "nav_library": "Library",
+    "nav_favorites": "Favorites",
     "nav_about": "About",
     "nav_edu_tools": "Edu Tools",
     "nav_books": "Books",

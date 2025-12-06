@@ -1,7 +1,6 @@
 <?php
 // children.php - Parent-specific children management
 require_once 'core/db/config.php';
-include_once 'core/layout/book-card.php';
 
 // Accept user_id from URL for admin viewing specific parent's children
 $viewingUserId = isset($_GET['user_id']) ? (int)$_GET['user_id'] : null;
@@ -223,7 +222,7 @@ $canManageAllChildren = $currentUserRole === 'ADMIN';
 </section>
 
 <!-- Add Child Modal -->
-<div class="modal fade show" id="addChildModal" tabindex="-1" aria-labelledby="addChildModalLabel" aria-hidden="true">
+<div class="modal fade" id="addChildModal" tabindex="-1" aria-labelledby="addChildModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -242,10 +241,6 @@ $canManageAllChildren = $currentUserRole === 'ADMIN';
                         <div class="col-md-6 mb-3">
                             <label for="childName" class="form-label">Name <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="childName" name="name" required>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="childCode" class="form-label">Code <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="childCode" name="code" required readonly>
                         </div>
                     </div>
                     <div class="row">
@@ -286,23 +281,44 @@ $canManageAllChildren = $currentUserRole === 'ADMIN';
     </div>
 </div>
 
+
+<!-- Edit Child Modal -->
+<div class="modal fade" id="editChildModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Child</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editChildForm">
+                    <input type="hidden" id="editChildId">
+                    <div class="mb-3">
+                        <label class="form-label">Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="editChildName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Date of Birth <span class="text-danger">*</span></label>
+                        <input type="date" class="form-control" id="editChildDob" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="submitEditChild()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Modal scripts and functionality -->
 <script>
     // Auto-generate child code and calculate age
     document.addEventListener('DOMContentLoaded', function() {
         const dobInput = document.getElementById('childDob');
         const ageInput = document.getElementById('childAge');
-        const codeInput = document.getElementById('childCode');
         const isAdminView = <?php echo $isAdminView ? 'true' : 'false'; ?>;
         const viewingUserId = <?php echo $viewingUserId ?? 'null'; ?>;
-
-        // Generate initial code
-        if (codeInput && !codeInput.value) {
-            const parentId = viewingUserId || <?php echo $_SESSION['user_id'] ?? '0'; ?>;
-            const timestamp = Date.now().toString(36).toUpperCase();
-            const random = Math.random().toString(36).substr(2, 4).toUpperCase();
-            codeInput.value = `CHILD-${parentId}-${random}-${timestamp}`;
-        }
 
         // Calculate age on DOB change
         if (dobInput && ageInput) {

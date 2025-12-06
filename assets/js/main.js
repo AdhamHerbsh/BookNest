@@ -3231,5 +3231,118 @@
   };
 
   // Run App
+  // Children Management Functions (Global scope for inline onclick handlers)
+  window.submitAddChild = function () {
+    const form = document.getElementById("addChildForm");
+    const formData = new FormData(form);
+    const data = {};
+    formData.forEach((value, key) => (data[key] = value));
+
+    fetch("core/api/children/add.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    })
+      .then((r) => r.json())
+      .then((result) => {
+        if (result.success) {
+          alert("Child added successfully!");
+          location.reload();
+        } else {
+          alert("Error: " + result.message);
+        }
+      })
+      .catch((err) => alert("Failed: " + err.message));
+  };
+
+  window.openEditChildModal = function (childId) {
+    fetch(`core/api/children/get.php?id=${childId}`)
+      .then((r) => r.json())
+      .then((result) => {
+        if (result.success) {
+          const child = result.child;
+          document.getElementById("editChildId").value = child.ID;
+          document.getElementById("editChildName").value = child.NAME;
+          document.getElementById("editChildDob").value = child.DOB;
+          new bootstrap.Modal(document.getElementById("editChildModal")).show();
+        } else {
+          alert("Error: " + result.message);
+        }
+      });
+  };
+
+  window.submitEditChild = function () {
+    const data = {
+      id: document.getElementById("editChildId").value,
+      name: document.getElementById("editChildName").value,
+      dob: document.getElementById("editChildDob").value,
+    };
+
+    fetch("core/api/children/update.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    })
+      .then((r) => r.json())
+      .then((result) => {
+        if (result.success) {
+          alert("Child updated successfully!");
+          location.reload();
+        } else {
+          alert("Error: " + result.message);
+        }
+      })
+      .catch((err) => alert("Failed: " + err.message));
+  };
+
+  window.showDeleteChildModal = function (childId) {
+    fetch("core/api/children/delete.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: childId }),
+    })
+      .then((r) => r.json())
+      .then((result) => {
+        if (result.success) {
+          alert("Child deleted successfully!");
+          location.reload();
+        } else {
+          alert("Error: " + result.message);
+        }
+      })
+      .catch((err) => alert("Failed: " + err.message));
+  };
+
+  window.copyToClipboard = function (text) {
+    navigator.clipboard.writeText(text).then(() => {
+      alert("Copied to clipboard: " + text);
+    });
+  };
+
+  window.clearAllFavorites = function () {
+    if (
+      !confirm(
+        "Are you sure you want to remove all favorites? This cannot be undone."
+      )
+    ) {
+      return;
+    }
+
+    fetch("core/api/favorites/clear.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((r) => r.json())
+      .then((result) => {
+        if (result.success) {
+          alert("All favorites cleared successfully!");
+          location.reload();
+        } else {
+          alert("Error: " + result.message);
+        }
+      })
+      .catch((err) => alert("Failed: " + err.message));
+  };
+
   App.init();
 })();

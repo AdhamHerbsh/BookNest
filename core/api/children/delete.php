@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../../db/config.php';
 require_once __DIR__ . '/../../auth/session.php';
+
 // Initialize session if not already started 
 if (session_status() === PHP_SESSION_NONE) {
     initSession();
@@ -16,13 +17,14 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-if (!isset($session['user_id']) || $session['role'] !== 'PARENT') {
+if (!isset($session['user_id']) || !in_array($session['role'], ['PARENT', 'ADMIN'])) {
     http_response_code(403);
     echo json_encode(['success' => false, 'message' => 'Unauthorized']);
     exit;
 }
 
 $userId = $session['user_id'];
+$role = $session['role'];
 $data = json_decode(file_get_contents('php://input'), true);
 $childId = $data['id'] ?? null;
 
@@ -34,12 +36,17 @@ if (!$childId) {
 try {
     $pdo = getDatabaseConnection();
 
-    // Verify child belongs to parent
-    $stmt = $pdo->prepare("SELECT ID FROM children WHERE ID = ? AND USER_ID = ?");
-    $stmt->execute([$childId, $userId]);
+    // Verify child exists and parent owns it (unless admin)
+    if ($role === 'ADMIN') {
+        $stmt = $pdo->prepare("SELECT ID FROM children WHERE ID = ?");
+        $stmt->execute([$childId]);
+    } else {
+        $stmt = $pdo->prepare("SELECT ID FROM children WHERE ID = ? AND USER_ID = ?");
+        $stmt->execute([$childId, $userId]);
+    }
     if (!$stmt->fetch()) {
         http_response_code(403);
-        echo json_encode(['success' => false, 'message' => 'Unauthorized access to this child']);
+        echo json_encode(['success' => false, 'message' => 'Child not found or unauthorized']);
         exit;
     }
 

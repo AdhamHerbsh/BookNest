@@ -281,6 +281,7 @@
   "navbar": {
     "nav_home": "الرئيسية",
     "nav_library": "المكتبة",
+    "nav_favorites": "المفضلة",
     "nav_about": "من نحن",
     "nav_books": "الكتب",
     "nav_quizzes": "الاختبارات",

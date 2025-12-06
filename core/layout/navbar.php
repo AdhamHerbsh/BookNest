@@ -33,6 +33,8 @@
                     class="nav-link d-inline-block px-3 <?= ($_GET['admin'] ?? '') == 'quizzes' ? 'text-primary' : 'text-black' ?>" data-i18n="navbar.nav_quizzes">Quizzes</a>
 
             <?php elseif (isChild()) : ?>
+                <a href="?page=favorites"
+                    class="nav-link d-inline-block px-3 <?= ($_GET['page'] ?? '') == 'favorites' ? 'text-primary' : 'text-black' ?>" data-i18n="navbar.nav_favorites">Favorites</a>
                 <a href="?page=library#featured-collections"
                     class="nav-link d-inline-block px-3 <?= ($_GET['page'] ?? '') == 'library' ? 'text-primary' : 'text-black' ?>" data-i18n="navbar.nav_library">Library</a>
                 <a href="?page=about"
@@ -67,14 +69,16 @@
                         <h6 class="dropdown-header"><?php echo htmlspecialchars($_SESSION['user_name']); ?>
                         </h6>
                     </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="?page=account" data-i18n="navbar.dropdown_my_account">
-                            <i class="bi bi-person me-2"></i>My Account
-                        </a>
-                    </li>
+                    <?php if (!isChild()) : ?>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="?page=account" data-i18n="navbar.dropdown_my_account">
+                                <i class="bi bi-person me-2"></i>My Account
+                            </a>
+                        </li>
+                    <?php endif; ?>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
